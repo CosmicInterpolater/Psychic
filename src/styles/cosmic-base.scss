@@ -1,0 +1,224 @@
+// Cosmic Base Styles
+// CSS custom properties for consistent theming
+
+:root {
+  // Cosmic Colors
+  --cosmic-deep: #0f0c29;
+  --cosmic-void: #302b63;
+  --cosmic-nebula: #24243e;
+  --cosmic-twilight: #1a1a2e;
+  --cosmic-midnight: #16213e;
+
+  // Brand Colors
+  --starship-primary: #667eea;
+  --starship-secondary: #764ba2;
+  --starship-accent: #f093fb;
+  --starship-gold: #fbbf24;
+  --starship-coral: #ff6b6b;
+  --starship-orange: #ee5a24;
+
+  // Text Colors
+  --text-cosmic: #e5e7eb;
+  --text-stardust: #d1d5db;
+  --text-nebula: #9ca3af;
+  --text-void: #6b7280;
+
+  // Glass Effects
+  --glass-light: rgba(255, 255, 255, 0.1);
+  --glass-medium: rgba(255, 255, 255, 0.2);
+  --glass-dark: rgba(0, 0, 0, 0.3);
+
+  // Shadows
+  --shadow-cosmic: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-cosmic-lg: 0 15px 40px rgba(102, 126, 234, 0.4);
+  --shadow-glow: 0 0 20px rgba(255, 255, 255, 0.5);
+  --shadow-glow-purple: 0 0 30px rgba(102, 126, 234, 0.6);
+
+  // Border Radius
+  --radius-cosmic: 20px;
+  --radius-card: 15px;
+  --radius-pill: 50px;
+
+  // Spacing
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+
+  // Transitions
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  // Z-index layers
+  --z-background: -1;
+  --z-normal: 1;
+  --z-floating: 10;
+  --z-nav: 100;
+  --z-modal: 1000;
+  --z-emergency: 2000;
+}
+
+// Base element resets and improvements
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'liga' 1, 'kern' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Focus styles for accessibility
+:focus {
+  outline: 2px solid var(--starship-gold);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// Selection styles
+::selection {
+  background: var(--starship-accent);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--starship-accent);
+  color: white;
+}
+
+// Improved link styles
+a {
+  color: var(--starship-gold);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--starship-accent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--starship-gold);
+    outline-offset: 2px;
+  }
+}
+
+// Headings with consistent cosmic styling
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+  color: var(--text-cosmic);
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+}
+
+// Paragraph improvements
+p {
+  color: var(--text-stardust);
+  line-height: 1.6;
+  margin-bottom: 1em;
+}
+
+// Button reset for better customization
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// Form element improvements
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+// Image improvements
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// List improvements
+ul, ol {
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 0.25em;
+}
+
+// Table improvements
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--glass-light);
+}
+
+th {
+  font-weight: 600;
+  color: var(--text-cosmic);
+}
+
+td {
+  color: var(--text-stardust);
+}
+
+// Utility classes using CSS custom properties
+.text-cosmic { color: var(--text-cosmic); }
+.text-stardust { color: var(--text-stardust); }
+.text-nebula { color: var(--text-nebula); }
+.text-void { color: var(--text-void); }
+
+.bg-cosmic-deep { background-color: var(--cosmic-deep); }
+.bg-cosmic-void { background-color: var(--cosmic-void); }
+.bg-cosmic-nebula { background-color: var(--cosmic-nebula); }
+
+.shadow-cosmic { box-shadow: var(--shadow-cosmic); }
+.shadow-cosmic-lg { box-shadow: var(--shadow-cosmic-lg); }
+.shadow-glow { box-shadow: var(--shadow-glow); }
+.shadow-glow-purple { box-shadow: var(--shadow-glow-purple); }
+
+.rounded-cosmic { border-radius: var(--radius-cosmic); }
+.rounded-card { border-radius: var(--radius-card); }
+.rounded-pill { border-radius: var(--radius-pill); }
+
+.transition-fast { transition: all var(--transition-fast); }
+.transition-normal { transition: all var(--transition-normal); }
+.transition-slow { transition: all var(--transition-slow); }

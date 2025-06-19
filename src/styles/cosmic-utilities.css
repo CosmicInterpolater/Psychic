@@ -1,0 +1,288 @@
+/* Service Cards */
+.service-card-tarot {
+  @apply bg-gradient-to-br from-starship-primary via-starship-secondary to-starship-accent;
+  @apply p-8 rounded-cosmic text-white text-center cursor-pointer;
+  @apply border-2 border-white/10 shadow-cosmic;
+  @apply transition-all duration-300 hover:transform hover:-translate-y-2;
+  @apply hover:shadow-card-hover hover:border-white/30;
+}
+
+.service-card-astrology {
+  @apply bg-gradient-to-br from-starship-secondary via-starship-accent to-starship-primary;
+  @apply p-8 rounded-cosmic text-white text-center cursor-pointer;
+  @apply border-2 border-white/10 shadow-cosmic;
+  @apply transition-all duration-300 hover:transform hover:-translate-y-2;
+  @apply hover:shadow-card-hover hover:border-white/30;
+}
+
+.service-card-palm {
+  @apply bg-gradient-to-br from-starship-accent via-starship-primary to-starship-secondary;
+  @apply p-8 rounded-cosmic text-white text-center cursor-pointer;
+  @apply border-2 border-white/10 shadow-cosmic;
+  @apply transition-all duration-300 hover:transform hover:-translate-y-2;
+  @apply hover:shadow-card-hover hover:border-white/30;
+}
+
+.service-card-crystal {
+  @apply bg-gradient-to-br from-guides-sage via-services-crystal to-starship-primary;
+  @apply p-8 rounded-cosmic text-white text-center cursor-pointer;
+  @apply border-2 border-white/10 shadow-cosmic;
+  @apply transition-all duration-300 hover:transform hover:-translate-y-2;
+  @apply hover:shadow-card-hover hover:border-white/30;
+}
+
+/* Psychic Guide Cards */
+.psychic-card-luna {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  @apply p-6 rounded-cosmic text-white text-center cursor-pointer;
+  @apply border-2 border-white/10 shadow-cosmic;
+  @apply transition-all duration-300 hover:transform hover:-translate-y-2 hover:scale-105;
+  @apply hover:shadow-glow-purple;
+}
+
+.psychic-card-orion {
+  background: linear-gradient(45deg, #f093fb, #f5576c);
+  @apply p-6 rounded-cosmic text-white text-center cursor-pointer;
+  @apply border-2 border-white/10 shadow-cosmic;
+  @apply transition-all duration-300 hover:transform hover:-translate-y-2 hover:scale-105;
+  @apply hover:shadow-glow-pink;
+}
+
+.psychic-card-sage {
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  @apply p-6 rounded-cosmic text-white text-center cursor-pointer;
+  @apply border-2 border-white/10 shadow-cosmic;
+  @apply transition-all duration-300 hover:transform hover:-translate-y-2 hover:scale-105;
+  @apply hover:shadow-glow-blue;
+}
+
+.psychic-card-phoenix {
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
+  @apply p-6 rounded-cosmic text-white text-center cursor-pointer;
+  @apply border-2 border-white/10 shadow-cosmic;
+  @apply transition-all duration-300 hover:transform hover:-translate-y-2 hover:scale-105;
+  @apply hover:shadow-glow;
+}
+
+/* Avatar Styles */
+.psychic-avatar {
+  @apply w-20 h-20 rounded-full mx-auto mb-4;
+  @apply bg-gradient-to-br from-starship-coral to-starship-gold;
+  @apply flex items-center justify-center text-3xl;
+  @apply border-4 border-white shadow-cosmic;
+}
+
+/* Button Styles */
+.cosmic-button-primary {
+  @apply bg-gradient-to-r from-starship-coral to-starship-orange;
+  @apply text-white font-bold py-4 px-8 rounded-pill;
+  @apply shadow-cosmic transition-all duration-300;
+  @apply hover:transform hover:-translate-y-1 hover:shadow-cosmic-lg;
+}
+
+.cosmic-button-secondary {
+  @apply bg-gradient-to-r from-starship-primary to-starship-secondary;
+  @apply text-white font-bold py-3 px-6 rounded-pill;
+  @apply shadow-cosmic transition-all duration-300;
+  @apply hover:transform hover:-translate-y-1 hover:shadow-cosmic-lg;
+}
+
+.cosmic-button-ghost {
+  @apply bg-white/20 text-white border-2 border-white;
+  @apply py-2 px-4 rounded-pill font-semibold;
+  @apply transition-all duration-300;
+  @apply hover:bg-white hover:text-starship-secondary;
+  @apply hover:shadow-glow;
+}
+
+/* Glass Morphism Components */
+.glass-card {
+  @apply bg-white/10 backdrop-blur-cosmic;
+  @apply border border-white/20 rounded-card;
+  @apply shadow-cosmic;
+}
+
+.glass-nav {
+  @apply bg-black/80 backdrop-blur-cosmic;
+  @apply border-b border-white/10;
+}
+
+/* Text Styles */
+.cosmic-heading {
+  @apply text-white font-bold;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cosmic-text-glow {
+  @apply text-white;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.cosmic-text-muted {
+  @apply text-text-nebula;
+}
+
+/* Special Effects */
+.floating-orb {
+  @apply absolute rounded-full;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 6s ease-in-out infinite;
+}
+
+.star {
+  @apply absolute bg-white rounded-full;
+  animation: twinkle 2s infinite;
+}
+
+.star:nth-child(odd) {
+  animation-delay: 1s;
+}
+
+/* Modal Styles */
+.cosmic-modal {
+  @apply fixed inset-0 z-modal;
+  @apply bg-black/80 backdrop-blur-modal;
+}
+
+.cosmic-modal-content {
+  @apply bg-white mx-auto mt-8 p-8 rounded-cosmic;
+  @apply w-11/12 max-w-2xl relative;
+  @apply shadow-modal max-h-screen overflow-y-auto;
+  animation: modalSlideIn 0.3s ease;
+}
+
+/* Emergency Modal */
+.emergency-modal {
+  @apply fixed inset-0 z-emergency;
+  @apply bg-black/90 backdrop-blur-modal;
+}
+
+.emergency-modal-content {
+  @apply bg-gradient-to-br from-red-500 to-red-700;
+  @apply text-white mx-auto mt-20 p-8 rounded-cosmic;
+  @apply w-11/12 max-w-lg text-center;
+  @apply border-4 border-white/30;
+  animation: emergencyPulse 0.5s ease;
+}
+
+/* Form Styles */
+.cosmic-form-group {
+  @apply mb-4;
+}
+
+.cosmic-form-label {
+  @apply block mb-2 font-semibold text-gray-700;
+}
+
+.cosmic-form-input {
+  @apply w-full p-3 border-2 border-gray-300 rounded-xl;
+  @apply text-base transition-colors duration-200;
+  @apply focus:outline-none focus:border-starship-primary;
+}
+
+.cosmic-form-select {
+  @apply w-full p-3 border-2 border-gray-300 rounded-xl;
+  @apply text-base transition-colors duration-200;
+  @apply focus:outline-none focus:border-starship-primary;
+}
+
+.cosmic-form-textarea {
+  @apply w-full p-3 border-2 border-gray-300 rounded-xl;
+  @apply text-base transition-colors duration-200;
+  @apply focus:outline-none focus:border-starship-primary;
+  @apply resize-none;
+}
+
+/* Safety Notice */
+.safety-notice {
+  @apply bg-gradient-to-br from-starship-coral to-starship-orange;
+  @apply text-white p-6 rounded-card mb-6;
+  @apply border-2 border-white/30 shadow-cosmic;
+}
+
+.disclaimer-section {
+  @apply bg-gray-50 p-6 rounded-card mb-6;
+  @apply border-2 border-gray-200;
+}
+
+/* Checkbox Styles */
+.checkbox-group {
+  @apply flex items-start gap-2 mb-4;
+}
+
+.checkbox-group input[type="checkbox"] {
+  @apply w-auto mt-1 flex-shrink-0;
+}
+
+.checkbox-group label {
+  @apply font-normal text-sm leading-relaxed text-gray-700;
+}
+
+/* Rating Stars */
+.star-rating {
+  @apply text-yellow-400 text-lg;
+}
+
+/* Responsive Grid */
+.cosmic-grid-services {
+  @apply grid gap-8;
+  @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+.cosmic-grid-psychics {
+  @apply grid gap-6;
+  @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+/* Background Patterns */
+.cosmic-background {
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  @apply min-h-screen relative overflow-x-hidden;
+}
+
+.services-background {
+  @apply bg-cosmic-deep/80 backdrop-blur-glass;
+}
+
+.psychics-background {
+  @apply bg-cosmic-void/80 backdrop-blur-glass;
+}
+
+/* Navigation Styles */
+.cosmic-nav-link {
+  @apply text-white no-underline transition-all duration-300;
+  @apply py-2 px-4 rounded-pill;
+  @apply hover:bg-white/20 hover:transform hover:-translate-y-1;
+}
+
+.cosmic-nav-brand {
+  @apply text-starship-gold text-xl font-bold;
+  @apply no-underline transition-all duration-300;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cosmic-nav-brand:hover {
+  @apply text-yellow-300 transform -translate-y-1;
+}
+
+/* Utility Classes for Common Patterns */
+.cosmic-container {
+  @apply max-w-6xl mx-auto px-4;
+}
+
+.cosmic-section {
+  @apply py-24;
+}
+
+.cosmic-section-title {
+  @apply text-center text-4xl font-bold mb-12;
+  @apply text-white;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Animation Delays */
+.animate-delay-100 { animation-delay: 0.1s; }
+.animate-delay-200 { animation-delay: 0.2s; }
+.animate-delay-300 { animation-delay: 0.3s; }
+.animate-delay-400 { animation-delay: 0.4s; }
+.animate-delay-500 { animation-delay: 0.5s; }

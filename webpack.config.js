@@ -25,8 +25,8 @@ module.exports = (env, argv) => {
                     use: [
                         'style-loader',
                         'css-loader',
-                        'postcss-loader',
-                        'sass-loader',
+                        'postcss-loader',  // ← This processes Tailwind
+                        'sass-loader',     // ← This runs last (bottom-up)
                     ],
                 },
             ],

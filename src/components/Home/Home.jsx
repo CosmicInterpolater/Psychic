@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Home.scss';
 
 // AI-Generated Psychic Profiles
 const psychics = [
@@ -79,7 +78,6 @@ const services = [
 
 const Home = () => {
     const [showBookingModal, setShowBookingModal] = useState(false);
-    const [showEmergencyModal, setShowEmergencyModal] = useState(false);
     const [selectedService, setSelectedService] = useState('');
     const [selectedPrice, setSelectedPrice] = useState(0);
     const [selectedPsychic, setSelectedPsychic] = useState('');
@@ -182,79 +180,73 @@ const Home = () => {
         closeBookingModal();
     };
 
-    const showEmergencyAlert = () => {
-        setShowEmergencyModal(true);
-    };
-
-    const closeEmergencyModal = () => {
-        setShowEmergencyModal(false);
-    };
-
-    const contactCrisisSupport = () => {
-        window.open('tel:988', '_blank');
-    };
-
-    const scrollToSection = (sectionId) => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
     const selectedPsychicData = psychics.find(p => p.name === selectedPsychic);
 
+    const handleBookingSubmit = (e) => {
+        e.preventDefault();
+        if (!formData.disclaimer || !formData.terms) {
+            alert('Please agree to all terms and conditions.');
+            return;
+        }
+        setShowBookingModal(false);
+    };
+
     return (
-        <div className="starship-psychics">
-            {/* Floating orbs for visual effect */}
-            <div className="floating-orb orb1"></div>
-            <div className="floating-orb orb2"></div>
-            <div className="floating-orb orb3"></div>
-
-            {/* Animated starfield */}
-            <div className="starfield" id="starfield"></div>
-
-            <header>
-                <nav className="container">
-                    <div className="logo">🚀 Starship Psychics</div>
-                    <ul className="nav-links">
-                        <li><a href="#home" onClick={() => scrollToSection('home')}>Home</a></li>
-                        <li><a href="#services" onClick={() => scrollToSection('services')}>Services</a></li>
-                        <li><a href="#psychics" onClick={() => scrollToSection('psychics')}>Cosmic Guides</a></li>
-                        <li><Link to="/tarot">🔮 Tarot</Link></li>
-                        <li><Link to="/palm-reader">🖐️ Palm Reading</Link></li>
-                    </ul>
-                </nav>
-            </header>
-
-            <main>
-                <section id="home" className="hero">
-                    <div className="container">
-                        <h1>Navigate Your Cosmic Destiny</h1>
-                        <p>Connect with stellar wisdom through our advanced AI-enhanced cosmic guidance system. Navigate the mysteries of the universe with our experienced cosmic guides.</p>
-                        <a href="#services" className="cta-button" onClick={() => scrollToSection('services')}>
-                            Explore Services
-                        </a>
+        <div className="page-container page-full-width page--container-home">
+            <section className="page-section" style={{paddingBottom: 0}}>
+                {/* Hero Section */}
+                <section id="home" className="py-32">
+                    <div className="page-container">
+                        <div className="text-center">
+                            <h1 className="animate-fadeInUp">
+                                Navigate Your Cosmic Destiny
+                            </h1>
+                            <p className="text-text-cosmic text-lg mb-8 max-w-3xl mx-auto animate-fadeInUp animate-delay-200">
+                                Connect with stellar wisdom through our advanced AI-enhanced cosmic guidance system.
+                                Navigate the mysteries of the universe with our experienced cosmic guides.
+                            </p>
+                            <div className="animate-fadeInUp animate-delay-400">
+                                <button
+                                    onClick={() => document.getElementById('services').scrollIntoView({ behavior: 'smooth' })}
+                                    className="cosmic-button-primary"
+                                >
+                                    Explore Services
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                <section id="services" className="services">
-                    <div className="container">
-                        <h2>Cosmic Services</h2>
-                        <div className="services-grid">
-                            {services.map((service) => (
-                                <div key={service.id} className="service-card" data-service={service.id}>
-                                    <h3>{service.icon} {service.title}</h3>
-                                    <p>{service.description}</p>
-                                    <div className="price">${service.price} - {service.duration} minutes</div>
-                                    <div className="service-buttons">
+                {/* Services Section */}
+                <section id="services" className="page-section bg-cosmic-deep/80 backdrop-blur-glass;">
+                    <div className="page-container">
+                        <h2 className={'text-center'}>Cosmic Services</h2>
+                        <div className="cosmic-grid-services">
+                            {services.map((service, index) => (
+                                <div
+                                    key={service.id}
+                                    className={`service-card animate-fadeInUp`}
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
+                                    <div className="text-4xl mb-4">{service.icon}</div>
+                                    <h3 className="text-xl font-bold mb-3 cosmic-text-shadow">
+                                        {service.title}
+                                    </h3>
+                                    <p className="mb-4 opacity-90">
+                                        {service.description}
+                                    </p>
+                                    <div className="text-lg font-bold mb-4 cosmic-text-shadow">
+                                        ${service.price} - {service.duration} minutes
+                                    </div>
+                                    <div className="flex gap-2 justify-center flex-wrap">
                                         <button
-                                            className="book-btn"
                                             onClick={() => openBookingModal(service.title, service.price)}
+                                            className="cosmic-button-ghost"
                                         >
                                             Book Session
                                         </button>
                                         {service.route && (
-                                            <Link to={service.route} className="try-btn">
+                                            <Link to={service.route} className="cosmic-button-ghost">
                                                 Try Interactive
                                             </Link>
                                         )}
@@ -265,24 +257,29 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section id="psychics" className="psychics">
-                    <div className="container">
-                        <h2>Our Cosmic Guides</h2>
-                        <div className="psychics-grid">
-                            {psychics.map((psychic) => (
-                                <div key={psychic.id} className="psychic-card" style={{ background: psychic.gradient }}>
+                {/* Psychics Section */}
+                <section id="psychics" className="page-section bg-cosmic-void/80 backdrop-blur-glass">
+                    <div className="page-container">
+                        <h2 className={'text-center'}>Our Cosmic Guides</h2>
+                        <div className="cosmic-grid-psychics">
+                            {psychics.map((psychic, index) => (
+                                <div
+                                    key={psychic.id}
+                                    className={`psychic-card animate-fadeInUp`}
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
                                     <div className="psychic-avatar">
                                         {psychic.avatar}
                                     </div>
-                                    <h3>{psychic.name}</h3>
-                                    <div className="psychic-specialty">{psychic.specialty}</div>
-                                    <div className="psychic-rating">
-                                        <div className="stars">
-                                            {'★'.repeat(psychic.rating)}{'☆'.repeat(5 - psychic.rating)}
-                                        </div>
+                                    <h3 className="text-lg font-bold mb-2">{psychic.name}</h3>
+                                    <div className="text-sm opacity-90 mb-3">
+                                        {psychic.specialty}
+                                    </div>
+                                    <div className="star-rating mb-3">
+                                        {'★'.repeat(psychic.rating)}{'☆'.repeat(5 - psychic.rating)}
                                     </div>
                                     <button
-                                        className="select-psychic-btn"
+                                        className="cosmic-button-ghost text-sm"
                                         onClick={() => {
                                             setSelectedPsychic(psychic.name);
                                             setFormData(prev => ({ ...prev, psychic: psychic.name }));
@@ -295,240 +292,184 @@ const Home = () => {
                         </div>
                     </div>
                 </section>
-            </main>
 
-            {/* Booking Modal - (keep all existing modal code) */}
+            </section>
+
+            {/* Booking Modal */}
             {showBookingModal && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={closeBookingModal}>&times;</span>
-                        <h2>Book Your Session</h2>
-
-                        {/* Safety Notice */}
-                        <div className="safety-notice">
-                            <h4>🛡️ Client Safety & Monitoring Notice</h4>
-                            <ul>
-                                <li>All sessions are monitored for client safety and well-being</li>
-                                <li>Inappropriate behavior will result in immediate session termination</li>
-                                <li>Expressions of violence or harmful intent will be reported to authorities</li>
-                                <li>Professional boundaries must be maintained at all times</li>
-                                <li>Crisis support resources are available if needed</li>
-                            </ul>
+                <div className="cosmic-modal">
+                    <div className="cosmic-modal-content">
+                        <div className="cosmic-modal-header">
+                            <h2>Book Your Cosmic Session</h2>
+                            <button
+                                onClick={() => setShowBookingModal(false)}
+                                className="close-button"
+                                aria-label="Close modal"
+                            >
+                                ×
+                            </button>
                         </div>
+                        <div className="cosmic-modal-body">
 
-                        <form onSubmit={handleSubmit}>
-                            {/* ... keep all existing form fields ... */}
-                            <div className="form-group">
-                                <label htmlFor="name">Full Name:</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleInputChange}
-                                    required
-                                />
+                            {/* Safety Notice */}
+                            <div className="cosmic-notice notice-warning">
+                                <h4>🛡️ Client Safety & Monitoring Notice</h4>
+                                <ul>
+                                    <li>All sessions are monitored for client safety and well-being</li>
+                                    <li>Professional boundaries must be maintained at all times</li>
+                                    <li>Crisis support resources are available if needed</li>
+                                </ul>
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="email">Email:</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
+                            <form onSubmit={handleBookingSubmit} className="space-y-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="cosmic-form-group">
+                                        <label className="cosmic-form-label">Full Name *</label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
+                                            className="cosmic-form-input"
+                                            placeholder="Your full name"
+                                            required
+                                        />
+                                    </div>
 
-                            <div className="form-group">
-                                <label htmlFor="phone">Phone Number:</label>
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    name="phone"
-                                    value={formData.phone}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="date">Preferred Date:</label>
-                                <input
-                                    type="date"
-                                    id="date"
-                                    name="date"
-                                    value={formData.date}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="time">Preferred Time:</label>
-                                <select
-                                    id="time"
-                                    name="time"
-                                    value={formData.time}
-                                    onChange={handleInputChange}
-                                    required
-                                >
-                                    <option value="">Select a time</option>
-                                    <option value="09:00">9:00 AM</option>
-                                    <option value="10:00">10:00 AM</option>
-                                    <option value="11:00">11:00 AM</option>
-                                    <option value="14:00">2:00 PM</option>
-                                    <option value="15:00">3:00 PM</option>
-                                    <option value="16:00">4:00 PM</option>
-                                    <option value="17:00">5:00 PM</option>
-                                    <option value="18:00">6:00 PM</option>
-                                </select>
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="psychic">Choose Your Cosmic Guide:</label>
-                                <select
-                                    id="psychic"
-                                    name="psychic"
-                                    value={formData.psychic}
-                                    onChange={handleInputChange}
-                                    required
-                                >
-                                    <option value="">Select a psychic</option>
-                                    {psychics.map((psychic) => (
-                                        <option key={psychic.id} value={psychic.name}>
-                                            {psychic.name} - {psychic.specialty}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            {selectedPsychicData && (
-                                <div className="selected-psychic-info">
-                                    <h4>{selectedPsychicData.name}</h4>
-                                    <p>{selectedPsychicData.bio}</p>
+                                    <div className="cosmic-form-group">
+                                        <label className="cosmic-form-label">Email *</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                            className="cosmic-form-input"
+                                            placeholder="your@email.com"
+                                            required
+                                        />
+                                    </div>
                                 </div>
-                            )}
 
-                            <div className="form-group">
-                                <label htmlFor="service">Cosmic Service:</label>
-                                <input
-                                    type="text"
-                                    id="service"
-                                    name="service"
-                                    value={formData.service}
-                                    readOnly
-                                />
-                            </div>
+                                <div className="cosmic-form-group">
+                                    <label className="cosmic-form-label">Cosmic Service *</label>
+                                    <select
+                                        name="service"
+                                        value={formData.service}
+                                        onChange={handleInputChange}
+                                        className="cosmic-form-select"
+                                        required
+                                    >
+                                        <option value="">Choose your cosmic journey</option>
+                                        <option value="tarot">🌟 Stellar Tarot Reading - $25</option>
+                                        <option value="astrology">🪐 Galactic Astrology Chart - $40</option>
+                                        <option value="palm">🖐️ Quantum Palm Reading - $30</option>
+                                        <option value="crystal">💎 Crystal Matrix Consultation - $35</option>
+                                    </select>
+                                </div>
 
-                            <div className="form-group">
-                                <label htmlFor="price">Investment:</label>
-                                <input
-                                    type="text"
-                                    id="price"
-                                    name="price"
-                                    value={formData.price}
-                                    readOnly
-                                />
-                            </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="cosmic-form-group">
+                                        <label className="cosmic-form-label">Preferred Date *</label>
+                                        <input
+                                            type="date"
+                                            name="date"
+                                            value={formData.date}
+                                            onChange={handleInputChange}
+                                            className="cosmic-form-input"
+                                            required
+                                        />
+                                    </div>
 
-                            <div className="form-group">
-                                <label htmlFor="notes">Cosmic Questions (Optional):</label>
-                                <textarea
-                                    id="notes"
-                                    name="notes"
-                                    rows="3"
-                                    value={formData.notes}
-                                    onChange={handleInputChange}
-                                    placeholder="Any specific questions or areas of focus for your cosmic journey?"
-                                />
-                            </div>
+                                    <div className="cosmic-form-group">
+                                        <label className="cosmic-form-label">Preferred Time *</label>
+                                        <select
+                                            name="time"
+                                            value={formData.time}
+                                            onChange={handleInputChange}
+                                            className="cosmic-form-select"
+                                            required
+                                        >
+                                            <option value="">Select time</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="14:00">2:00 PM</option>
+                                            <option value="15:00">3:00 PM</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="18:00">6:00 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                            {/* Enhanced Disclaimers */}
-                            <div className="disclaimer-section">
-                                <h4>⚖️ Legal & Professional Disclaimers</h4>
-                                <p><strong>Entertainment & Guidance:</strong> Psychic readings are for entertainment and guidance purposes only. Results are not guaranteed and should not replace professional medical, legal, or financial advice.</p>
-                                <p><strong>Age Requirement:</strong> Clients must be 18 years or older. Sessions involving minors require parental consent and supervision.</p>
-                                <p><strong>Recording & Monitoring:</strong> Sessions may be recorded for quality assurance and safety purposes. Monitoring systems are in place to detect inappropriate behavior.</p>
-                                <p><strong>Mandatory Reporting:</strong> We are legally required to report threats of violence, child abuse, elder abuse, or other criminal activity to appropriate authorities.</p>
-                                <p><strong>Crisis Resources:</strong> If you're experiencing a mental health crisis, please contact the National Suicide Prevention Lifeline at 988 or local emergency services at 911.</p>
-                            </div>
+                                <div className="cosmic-form-group">
+                                    <label className="cosmic-form-label">Cosmic Questions (Optional)</label>
+                                    <textarea
+                                        name="notes"
+                                        value={formData.notes}
+                                        onChange={handleInputChange}
+                                        className="cosmic-form-textarea"
+                                        placeholder="Any specific questions or areas of focus for your cosmic journey?"
+                                        rows="3"
+                                    />
+                                </div>
 
-                            <div className="checkbox-group">
-                                <input
-                                    type="checkbox"
-                                    id="disclaimer"
-                                    name="disclaimer"
-                                    checked={formData.disclaimer}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                                <label htmlFor="disclaimer">I understand that psychic reading is for entertainment purposes only and acknowledge that results may vary due to the interpretive nature of cosmic guidance.</label>
-                            </div>
+                                {/* Disclaimers */}
+                                <div className="cosmic-notice notice-info">
+                                    <h4>⚖️ Important Information</h4>
+                                    <p><strong>Entertainment & Guidance:</strong> Readings are for entertainment purposes only.</p>
+                                    <p><strong>Age Requirement:</strong> Must be 18+ years old.</p>
+                                    <p><strong>Crisis Resources:</strong> National Suicide Prevention Lifeline 988</p>
+                                </div>
 
-                            <div className="checkbox-group">
-                                <input
-                                    type="checkbox"
-                                    id="safetyAgreement"
-                                    name="safetyAgreement"
-                                    checked={formData.safetyAgreement}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                                <label htmlFor="safetyAgreement">I acknowledge the safety monitoring protocols and agree to maintain professional boundaries during my session. I understand that inappropriate behavior will result in session termination and potential reporting to authorities.</label>
-                            </div>
+                                <div className="space-y-3">
+                                    <div className="cosmic-checkbox-group">
+                                        <input
+                                            type="checkbox"
+                                            id="disclaimer"
+                                            name="disclaimer"
+                                            checked={formData.disclaimer}
+                                            onChange={handleInputChange}
+                                            required
+                                        />
+                                        <label htmlFor="disclaimer">
+                                            I understand this is for entertainment purposes and acknowledge results may vary.
+                                        </label>
+                                    </div>
 
-                            <div className="checkbox-group">
-                                <input
-                                    type="checkbox"
-                                    id="ageConfirmation"
-                                    name="ageConfirmation"
-                                    checked={formData.ageConfirmation}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                                <label htmlFor="ageConfirmation">I confirm that I am 18 years of age or older and legally able to enter into this service agreement.</label>
-                            </div>
+                                    <div className="cosmic-checkbox-group">
+                                        <input
+                                            type="checkbox"
+                                            id="terms"
+                                            name="terms"
+                                            checked={formData.terms}
+                                            onChange={handleInputChange}
+                                            required
+                                        />
+                                        <label htmlFor="terms">
+                                            I agree to maintain professional boundaries and consent to session monitoring.
+                                        </label>
+                                    </div>
+                                </div>
 
-                            <div className="checkbox-group">
-                                <input
-                                    type="checkbox"
-                                    id="recordingConsent"
-                                    name="recordingConsent"
-                                    checked={formData.recordingConsent}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                                <label htmlFor="recordingConsent">I consent to session recording and monitoring for safety and quality assurance purposes.</label>
-                            </div>
-
-                            <button type="submit" className="submit-btn">Launch Your Cosmic Journey</button>
-                        </form>
+                                <div className="flex gap-3 pt-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowBookingModal(false)}
+                                        className="cosmic-button-ghost flex-1"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="cosmic-button-primary flex-1"
+                                    >
+                                        🚀 Launch Your Journey
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             )}
-
-            {/* Emergency Alert Modal */}
-            {showEmergencyModal && (
-                <div className="emergency-modal">
-                    <div className="emergency-modal-content">
-                        <div className="emergency-icon">🚨</div>
-                        <h2>Session Safety Alert</h2>
-                        <p>Inappropriate behavior has been detected. This session will be terminated immediately and appropriate authorities will be notified.</p>
-                        <button className="emergency-btn" onClick={closeEmergencyModal}>Understood</button>
-                        <button className="emergency-btn" onClick={contactCrisisSupport}>Crisis Support</button>
-                    </div>
-                </div>
-            )}
-
-            <footer>
-                <div className="container">
-                    <p>&copy; 2025 Starship Psychics. Professional psychic consultation services with comprehensive safety protocols.</p>
-                    <p>Crisis Support: National Suicide Prevention Lifeline 988 | Emergency Services 911</p>
-                </div>
-            </footer>
         </div>
     );
 };
