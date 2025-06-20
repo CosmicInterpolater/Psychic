@@ -416,14 +416,12 @@ const PalmReader = () => {
     }, [isDragging, dragPoint]);
 
     return (
-        <div className="palm-reader">
-            <div className="container">
-                <div className="header">
-                    <h1>🖐️ Palm Reading Analysis</h1>
-                    <p>Upload a palm photo and adjust the lines for accurate reading</p>
-                </div>
+        <div className="page-container page-component--palm-reader">
+            <section className="page-section">
+                <h1 className="page-title">Palm Reading Analysis</h1>
+                <p>Upload a palm photo and adjust the lines for accurate reading</p>
 
-                <div className="controls">
+                <div className="cosmic-card bg-cosmic-deep/80 mb-6">
                     <div className="control-group">
                         <input
                             type="file"
@@ -431,18 +429,18 @@ const PalmReader = () => {
                             onChange={(e) => loadImage(e.target.files[0])}
                             className="file-input"
                         />
-                        <button onClick={resetLines}>Reset Lines</button>
-                        <button onClick={toggleLines}>
+                        <button className={'cosmic-button'} onClick={resetLines}>Reset Lines</button>
+                        <button className={'cosmic-button'} onClick={toggleLines}>
                             {showLines ? 'Hide Lines' : 'Show Lines'}
                         </button>
-                        <button onClick={analyzeWithAI} disabled={isAnalyzing}>
+                        <button className={'cosmic-button'} onClick={analyzeWithAI} disabled={isAnalyzing}>
                             {isAnalyzing ? 'Analyzing...' : 'AI Analysis'}
                         </button>
                     </div>
                 </div>
 
-                <div className="main-content">
-                    <div className="canvas-container">
+                <div className="main-content cosmic-card bg-cosmic-deep/80">
+                    <div className="canvas-container bg-cosmic-void">
                         <div className="canvas-wrapper">
                             <canvas
                                 ref={canvasRef}
@@ -453,7 +451,7 @@ const PalmReader = () => {
                         </div>
                     </div>
 
-                    <div className="sidebar">
+                    <div className="sidebar bg-cosmic-void">
                         <div className="feature-section">
                             <h3>📋 Current Analysis</h3>
                             <div
@@ -523,7 +521,7 @@ const PalmReader = () => {
                         )}
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     );
 };

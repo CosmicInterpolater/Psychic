@@ -222,18 +222,6 @@ module.exports = {
         // Custom plugin for cosmic utilities
         function({ addUtilities, theme }) {
             const newUtilities = {
-                '.cosmic-card': {
-                    background: theme('backgroundImage.cosmic-secondary'),
-                    borderRadius: theme('borderRadius.cosmic'),
-                    boxShadow: theme('boxShadow.cosmic'),
-                    border: '2px solid rgba(255, 255, 255, 0.1)',
-                    transition: 'all 0.3s ease',
-                },
-                '.cosmic-card:hover': {
-                    transform: 'translateY(-10px)',
-                    boxShadow: theme('boxShadow.cosmic-lg'),
-                    borderColor: 'rgba(255, 255, 255, 0.3)',
-                },
                 '.glass-morphism': {
                     backgroundColor: 'rgba(255, 255, 255, 0.1)',
                     backdropFilter: 'blur(16px)',

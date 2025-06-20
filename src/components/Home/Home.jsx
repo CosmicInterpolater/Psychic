@@ -192,7 +192,7 @@ const Home = () => {
     };
 
     return (
-        <div className="page-container page-full-width page--container-home">
+        <div className="page-container page-full-width page-component--home">
             <section className="page-section" style={{paddingBottom: 0}}>
                 {/* Hero Section */}
                 <section id="home" className="py-32">
@@ -225,17 +225,17 @@ const Home = () => {
                             {services.map((service, index) => (
                                 <div
                                     key={service.id}
-                                    className={`service-card animate-fadeInUp`}
+                                    className={`cosmic-card-service animated animate-fadeInUp`}
                                     style={{ animationDelay: `${index * 0.1}s` }}
                                 >
-                                    <div className="text-4xl mb-4">{service.icon}</div>
-                                    <h3 className="text-xl font-bold mb-3 cosmic-text-shadow">
+                                    <div className="service-icon">{service.icon}</div>
+                                    <h3 className="service-title">
                                         {service.title}
                                     </h3>
-                                    <p className="mb-4 opacity-90">
+                                    <p className="service-description">
                                         {service.description}
                                     </p>
-                                    <div className="text-lg font-bold mb-4 cosmic-text-shadow">
+                                    <div className="service-price">
                                         ${service.price} - {service.duration} minutes
                                     </div>
                                     <div className="flex gap-2 justify-center flex-wrap">

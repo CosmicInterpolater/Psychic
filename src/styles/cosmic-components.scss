@@ -130,7 +130,6 @@
 
 // Card components
 .cosmic-card {
-  background: linear-gradient(135deg, var(--starship-primary) 0%, var(--starship-secondary) 50%, var(--starship-accent) 100%);
   border-radius: var(--radius-cosmic);
   padding: 2rem;
   color: white;
@@ -138,7 +137,7 @@
   border: 2px solid var(--glass-light);
   transition: all var(--transition-normal);
 
-  &:hover {
+  &.animated:hover {
     transform: translateY(-10px);
     box-shadow: var(--shadow-cosmic-lg);
     border-color: var(--glass-medium);
@@ -149,6 +148,7 @@
   @extend .cosmic-card;
   text-align: center;
   cursor: pointer;
+  background: linear-gradient(135deg, var(--starship-primary) 0%, var(--starship-secondary) 50%, var(--starship-accent) 100%);
 
   .service-icon {
     font-size: 3rem;

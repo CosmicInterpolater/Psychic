@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './TarotReader.scss';
 
 // Tarot deck data
@@ -91,17 +91,11 @@ const TarotReader = () => {
     };
 
     return (
-        <div className="tarot-reader min-h-screen p-4">
-            <div className="max-w-6xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold text-white mb-4 flex items-center justify-center gap-3">
-                        <span className="text-yellow-400">✨</span>
-                        Tarot Card Reader
-                        <span className="text-yellow-400">✨</span>
-                    </h1>
-                    <p className="text-blue-200 text-lg">Discover insights through the ancient wisdom of the cards</p>
-                </div>
+        <div className="page-container">
+            <section className="page-section">
+                <h1 className="page-title">Tarot Card Reader</h1>
+
+                <p className="text-center">Discover insights through the ancient wisdom of the cards</p>
 
                 {/* Spread Selection */}
                 {!isReading && (
@@ -215,7 +209,7 @@ const TarotReader = () => {
                         )}
                     </div>
                 )}
-            </div>
+            </section>
         </div>
     );
 };

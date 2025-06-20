@@ -66,14 +66,6 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-feature-settings: 'liga' 1, 'kern' 1;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 // Focus styles for accessibility
 :focus {
   outline: 2px solid var(--starship-gold);
@@ -205,10 +197,6 @@ td {
 .text-stardust { color: var(--text-stardust); }
 .text-nebula { color: var(--text-nebula); }
 .text-void { color: var(--text-void); }
-
-.bg-cosmic-deep { background-color: var(--cosmic-deep); }
-.bg-cosmic-void { background-color: var(--cosmic-void); }
-.bg-cosmic-nebula { background-color: var(--cosmic-nebula); }
 
 .shadow-cosmic { box-shadow: var(--shadow-cosmic); }
 .shadow-cosmic-lg { box-shadow: var(--shadow-cosmic-lg); }
