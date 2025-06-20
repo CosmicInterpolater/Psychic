@@ -38,8 +38,25 @@ module.exports = (env, argv) => {
             }),
         ],
         devServer: {
-            static: './dist',
+            historyApiFallback: true, // This handles React Router
+            port: 3000, // React dev server port
+            proxy: [
+                {
+                    context: ['/api'],
+                    target: 'http://localhost:5555',
+                    changeOrigin: true,
+                    secure: false,
+                    logLevel: 'debug',
+                    onProxyReq: (proxyReq, req, res) => {
+                        console.log('Proxying request:', req.method, req.url);
+                    },
+                    onProxyRes: (proxyRes, req, res) => {
+                        console.log('Proxy response:', proxyRes.statusCode);
+                    }
+                }
+            ],
             hot: true,
+            open: true
         },
         mode: 'development',
     }
