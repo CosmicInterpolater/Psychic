@@ -187,49 +187,49 @@ const PalmReader = () => {
         });
     };
 
-    const handleMouseDown = (e) => {
-        if (!image || !showLines) return;
+const handleMouseDown = useCallback((e) => {
+    if (!image || !showLines) return;
 
-        const canvas = canvasRef.current;
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-        // Check if clicking on a control point
-        Object.entries(lines).forEach(([lineKey, line]) => {
-            line.points.forEach((point, index) => {
-                const distance = Math.sqrt((x - point.x) ** 2 + (y - point.y) ** 2);
-                if (distance < 10) {
-                    setIsDragging(true);
-                    setDragPoint({ lineKey, pointIndex: index });
-                }
-            });
-        });
-    };
-
-    const handleMouseMove = (e) => {
-        if (!isDragging || !dragPoint) return;
-
-        const canvas = canvasRef.current;
-        const rect = canvas.getBoundingClientRect();
-        const x = Math.max(0, Math.min(canvas.width, e.clientX - rect.left));
-        const y = Math.max(0, Math.min(canvas.height, e.clientY - rect.top));
-
-        setLines(prev => ({
-            ...prev,
-            [dragPoint.lineKey]: {
-                ...prev[dragPoint.lineKey],
-                points: prev[dragPoint.lineKey].points.map((point, index) =>
-                    index === dragPoint.pointIndex ? { x, y } : point
-                )
+    // Check if clicking on a control point
+    Object.entries(lines).forEach(([lineKey, line]) => {
+        line.points.forEach((point, index) => {
+            const distance = Math.sqrt((x - point.x) ** 2 + (y - point.y) ** 2);
+            if (distance < 10) {
+                setIsDragging(true);
+                setDragPoint({ lineKey, pointIndex: index });
             }
-        }));
-    };
+        });
+    });
+}, [image, showLines, lines]);
 
-    const handleMouseUp = () => {
-        setIsDragging(false);
-        setDragPoint(null);
-    };
+const handleMouseMove = useCallback((e) => {
+    if (!isDragging || !dragPoint) return;
+
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.max(0, Math.min(canvas.width, e.clientX - rect.left));
+    const y = Math.max(0, Math.min(canvas.height, e.clientY - rect.top));
+
+    setLines(prev => ({
+        ...prev,
+        [dragPoint.lineKey]: {
+            ...prev[dragPoint.lineKey],
+            points: prev[dragPoint.lineKey].points.map((point, index) =>
+                index === dragPoint.pointIndex ? { x, y } : point
+            )
+        }
+    }));
+}, [isDragging, dragPoint]);
+
+const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+    setDragPoint(null);
+}, []);
 
     const calculateLineLength = (points) => {
         let length = 0;
@@ -399,21 +399,21 @@ const PalmReader = () => {
     }, [draw, lines]);
 
     useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-        canvas.addEventListener('mousedown', handleMouseDown);
-        canvas.addEventListener('mousemove', handleMouseMove);
-        canvas.addEventListener('mouseup', handleMouseUp);
-        canvas.addEventListener('mouseleave', handleMouseUp);
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseup', handleMouseUp);
+    canvas.addEventListener('mouseleave', handleMouseUp);
 
-        return () => {
-            canvas.removeEventListener('mousedown', handleMouseDown);
-            canvas.removeEventListener('mousemove', handleMouseMove);
-            canvas.removeEventListener('mouseup', handleMouseUp);
-            canvas.removeEventListener('mouseleave', handleMouseUp);
-        };
-    }, [isDragging, dragPoint]);
+    return () => {
+        canvas.removeEventListener('mousedown', handleMouseDown);
+        canvas.removeEventListener('mousemove', handleMouseMove);
+        canvas.removeEventListener('mouseup', handleMouseUp);
+        canvas.removeEventListener('mouseleave', handleMouseUp);
+    };
+}, [handleMouseDown, handleMouseMove, handleMouseUp]); // Include the callback functions as dependencies
 
     return (
         <div className="page-container page-component--palm-reader">
