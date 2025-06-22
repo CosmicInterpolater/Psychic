@@ -173,7 +173,7 @@ const TarotReader = () => {
                                 </div>
 
                                 <div className="mt-8 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
-                                    <p className="text-blue-100 text-sm text-center">
+                                    <p className="text-blue-100 text-sm text-center mb-0">
                                         Remember, tarot readings offer guidance and reflection. Trust your intuition and take what resonates with you.
                                     </p>
                                 </div>
