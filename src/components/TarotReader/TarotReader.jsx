@@ -1,34 +1,6 @@
 import React, { useState } from 'react';
 import './TarotReader.scss';
-
-// Tarot deck data
-const tarotDeck = [
-    // MAJOR ARCANA (0-21)
-    {
-        id: 0, name: "The Fool", suit: "major", number: 0,
-        keywords: ["new beginnings", "innocence", "spontaneity", "free spirit"],
-        upright: "New beginnings, innocence, spontaneity, a free spirit. The Fool represents new adventures, having faith in the future, being inexperienced, not knowing what to expect. Trust in the universe and believe that everything will work out as it should.",
-        reversed: "Holding back, recklessness, risk-taking. When reversed, The Fool suggests you are living life to the extreme, either being completely reckless or overly cautious. Take calculated risks and find balance.",
-        element: "Air", astrology: "Uranus"
-    },
-    {
-        id: 1, name: "The Magician", suit: "major", number: 1,
-        keywords: ["manifestation", "resourcefulness", "power", "inspired action"],
-        upright: "Manifestation, resourcefulness, power, inspired action. The Magician represents having the skill, talent and capabilities to succeed. You have the tools and resources available to manifest your desires.",
-        reversed: "Manipulation, poor planning, untapped talents. Reversed suggests you may be struggling to harness your inner power or using your abilities in manipulative ways. Focus your energy constructively.",
-        element: "Air", astrology: "Mercury"
-    },
-    // ... (including all 78 cards from your original data)
-    // For brevity, I'll include a few more examples and indicate where the rest would go
-    {
-        id: 2, name: "The High Priestess", suit: "major", number: 2,
-        keywords: ["intuition", "sacred knowledge", "divine feminine", "subconscious mind"],
-        upright: "Intuition, sacred knowledge, divine feminine, the subconscious mind. Trust your intuition and go with your gut feeling. Look for the deeper meaning and listen to your inner voice.",
-        reversed: "Secrets, disconnected from intuition, withdrawal. When reversed, you may be out of touch with your intuitive side or keeping secrets. Reconnect with your inner wisdom.",
-        element: "Water", astrology: "Moon"
-    },
-    // ... rest of the 78 cards would be included here
-];
+import { tarotDeck } from '../../data/tarotDeckData';
 
 const spreadTypes = {
     "single": { name: "Single Card", cards: 1, positions: ["Present Situation"] },
