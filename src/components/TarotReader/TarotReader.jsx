@@ -30,7 +30,7 @@ const TarotReader = () => {
         const cards = shuffled.slice(0, spread.cards).map((card, index) => ({
             ...card,
             position: spread.positions[index],
-            reversed: Math.random() < 0.3 // 30% chance of reversed
+            isReversed: Math.random() < 0.3 // 30% chance of reversed
         }));
 
         setDrawnCards(cards);
@@ -123,8 +123,8 @@ const TarotReader = () => {
                             <div className={`grid gap-6 ${getGridClass()}`}>
                                 {drawnCards.map((card, index) => (
                                     <div key={index} className="text-center">
-                                        <div className={`card-container bg-gradient-to-b from-yellow-200 to-yellow-400 rounded-lg p-6 mb-3 shadow-lg border-2 border-yellow-500 min-h-[200px] flex flex-col justify-center ${card.reversed ? 'card-reversed' : ''}`}>
-                                            <div className={card.reversed ? 'card-content-reversed' : ''}>
+                                        <div className={`card-container bg-gradient-to-b from-yellow-200 to-yellow-400 rounded-lg p-6 mb-3 shadow-lg border-2 border-yellow-500 min-h-[200px] flex flex-col justify-center ${card.isReversed ? 'card-reversed' : ''}`}>
+                                            <div className={card.isReversed ? 'card-content-reversed' : ''}>
                                                 <div className="text-2xl mb-2">
                                                     {card.suit === "major" ? "✨" : "🃏"}
                                                 </div>
@@ -138,7 +138,7 @@ const TarotReader = () => {
                                             </div>
                                         </div>
                                         <div className="text-white font-semibold">{card.position}</div>
-                                        {card.reversed && <div className="text-yellow-400 text-sm">Reversed</div>}
+                                        {card.isReversed && <div className="text-yellow-400 text-sm">Reversed</div>}
                                     </div>
                                 ))}
                             </div>
@@ -168,10 +168,10 @@ const TarotReader = () => {
                                     {drawnCards.map((card, index) => (
                                         <div key={index} className="border-l-4 border-yellow-400 pl-4">
                                             <h4 className="text-xl font-semibold text-white mb-2">
-                                                {card.position}: {card.name} {card.reversed ? "(Reversed)" : ""}
+                                                {card.position}: {card.name} {card.isReversed ? "(Reversed)" : ""}
                                             </h4>
                                             <p className="text-blue-100 leading-relaxed">
-                                                {card.reversed ? card.reversed : card.upright}
+                                                {card.isReversed ? card.reversed : card.upright}
                                             </p>
                                         </div>
                                     ))}
