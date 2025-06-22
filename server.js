@@ -32,7 +32,7 @@ app.post('/api/tarot-reading', async (req, res) => {
     } = req.body;
 
     let cardMessage = drawnCards.map((card, index) => {
-        return `${index + 1}: ${card.name} (${card.reversed ? "reversed" : "upright"})`;
+        return `${index + 1}: ${card.name} (${card.isReversed ? "reversed" : "upright"})`;
     })
         .join('\n')
 
