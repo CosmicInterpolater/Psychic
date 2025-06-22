@@ -5,6 +5,8 @@ import { tarotDeck } from '../../data/tarotDeckData';
 const spreadTypes = {
     "single": { name: "Single Card", cards: 1, positions: ["Present Situation"] },
     "three": { name: "Past, Present, Future", cards: 3, positions: ["Past", "Present", "Future"] },
+    "seven": { name: "Horseshoe", cards: 7, positions: ["The Chance", "The Booty", "The Sacrifice", "The Trail",
+            "The Wit", "The Vigilance", "The Survival Instinct"] },
     "celtic": { name: "Celtic Cross", cards: 10, positions: [
             "Present Situation", "Challenge", "Distant Past", "Recent Past",
             "Possible Outcome", "Near Future", "Your Approach", "External Influences",
@@ -63,7 +65,7 @@ const TarotReader = () => {
     };
 
     return (
-        <div className="page-container">
+        <div className="page-container page--component-tarot-reader">
             <section className="page-section">
                 <h1 className="page-title">Tarot Card Reader</h1>
 
@@ -73,7 +75,7 @@ const TarotReader = () => {
                 {!isReading && (
                     <div className="spread-selection bg-white/10 backdrop-blur rounded-xl p-6 mb-8 border border-white/20">
                         <h2 className="text-2xl font-semibold text-white mb-4">Choose Your Reading</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                             {Object.entries(spreadTypes).map(([key, spread]) => (
                                 <button
                                     key={key}
@@ -127,8 +129,11 @@ const TarotReader = () => {
                                                     {card.suit === "major" ? "✨" : "🃏"}
                                                 </div>
                                                 <div className="font-bold text-gray-800 text-lg mb-2">{card.name}</div>
-                                                <div className="text-sm text-gray-700">
+                                                <div className="text-sm text-gray-700 mb-3">
                                                     {card.keywords.slice(0, 2).join(" • ")}
+                                                </div>
+                                                <div>
+                                                    <img src={'/images/' + card.name.toLowerCase().replaceAll(' ', '') + '.jpeg'} alt={card.name} className="w-full" />
                                                 </div>
                                             </div>
                                         </div>
