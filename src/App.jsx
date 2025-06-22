@@ -72,14 +72,17 @@ const App = () => {
 // Simple 404 component
 const NotFound = () => {
     return (
-        <div className="not-found">
-            <div className="container">
-                <h1>🌌 Lost in Space</h1>
-                <p>The cosmic page you're looking for doesn't exist in this dimension.</p>
-                <Link to="/" className="nav-btn">
-                    🚀 Return to Home
-                </Link>
-            </div>
+        <div className="page-container">
+            <section className="page-section">
+                <h1 className="page-title">🌌 Lost in Space</h1>
+                <div className={'container text-center'}>
+                    <p>The cosmic page you're looking for doesn't exist in this dimension.</p>
+                    <Link to="/" className="cosmic-button">
+                        🚀 Return to Home
+                    </Link>
+                </div>
+            
+            </section>
         </div>
     );
 };
