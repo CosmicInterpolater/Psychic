@@ -3,11 +3,9 @@
   min-height: 100vh;
 
   .card-reversed {
-    transform: rotate(180deg);
-  }
-
-  .card-content-reversed {
-    transform: rotate(180deg);
+    .card-image {
+      transform: rotate(180deg);
+    }
   }
 
   .backdrop-blur {

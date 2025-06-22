@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './TarotReader.scss';
 import { tarotDeck } from '../../data/tarotDeckData';
+import axios from 'axios';
 
 const spreadTypes = {
     "single": { name: "Single Card", cards: 1, positions: ["Present Situation"] },
@@ -19,6 +20,8 @@ const TarotReader = () => {
     const [drawnCards, setDrawnCards] = useState([]);
     const [isReading, setIsReading] = useState(false);
     const [showInterpretation, setShowInterpretation] = useState(false);
+    const [gettingAnalysis, setGettingAnalysis] = useState(false);
+    const [readingAnalysis, setReadingAnalysis] = useState({});
 
     const selectSpread = (spreadType) => {
         setSelectedSpread(spreadType);
@@ -40,6 +43,20 @@ const TarotReader = () => {
 
     const generateInterpretation = () => {
         setShowInterpretation(true);
+        setGettingAnalysis(true);
+
+        axios.post('api/tarot-reading', {
+            drawnCards: drawnCards,
+            spread: selectedSpread,
+        })
+            .then(response => {
+                console.log(response);
+
+                setGettingAnalysis(false);
+                setReadingAnalysis({
+                    result: response.data.message
+                })
+            })
     };
 
     const resetReading = () => {
@@ -48,7 +65,7 @@ const TarotReader = () => {
         setShowInterpretation(false);
     };
 
-    const getOverallReading = () => {
+    const getOverallReadingSubtitle = () => {
         if (drawnCards.length === 1) {
             return "Focus on this card's message for guidance in your current situation.";
         } else if (drawnCards.length === 3) {
@@ -124,7 +141,7 @@ const TarotReader = () => {
                                 {drawnCards.map((card, index) => (
                                     <div key={index} className="text-center">
                                         <div className={`card-container bg-gradient-to-b from-yellow-200 to-yellow-400 rounded-lg p-6 mb-3 shadow-lg border-2 border-yellow-500 min-h-[200px] flex flex-col justify-center ${card.isReversed ? 'card-reversed' : ''}`}>
-                                            <div className={card.isReversed ? 'card-content-reversed' : ''}>
+                                            <div>
                                                 <div className="text-2xl mb-2">
                                                     {card.suit === "major" ? "✨" : "🃏"}
                                                 </div>
@@ -132,7 +149,7 @@ const TarotReader = () => {
                                                 <div className="text-sm text-gray-700 mb-3">
                                                     {card.keywords.slice(0, 2).join(" • ")}
                                                 </div>
-                                                <div>
+                                                <div className={'card-image'}>
                                                     <img src={'/images/' + card.name.toLowerCase().replaceAll(' ', '') + '.jpeg'} alt={card.name} className="w-full" />
                                                 </div>
                                             </div>
@@ -158,10 +175,16 @@ const TarotReader = () => {
                         {/* Interpretation */}
                         {showInterpretation && (
                             <div className="interpretation bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20">
-                                <h3 className="text-2xl font-semibold text-white mb-4">Your Reading</h3>
+                                <h3 className="text-2xl font-semibold text-white mb-4">Your AI Card Interpretation</h3>
 
-                                <div className="mb-6 p-4 bg-yellow-500/20 rounded-lg border border-yellow-500/30">
-                                    <p className="text-yellow-100 text-center italic">{getOverallReading()}</p>
+                                <p className="italic mb-0">{getOverallReadingSubtitle()}</p>
+
+                                <div className={`mb-6 p-4 bg-yellow-500/20 rounded-lg border border-yellow-500/30 ${gettingAnalysis ? 'text-yellow-500' : 'text-white'}`}>
+                                    {gettingAnalysis ? (
+                                        'Getting Analysis...'
+                                    ) : (
+                                        readingAnalysis.result
+                                    )}
                                 </div>
 
                                 <div className="space-y-6">
