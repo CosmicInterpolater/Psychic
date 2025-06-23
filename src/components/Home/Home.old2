@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { BookingModal } from '../BookingModal';
-import ServiceCard from '../ServiceCard';
-import PsychicCard from '../PsychicCard';
 
 // AI-Generated Psychic Profiles
 const psychics = [
@@ -118,11 +117,6 @@ const Home = () => {
         setSelectedPsychic('');
     };
 
-    const handleSelectGuide = (psychicName) => {
-        setSelectedPsychic(psychicName);
-        openBookingModal();
-    };
-
     return (
         <div className="page-container page-full-width page-component--home">
             <section className="page-section" style={{paddingBottom: 0}}>
@@ -155,12 +149,35 @@ const Home = () => {
                         <h2 className={'text-center'}>Cosmic Services</h2>
                         <div className="cosmic-grid-services">
                             {services.map((service, index) => (
-                                <ServiceCard
+                                <div
                                     key={service.id}
-                                    service={service}
-                                    index={index}
-                                    onBookSession={openBookingModal}
-                                />
+                                    className={`cosmic-card-service animated animate-fadeInUp`}
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
+                                    <div className="service-icon">{service.icon}</div>
+                                    <h3 className="service-title">
+                                        {service.title}
+                                    </h3>
+                                    <p className="service-description">
+                                        {service.description}
+                                    </p>
+                                    <div className="service-price">
+                                        ${service.price} - {service.duration} minutes
+                                    </div>
+                                    <div className="flex gap-2 justify-center flex-wrap">
+                                        <button
+                                            onClick={() => openBookingModal(service.id)}
+                                            className="cosmic-button-ghost"
+                                        >
+                                            Book Session
+                                        </button>
+                                        {service.route && (
+                                            <Link to={service.route} className="cosmic-button-ghost">
+                                                Try Interactive
+                                            </Link>
+                                        )}
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -172,12 +189,31 @@ const Home = () => {
                         <h2 className={'text-center'}>Our Cosmic Guides</h2>
                         <div className="cosmic-grid-psychics">
                             {psychics.map((psychic, index) => (
-                                <PsychicCard
+                                <div
                                     key={psychic.id}
-                                    psychic={psychic}
-                                    index={index}
-                                    onSelectGuide={handleSelectGuide}
-                                />
+                                    className={`psychic-card animate-fadeInUp`}
+                                    style={{ animationDelay: `${index * 0.1}s` }}
+                                >
+                                    <div className="psychic-avatar">
+                                        {psychic.avatar}
+                                    </div>
+                                    <h3 className="text-lg font-bold mb-2">{psychic.name}</h3>
+                                    <div className="text-sm opacity-90 mb-3">
+                                        {psychic.specialty}
+                                    </div>
+                                    <div className="star-rating mb-3">
+                                        {'★'.repeat(psychic.rating)}{'☆'.repeat(5 - psychic.rating)}
+                                    </div>
+                                    <button
+                                        className="cosmic-button-ghost text-sm"
+                                        onClick={() => {
+                                            setSelectedPsychic(psychic.name);
+                                            openBookingModal();
+                                        }}
+                                    >
+                                        Select Guide
+                                    </button>
+                                </div>
                             ))}
                         </div>
                     </div>
