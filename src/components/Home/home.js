@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BookingModal } from '../BookingModal';
-//import hero_section from '../HeroSection/';
-//import services_section from '../ServicesSection/';
-//import psychics_section from '../PsychicsSection/';
-//import palm_reading from '../ServicesSection/'; 
-//import tarot_reading from '../ServicesSection/'; 
-//import astrology_reading_page from '../ServicesSection/';
-import PalmReader from '../PalmReader'; 
-import TarotReader from '../TarotReader';
-import AstrologyReader from '../Astrology'; 
+//import { hero_section } from '../HeroSection/hero_section';
+//import { services_section } from '../ServicesSection/services_section/';
+//import { psychics_section } from '../PsychicsSection/psychics_section';
+//import { palm_reading } from '../ServicesSection/palm_reading/'; 
+//import { tarot_reading } from '../ServicesSection/tarot_reading'; 
+//import { astrology_reading_page } from '../ServicesSection/astrology_reading_page';
+import { PalmReader } from '../PalmReader/PalmReader'; 
+import { TarotReader } from '../TarotReader/TarotReader';
+import { AstrologyReader } from '../Astrology/AstrologyReader'
 
 const Home = () => {
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
