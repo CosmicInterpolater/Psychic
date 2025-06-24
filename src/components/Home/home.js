@@ -6,9 +6,9 @@ import { BookingModal } from '../BookingModal';
 //import { palm_reading } from '../ServicesSection/palm_reading/'; 
 //import { tarot_reading } from '../ServicesSection/tarot_reading'; 
 //import { astrology_reading_page } from '../ServicesSection/astrology_reading_page';
-import { PalmReader } from '../PalmReader/PalmReader'; 
-import { TarotReader } from '../TarotReader/TarotReader';
-import { AstrologyReader } from '../Astrology/AstrologyReader'
+import PalmReader from '../PalmReader/PalmReader'; 
+import TarotReader from '../TarotReader/TarotReader';
+//Reader } from '../Astrology/AstrologyReader'
 
 const Home = () => {
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -59,10 +59,10 @@ const Home = () => {
             path: '../TarotReader', 
             element: <TarotReader />
         },
-        {
-            path: '../Astrology',
-            element: <AstrologyReader />
-        }
+        //{
+        //    path: '../Astrology',
+        //    element: <AstrologyReader />
+        //}
     ];
     const handleSelectGuide = (psychicName) => {
         setSelectedPsychic(psychicName);
