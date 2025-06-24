@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BookingModal } from '../BookingModal';
-import hero_section from '../HeroSection';
-import services_section from '../ServicesSection';
-import psychics_section from '../PsychicsSection';
-import palm_reading from '../ServicesSection'; 
-import tarot_reading from '../ServicesSection/'; 
-import astrology_reading_page from '../ServicesSection';
+//import hero_section from '../HeroSection/';
+//import services_section from '../ServicesSection/';
+//import psychics_section from '../PsychicsSection/';
+//import palm_reading from '../ServicesSection/'; 
+//import tarot_reading from '../ServicesSection/'; 
+//import astrology_reading_page from '../ServicesSection/';
 import PalmReader from '../PalmReader'; 
 import TarotReader from '../TarotReader';
 import AstrologyReader from '../Astrology'; 
