@@ -36,19 +36,39 @@ const services = [
     }
 ];
 
-const ServicesSection = ({ onBookingOpen }) => {
+const ServicesSection = ({ onBookingOpen, onServiceSelect }) => {
     return (
         <section id="services" className="page-section bg-cosmic-deep/80 backdrop-blur-glass">
             <div className="page-container">
-                <h2 className="text-center">Cosmic Services</h2>
-                <div className="cosmic-grid-services">
+                <h2 className="text-center text-3xl font-bold text-white mb-12">Cosmic Services</h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {services.map((service, index) => (
-                        <ServiceCard
-                            key={service.id}
-                            service={service}
-                            index={index}
-                            onBookSession={onBookingOpen}
-                        />
+                        <div key={service.id} className="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20 text-center">
+                            <div className="text-4xl mb-4">{service.icon}</div>
+                            <h3 className="text-xl font-semibold text-white mb-3">{service.title}</h3>
+                            <p className="text-blue-200 mb-4 text-sm">{service.description}</p>
+                            <div className="text-2xl font-bold text-yellow-400 mb-2">${service.price}</div>
+                            <div className="text-sm text-blue-300 mb-6">{service.duration} minutes</div>
+                            
+                            <div className="space-y-2">
+                                <button
+                                    onClick={() => onBookingOpen(service.id)}
+                                    className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all"
+                                >
+                                    Book Session
+                                </button>
+                                
+                                {/* Only show "Learn More" for services that have dedicated pages */}
+                                {(service.id === 'tarot' || service.id === 'palmistry' || service.id === 'astrology') && (
+                                    <button
+                                        onClick={() => onServiceSelect(service.id)}
+                                        className="w-full bg-white/20 hover:bg-white/30 text-white font-semibold py-2 px-4 rounded-lg transition-all"
+                                    >
+                                        Learn More
+                                    </button>
+                                )}
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>
