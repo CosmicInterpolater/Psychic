@@ -1,5 +1,8 @@
-import React from 'react';
-import ServiceCard from './ServiceCard';
+import React, { useState } from 'react';
+import ServiceCard from '../ServiceCard';
+import TarotReading from './tarot_reading';
+import PalmReading from './palm_reading';
+import AstrologyReading from './astrology_reading_page';
 
 const services = [
     {
@@ -37,6 +40,55 @@ const services = [
 ];
 
 const ServicesSection = ({ onBookingOpen, onServiceSelect }) => {
+    const [currentView, setCurrentView] = useState('overview');
+    const [selectedService, setSelectedService] = useState(null);
+
+    const handleServiceSelect = (serviceId) => {
+        setSelectedService(serviceId);
+        setCurrentView('detail');
+        // Also call the parent callback if provided
+        if (onServiceSelect) {
+            onServiceSelect(serviceId);
+        }
+    };
+
+    const handleBackToOverview = () => {
+        setCurrentView('overview');
+        setSelectedService(null);
+    };
+
+    const renderServiceDetail = () => {
+        switch (selectedService) {
+            case 'tarot':
+                return <TarotReading onBack={handleBackToOverview} />;
+            case 'palmistry':
+                return <PalmReading onBack={handleBackToOverview} />;
+            case 'astrology':
+                return <AstrologyReading onBack={handleBackToOverview} />;
+            default:
+                return null;
+        }
+    };
+
+    // If we're showing a service detail, render that instead
+    if (currentView === 'detail' && selectedService) {
+        return (
+            <div className="relative">
+                {/* Back Button */}
+                <div className="fixed top-4 left-4 z-50">
+                    <button
+                        onClick={handleBackToOverview}
+                        className="bg-cosmic-deep/80 backdrop-blur-sm border border-white/20 text-white px-4 py-2 rounded-lg hover:bg-cosmic-deep/90 transition-all flex items-center gap-2"
+                    >
+                        ← Back to Services
+                    </button>
+                </div>
+                {renderServiceDetail()}
+            </div>
+        );
+    }
+
+    // Default services overview
     return (
         <section id="services" className="page-section bg-cosmic-deep/80 backdrop-blur-glass">
             <div className="page-container">
@@ -61,7 +113,7 @@ const ServicesSection = ({ onBookingOpen, onServiceSelect }) => {
                                 {/* Only show "Learn More" for services that have dedicated pages */}
                                 {(service.id === 'tarot' || service.id === 'palmistry' || service.id === 'astrology') && (
                                     <button
-                                        onClick={() => onServiceSelect(service.id)}
+                                        onClick={() => handleServiceSelect(service.id)}
                                         className="w-full bg-white/20 hover:bg-white/30 text-white font-semibold py-2 px-4 rounded-lg transition-all"
                                     >
                                         Learn More

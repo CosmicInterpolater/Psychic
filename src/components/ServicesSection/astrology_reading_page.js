@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { zodiacSigns } from '../data/ZodiacSigns';
+import { zodiacSigns } from '../../data/ZodiacSigns';
 import { BookingModal } from '../BookingModal';
 
 const AstrologyReading = () => {
