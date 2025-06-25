@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import TarotReader from './components/TarotReader/TarotReader';
-import PalmReader from './components/PalmReader/PalmReader';
-import AstrologyReader from './components/Astrology/AstrologyReader';
+import TarotReader from './TarotReader/TarotReader';
+import PalmReader from './PalmReader/PalmReader';
+import AstrologyReader from './Astrology/astrology_reader';
 
 export const BookingModal = ({ 
     isOpen, 

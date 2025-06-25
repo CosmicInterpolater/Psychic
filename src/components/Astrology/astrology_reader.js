@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react';
 // Astrological data
 import { zodiacSigns } from '../../data/ZodiacSigns';
 
-const AstrologicalReader: React.FC = () => {
+const AstrologicalReader = () => {
   const [birthDate, setBirthDate] = useState('');
-  const [reading, setReading] = useState<any>(null);
+  const [reading, setReading] = useState(null);
   const [showReading, setShowReading] = useState(false);
   const [animationClass, setAnimationClass] = useState('');
 
   // Function to get zodiac sign based on birth date
-  const getZodiacSign = (date: Date): string => {
+  const getZodiacSign = (date) => {
     const month = date.getMonth() + 1;
     const day = date.getDate();
 
@@ -49,6 +49,42 @@ const AstrologicalReader: React.FC = () => {
     return 'aries'; // Default fallback
   };
 
+  const getDateRange = (sign) => {
+    const ranges = {
+      aries: 'March 21 - April 19',
+      taurus: 'April 20 - May 20',
+      gemini: 'May 21 - June 20',
+      cancer: 'June 21 - July 22',
+      leo: 'July 23 - August 22',
+      virgo: 'August 23 - September 22',
+      libra: 'September 23 - October 22',
+      scorpio: 'October 23 - November 21',
+      sagittarius: 'November 22 - December 21',
+      capricorn: 'December 22 - January 19',
+      aquarius: 'January 20 - February 18',
+      pisces: 'February 19 - March 20'
+    };
+    return ranges[sign] || 'Unknown';
+  };
+
+  const getZodiacEmoji = (sign) => {
+    const emojis = {
+      aries: '♈',
+      taurus: '♉',
+      gemini: '♊',
+      cancer: '♋',
+      leo: '♌',
+      virgo: '♍',
+      libra: '♎',
+      scorpio: '♏',
+      sagittarius: '♐',
+      capricorn: '♑',
+      aquarius: '♒',
+      pisces: '♓'
+    };
+    return emojis[sign] || '⭐';
+  };
+
   const generateReading = () => {
     if (!birthDate) return;
     
@@ -67,50 +103,14 @@ const AstrologicalReader: React.FC = () => {
       
       challenges: `Your celestial challenges revolve around overcoming tendencies toward ${signData.weaknesses.slice(0, 2).join(' and ').toLowerCase()}. The universe presents these as growth opportunities, not obstacles. By acknowledging and working with these energies, you transform them into sources of wisdom and strength.`,
       
-      dates: this.getDateRange(sign),
+      dates: getDateRange(sign),
       planet: signData.rulingPlanet || 'Unknown',
-      emoji: this.getZodiacEmoji(sign)
+      emoji: getZodiacEmoji(sign)
     };
     
     setReading(enhancedReading);
     setAnimationClass('animate-fadeInUp');
     setShowReading(true);
-  };
-
-  const getDateRange = (sign: string): string => {
-    const ranges: Record<string, string> = {
-      aries: 'March 21 - April 19',
-      taurus: 'April 20 - May 20',
-      gemini: 'May 21 - June 20',
-      cancer: 'June 21 - July 22',
-      leo: 'July 23 - August 22',
-      virgo: 'August 23 - September 22',
-      libra: 'September 23 - October 22',
-      scorpio: 'October 23 - November 21',
-      sagittarius: 'November 22 - December 21',
-      capricorn: 'December 22 - January 19',
-      aquarius: 'January 20 - February 18',
-      pisces: 'February 19 - March 20'
-    };
-    return ranges[sign] || 'Unknown';
-  };
-
-  const getZodiacEmoji = (sign: string): string => {
-    const emojis: Record<string, string> = {
-      aries: '♈',
-      taurus: '♉',
-      gemini: '♊',
-      cancer: '♋',
-      leo: '♌',
-      virgo: '♍',
-      libra: '♎',
-      scorpio: '♏',
-      sagittarius: '♐',
-      capricorn: '♑',
-      aquarius: '♒',
-      pisces: '♓'
-    };
-    return emojis[sign] || '⭐';
   };
 
   const resetReading = () => {
@@ -358,7 +358,7 @@ const AstrologicalReader: React.FC = () => {
                   💪 Cosmic Strengths
                 </h3>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {reading.strengths?.map((strength: string, index: number) => (
+                  {reading.strengths?.map((strength, index) => (
                     <li key={index} style={{
                       color: 'rgba(255, 255, 255, 0.9)',
                       marginBottom: '0.5rem',
@@ -386,7 +386,7 @@ const AstrologicalReader: React.FC = () => {
                   🌙 Growth Areas
                 </h3>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {reading.weaknesses?.map((weakness: string, index: number) => (
+                  {reading.weaknesses?.map((weakness, index) => (
                     <li key={index} style={{
                       color: 'rgba(255, 255, 255, 0.9)',
                       marginBottom: '0.5rem',
