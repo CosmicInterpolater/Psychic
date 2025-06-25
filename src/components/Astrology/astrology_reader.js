@@ -92,11 +92,11 @@ const AstrologicalReader = () => {
     const sign = getZodiacSign(date);
     //const signData = zodiacSigns.find(z => z.name.toLowerCase() === sign) || zodiacSigns[0];
     const zodiacSignKey = getZodiacSign(date);
-    const singData = zodiacSigns[zodiacSignKey];
+    const signData = zodiacSigns[zodiacSignKey];
     // Enhanced reading data
     const enhancedReading = {
       ...signData,
-      personality: `As a ${signData.name}, you embody the essence of ${signData.element} energy. Your cosmic blueprint reveals a soul destined for ${signData.description.toLowerCase()}. The universe has blessed you with an innate understanding of life's deeper mysteries, making you naturally attuned to the celestial rhythms that govern our existence.`,
+      personality: `As a ${signData.name}, you embody the essence of ${signData.element} energy. Your cosmic blueprint reveals a soul destined for ${signData.personality.toLowerCase()}. The universe has blessed you with an innate understanding of life's deeper mysteries, making you naturally attuned to the celestial rhythms that govern our existence.`,
       
       lifePath: `Your life journey as a ${signData.name} is one of continuous evolution and cosmic alignment. The stars indicate that your path involves mastering the balance between your ${signData.element.toLowerCase()} nature and the practical demands of earthly existence. You are here to learn, teach, and inspire others through your unique perspective on life's grand tapestry.`,
       
