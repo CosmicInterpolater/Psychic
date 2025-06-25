@@ -90,8 +90,9 @@ const AstrologicalReader = () => {
     
     const date = new Date(birthDate);
     const sign = getZodiacSign(date);
-    const signData = zodiacSigns.find(z => z.name.toLowerCase() === sign) || zodiacSigns[0];
-    
+    //const signData = zodiacSigns.find(z => z.name.toLowerCase() === sign) || zodiacSigns[0];
+    const zodiacSignKey = getZodiacSign(birthDate);
+    const singData = zodiacSigns[zodiacSignKey];
     // Enhanced reading data
     const enhancedReading = {
       ...signData,
