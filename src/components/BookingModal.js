@@ -112,17 +112,64 @@ export const BookingModal = ({
 
     // Helper function to render the correct component
     const renderReaderComponent = () => {
-        switch(activeReader) {
-            case 'tarot':
-                return <TarotReader />;
-            case 'palmistry':
-                return <PalmReader />;
-            case 'astrology':
-                return <AstrologyReader />;
-            default:
-                return <div style={{ color: 'white', textAlign: 'center', padding: '40px' }}>
-                    Component not available
-                </div>;
+        try {
+            switch(activeReader) {
+                case 'tarot':
+                    return <TarotReader />;
+                case 'palmistry':
+                    return <PalmReader />;
+                case 'astrology':
+                    return <AstrologyReader />;
+                default:
+                    return <div style={{ color: 'white', textAlign: 'center', padding: '40px' }}>
+                        Component not available
+                    </div>;
+            }
+        } catch (error) {
+            console.error('Error rendering reader component:', error);
+            console.error('Error details:', {
+                message: error.message,
+                stack: error.stack,
+                activeReader: activeReader,
+                currentService: currentService
+            });
+            
+            return (
+                <div style={{ 
+                    color: 'white', 
+                    textAlign: 'center', 
+                    padding: '40px',
+                    backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                    border: '1px solid #ff4444',
+                    borderRadius: '12px',
+                    margin: '20px'
+                }}>
+                    <h3 style={{ color: '#ff6666', marginBottom: '16px' }}>⚠️ Service Temporarily Unavailable</h3>
+                    <p style={{ marginBottom: '16px' }}>
+                        We're experiencing technical difficulties with the {currentService?.title}.
+                    </p>
+                    <p style={{ fontSize: '0.875rem', color: '#cccccc', marginBottom: '8px' }}>
+                        Error: {error.message}
+                    </p>
+                    <p style={{ fontSize: '0.75rem', color: '#999999', marginBottom: '16px' }}>
+                        Our technical team has been notified. Please try again later.
+                    </p>
+                    <button
+                        onClick={handleBackToSubscription}
+                        style={{
+                            marginTop: '16px',
+                            padding: '8px 16px',
+                            backgroundColor: '#4a90e2',
+                            border: 'none',
+                            color: 'white',
+                            borderRadius: '8px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Choose Different Service
+                    </button>
+                </div>
+            );
         }
     };
 
