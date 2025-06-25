@@ -175,7 +175,8 @@ const CosmicAstrologyReading = () => {
   const [showReading, setShowReading] = useState(false);
   const [animationClass, setAnimationClass] = useState('');
 
-    const getZodiacSign = (date) => {
+    const getZodiacSign = (dateInput) => {
+    const date = new Date(dateInput);
     const month = date.getMonth() + 1;
     const day = date.getDate();
     
