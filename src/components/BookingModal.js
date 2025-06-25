@@ -116,28 +116,71 @@ export const BookingModal = ({
     if (currentStep === 'reading' && activeReader) {
         const ReaderComponent = activeReader;
         return (
-            <div className="cosmic-modal cosmic-modal-fullscreen">
-                <div className="cosmic-modal-content-fullscreen">
-                    <div className="cosmic-modal-header">
-                        <h2>{currentService?.icon} {currentService?.title}</h2>
-                        <div className="flex gap-2">
+            <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1000
+            }}>
+                <div style={{
+                    width: '95vw',
+                    height: '95vh',
+                    backgroundColor: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+                    borderRadius: '20px',
+                    border: '2px solid #4a90e2',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    overflow: 'hidden'
+                }}>
+                    <div style={{
+                        padding: '20px',
+                        borderBottom: '1px solid #333',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(74, 144, 226, 0.1)'
+                    }}>
+                        <h2 style={{ color: 'white', margin: 0, fontSize: '1.5rem' }}>
+                            {currentService?.icon} {currentService?.title}
+                        </h2>
+                        <div style={{ display: 'flex', gap: '10px' }}>
                             <button
                                 onClick={handleBackToSubscription}
-                                className="cosmic-button-ghost"
-                                aria-label="Back to subscription"
+                                style={{
+                                    padding: '8px 16px',
+                                    backgroundColor: 'transparent',
+                                    border: '1px solid #4a90e2',
+                                    color: '#4a90e2',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer'
+                                }}
                             >
                                 ← Back
                             </button>
                             <button
                                 onClick={handleClose}
-                                className="close-button"
-                                aria-label="Close modal"
+                                style={{
+                                    padding: '8px 12px',
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    color: 'white',
+                                    fontSize: '24px',
+                                    cursor: 'pointer',
+                                    borderRadius: '4px'
+                                }}
                             >
                                 ×
                             </button>
                         </div>
                     </div>
-                    <div className="cosmic-modal-body-fullscreen">
+                    <div style={{ flex: 1, overflow: 'auto', padding: '20px' }}>
                         <ReaderComponent />
                     </div>
                 </div>
@@ -147,65 +190,204 @@ export const BookingModal = ({
 
     // Render subscription form
     return (
-        <div className="cosmic-modal">
-            <div className="cosmic-modal-content">
-                <div className="cosmic-modal-header">
-                    <h2>🚀 Start Your Cosmic Journey</h2>
+        <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '20px'
+        }}>
+            <div style={{
+                maxWidth: '800px',
+                width: '100%',
+                maxHeight: '90vh',
+                backgroundColor: '#1a1a2e',
+                borderRadius: '20px',
+                border: '2px solid #4a90e2',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column'
+            }}>
+                <div style={{
+                    padding: '20px',
+                    borderBottom: '1px solid #333',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: 'rgba(74, 144, 226, 0.1)'
+                }}>
+                    <h2 style={{ color: 'white', margin: 0, fontSize: '1.5rem' }}>
+                        🚀 Start Your Cosmic Journey
+                    </h2>
                     <button
                         onClick={handleClose}
-                        className="close-button"
-                        aria-label="Close modal"
+                        style={{
+                            padding: '8px 12px',
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            color: 'white',
+                            fontSize: '24px',
+                            cursor: 'pointer',
+                            borderRadius: '4px'
+                        }}
                     >
                         ×
                     </button>
                 </div>
-                <div className="cosmic-modal-body">
+                
+                <div style={{ 
+                    flex: 1, 
+                    overflow: 'auto', 
+                    padding: '20px',
+                    color: 'white'
+                }}>
                     {/* Selected Service Display */}
                     {currentService && (
-                        <div className="cosmic-notice notice-info mb-6">
-                            <div className="flex items-center gap-3">
-                                <span className="text-2xl">{currentService.icon}</span>
+                        <div style={{
+                            padding: '16px',
+                            backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                            border: '1px solid #4a90e2',
+                            borderRadius: '12px',
+                            marginBottom: '24px'
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <span style={{ fontSize: '2rem' }}>{currentService.icon}</span>
                                 <div>
-                                    <h4 className="font-semibold">Selected Service: {currentService.title}</h4>
-                                    <p className="text-sm">This will launch immediately after subscription</p>
+                                    <h4 style={{ margin: '0 0 4px 0', fontWeight: '600' }}>
+                                        Selected Service: {currentService.title}
+                                    </h4>
+                                    <p style={{ margin: 0, fontSize: '0.875rem', color: '#b0b0b0' }}>
+                                        This will launch immediately after subscription
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     )}
 
                     {/* Subscription Plans */}
-                    <div className="mb-8">
-                        <h3 className="text-xl font-semibold text-white mb-4">Choose Your Subscription Plan</h3>
-                        <div className="grid md:grid-cols-2 gap-4">
+                    <div style={{ marginBottom: '32px' }}>
+                        <h3 style={{ 
+                            fontSize: '1.25rem', 
+                            fontWeight: '600', 
+                            color: 'white', 
+                            marginBottom: '16px' 
+                        }}>
+                            Choose Your Subscription Plan
+                        </h3>
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                            gap: '16px' 
+                        }}>
+                            {/* Monthly Plan */}
                             <div 
-                                className={`cosmic-plan-card ${selectedPlan === 'monthly' ? 'selected' : ''}`}
+                                style={{
+                                    padding: '20px',
+                                    backgroundColor: selectedPlan === 'monthly' ? 'rgba(74, 144, 226, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                                    border: selectedPlan === 'monthly' ? '2px solid #4a90e2' : '1px solid rgba(255, 255, 255, 0.1)',
+                                    borderRadius: '16px',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s ease',
+                                    textAlign: 'center',
+                                    color: 'white',
+                                    opacity: 1
+                                }}
                                 onClick={() => handlePlanSelect('monthly')}
+                                onMouseEnter={(e) => {
+                                    if (selectedPlan !== 'monthly') {
+                                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                                        e.target.style.borderColor = 'rgba(74, 144, 226, 0.5)';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    if (selectedPlan !== 'monthly') {
+                                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                    }
+                                }}
                             >
-                                <div className="text-2xl mb-2">🌙</div>
-                                <h4 className="text-lg font-semibold">Monthly</h4>
-                                <div className="text-2xl font-bold text-yellow-400 mb-2">$4.99</div>
-                                <p className="text-sm text-blue-200">per month</p>
-                                <ul className="text-xs text-blue-300 mt-3 space-y-1">
-                                    <li>• Unlimited readings</li>
-                                    <li>• All cosmic services</li>
+                                <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🌙</div>
+                                <h4 style={{ fontSize: '1.125rem', fontWeight: '600', margin: '0 0 8px 0' }}>Monthly</h4>
+                                <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ffd700', marginBottom: '8px' }}>$4.99</div>
+                                <p style={{ fontSize: '0.875rem', color: '#b0b0b0', margin: '0 0 12px 0' }}>per month</p>
+                                <ul style={{ 
+                                    fontSize: '0.75rem', 
+                                    color: '#a0a0a0', 
+                                    listStyle: 'none', 
+                                    padding: 0, 
+                                    margin: 0,
+                                    textAlign: 'left'
+                                }}>
+                                    <li style={{ marginBottom: '4px' }}>• Unlimited readings</li>
+                                    <li style={{ marginBottom: '4px' }}>• All cosmic services</li>
                                     <li>• Cancel anytime</li>
                                 </ul>
                             </div>
 
+                            {/* Yearly Plan */}
                             <div 
-                                className={`cosmic-plan-card ${selectedPlan === 'yearly' ? 'selected' : ''}`}
+                                style={{
+                                    padding: '20px',
+                                    backgroundColor: selectedPlan === 'yearly' ? 'rgba(74, 144, 226, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                                    border: selectedPlan === 'yearly' ? '2px solid #4a90e2' : '1px solid rgba(255, 255, 255, 0.1)',
+                                    borderRadius: '16px',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s ease',
+                                    textAlign: 'center',
+                                    color: 'white',
+                                    position: 'relative',
+                                    opacity: 1
+                                }}
                                 onClick={() => handlePlanSelect('yearly')}
+                                onMouseEnter={(e) => {
+                                    if (selectedPlan !== 'yearly') {
+                                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                                        e.target.style.borderColor = 'rgba(74, 144, 226, 0.5)';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    if (selectedPlan !== 'yearly') {
+                                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                    }
+                                }}
                             >
-                                <div className="text-2xl mb-2">⭐</div>
-                                <div className="cosmic-badge">Best Value</div>
-                                <h4 className="text-lg font-semibold">Yearly</h4>
-                                <div className="text-2xl font-bold text-yellow-400 mb-2">$49.95</div>
-                                <p className="text-sm text-blue-200">per year</p>
-                                <p className="text-xs text-green-400">Save $9.93!</p>
-                                <ul className="text-xs text-blue-300 mt-3 space-y-1">
-                                    <li>• Unlimited readings</li>
-                                    <li>• All cosmic services</li>
-                                    <li>• Priority support</li>
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '-8px',
+                                    right: '12px',
+                                    backgroundColor: '#4a90e2',
+                                    color: 'white',
+                                    padding: '4px 8px',
+                                    borderRadius: '12px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '600'
+                                }}>
+                                    Best Value
+                                </div>
+                                <div style={{ fontSize: '2rem', marginBottom: '8px' }}>⭐</div>
+                                <h4 style={{ fontSize: '1.125rem', fontWeight: '600', margin: '0 0 8px 0' }}>Yearly</h4>
+                                <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ffd700', marginBottom: '8px' }}>$49.95</div>
+                                <p style={{ fontSize: '0.875rem', color: '#b0b0b0', margin: '0 0 4px 0' }}>per year</p>
+                                <p style={{ fontSize: '0.75rem', color: '#00ff88', margin: '0 0 12px 0' }}>Save $9.93!</p>
+                                <ul style={{ 
+                                    fontSize: '0.75rem', 
+                                    color: '#a0a0a0', 
+                                    listStyle: 'none', 
+                                    padding: 0, 
+                                    margin: 0,
+                                    textAlign: 'left'
+                                }}>
+                                    <li style={{ marginBottom: '4px' }}>• Unlimited readings</li>
+                                    <li style={{ marginBottom: '4px' }}>• All cosmic services</li>
+                                    <li style={{ marginBottom: '4px' }}>• Priority support</li>
                                     <li>• Cancel anytime</li>
                                 </ul>
                             </div>
@@ -213,38 +395,78 @@ export const BookingModal = ({
                     </div>
 
                     {/* Safety Notice */}
-                    <div className="cosmic-notice notice-warning mb-6">
-                        <h4>🛡️ Client Safety & Monitoring Notice</h4>
-                        <ul>
+                    <div style={{
+                        padding: '16px',
+                        backgroundColor: 'rgba(255, 193, 7, 0.1)',
+                        border: '1px solid #ffc107',
+                        borderRadius: '12px',
+                        marginBottom: '24px'
+                    }}>
+                        <h4 style={{ margin: '0 0 8px 0', color: '#ffc107' }}>🛡️ Client Safety & Monitoring Notice</h4>
+                        <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.875rem', color: '#e0e0e0' }}>
                             <li>All sessions are monitored for client safety and well-being</li>
                             <li>Professional boundaries must be maintained at all times</li>
                             <li>Crisis support resources are available if needed</li>
                         </ul>
                     </div>
 
-                    <form onSubmit={handleSubscriptionSubmit} className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="cosmic-form-group">
-                                <label className="cosmic-form-label">Full Name *</label>
+                    <form onSubmit={handleSubscriptionSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+                            gap: '16px' 
+                        }}>
+                            <div>
+                                <label style={{ 
+                                    display: 'block', 
+                                    marginBottom: '8px', 
+                                    fontWeight: '500', 
+                                    color: '#e0e0e0' 
+                                }}>
+                                    Full Name *
+                                </label>
                                 <input
                                     type="text"
                                     name="name"
                                     value={formData.name}
                                     onChange={handleInputChange}
-                                    className="cosmic-form-input"
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                                        borderRadius: '8px',
+                                        color: 'white',
+                                        fontSize: '14px'
+                                    }}
                                     placeholder="Your full name"
                                     required
                                 />
                             </div>
 
-                            <div className="cosmic-form-group">
-                                <label className="cosmic-form-label">Email *</label>
+                            <div>
+                                <label style={{ 
+                                    display: 'block', 
+                                    marginBottom: '8px', 
+                                    fontWeight: '500', 
+                                    color: '#e0e0e0' 
+                                }}>
+                                    Email *
+                                </label>
                                 <input
                                     type="email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    className="cosmic-form-input"
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                                        borderRadius: '8px',
+                                        color: 'white',
+                                        fontSize: '14px'
+                                    }}
                                     placeholder="your@email.com"
                                     required
                                 />
@@ -252,55 +474,86 @@ export const BookingModal = ({
                         </div>
 
                         {/* Disclaimers */}
-                        <div className="cosmic-notice notice-info">
-                            <h4>⚖️ Important Information</h4>
-                            <p><strong>Entertainment & Guidance:</strong> Readings are for entertainment purposes only.</p>
-                            <p><strong>Age Requirement:</strong> Must be 18+ years old.</p>
-                            <p><strong>Crisis Resources:</strong> National Suicide Prevention Lifeline 988</p>
-                            <p><strong>Billing:</strong> Subscription will auto-renew unless cancelled.</p>
+                        <div style={{
+                            padding: '16px',
+                            backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                            border: '1px solid #4a90e2',
+                            borderRadius: '12px'
+                        }}>
+                            <h4 style={{ margin: '0 0 12px 0', color: '#4a90e2' }}>⚖️ Important Information</h4>
+                            <div style={{ fontSize: '0.875rem', color: '#e0e0e0', lineHeight: '1.5' }}>
+                                <p style={{ margin: '0 0 8px 0' }}><strong>Entertainment & Guidance:</strong> Readings are for entertainment purposes only.</p>
+                                <p style={{ margin: '0 0 8px 0' }}><strong>Age Requirement:</strong> Must be 18+ years old.</p>
+                                <p style={{ margin: '0 0 8px 0' }}><strong>Crisis Resources:</strong> National Suicide Prevention Lifeline 988</p>
+                                <p style={{ margin: 0 }}><strong>Billing:</strong> Subscription will auto-renew unless cancelled.</p>
+                            </div>
                         </div>
 
-                        <div className="space-y-3">
-                            <div className="cosmic-checkbox-group">
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                                 <input
                                     type="checkbox"
                                     id="disclaimer"
                                     name="disclaimer"
                                     checked={formData.disclaimer}
                                     onChange={handleInputChange}
+                                    style={{ marginTop: '2px' }}
                                     required
                                 />
-                                <label htmlFor="disclaimer">
+                                <label htmlFor="disclaimer" style={{ fontSize: '0.875rem', color: '#e0e0e0', cursor: 'pointer' }}>
                                     I understand this is for entertainment purposes and acknowledge results may vary.
                                 </label>
                             </div>
 
-                            <div className="cosmic-checkbox-group">
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                                 <input
                                     type="checkbox"
                                     id="terms"
                                     name="terms"
                                     checked={formData.terms}
                                     onChange={handleInputChange}
+                                    style={{ marginTop: '2px' }}
                                     required
                                 />
-                                <label htmlFor="terms">
+                                <label htmlFor="terms" style={{ fontSize: '0.875rem', color: '#e0e0e0', cursor: 'pointer' }}>
                                     I agree to the subscription terms, maintain professional boundaries, and consent to session monitoring.
                                 </label>
                             </div>
                         </div>
 
-                        <div className="flex gap-3 pt-4">
+                        <div style={{ display: 'flex', gap: '12px', paddingTop: '16px' }}>
                             <button
                                 type="button"
                                 onClick={handleClose}
-                                className="cosmic-button-ghost flex-1"
+                                style={{
+                                    flex: 1,
+                                    padding: '12px 24px',
+                                    backgroundColor: 'transparent',
+                                    border: '1px solid #666',
+                                    color: '#ccc',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    fontSize: '16px',
+                                    transition: 'all 0.3s ease'
+                                }}
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                className="cosmic-button-primary flex-1"
+                                style={{
+                                    flex: 1,
+                                    padding: '12px 24px',
+                                    backgroundColor: selectedPlan ? '#4a90e2' : '#666',
+                                    border: 'none',
+                                    color: 'white',
+                                    borderRadius: '8px',
+                                    cursor: selectedPlan ? 'pointer' : 'not-allowed',
+                                    fontSize: '16px',
+                                    fontWeight: '600',
+                                    transition: 'all 0.3s ease',
+                                    opacity: selectedPlan ? 1 : 0.6
+                                }}
                                 disabled={!selectedPlan}
                             >
                                 🚀 Subscribe & Launch Reading
