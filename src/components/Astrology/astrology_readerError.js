@@ -86,7 +86,7 @@ const AstrologicalReader = () => {
     return emojis[sign] || '⭐';
   };
 
-  // Function to get moon phase from online API with fallback calculation
+// Function to get moon phase from online API with fallback calculation
   const getMoonPhase = async () => {
     try {
       // Try online API first
@@ -193,326 +193,204 @@ const AstrologicalReader = () => {
     return phaseMap[phase] || 'newMoon';
   };
 
-  const generateReading = async () => {
-    if (!birthDate) return;
-    
-    const date = new Date(birthDate);
-    const sign = getZodiacSign(date);
-    const zodiacSignKey = getZodiacSign(date);
-    const signData = zodiacSigns[zodiacSignKey];
+          const generateReading = async () => {
+            if (!birthDate) return;
+            
+            const date = new Date(birthDate);
+            const sign = getZodiacSign(date);
+            const zodiacSignKey = getZodiacSign(date);
+            const signData = zodiacSigns[zodiacSignKey];
 
-    // Get current moon phase
-    const currentMoonPhase = await getMoonPhase();
-    setMoonPhase(currentMoonPhase);
+            // Get current moon phase
+            const currentMoonPhase = await getMoonPhase();
+            setMoonPhase(currentMoonPhase);
 
-    // Get moon phase influence for this zodiac sign
-    const moonInfluence = signData.moonPhases && signData.moonPhases[currentMoonPhase.name] 
-      ? signData.moonPhases[currentMoonPhase.name]
-      : `The current ${currentMoonPhase.phase} brings a time of cosmic reflection and energy alignment for your ${signData.name} nature. This lunar phase encourages you to embrace the celestial rhythms and trust in the universe's divine timing.`;
+            // Get moon phase influence for this zodiac sign
+            const moonInfluence = signData.moonPhases && signData.moonPhases[currentMoonPhase.name] 
+              ? signData.moonPhases[currentMoonPhase.name]
+              : `The current ${currentMoonPhase.phase} brings a time of cosmic reflection and energy alignment for your ${signData.name} nature. This lunar phase encourages you to embrace the celestial rhythms and trust in the universe's divine timing.`;
 
-    // Enhanced reading data with all missing elements
-    const enhancedReading = {
-      ...signData,
-      
-      // Enhanced personality with cosmic context
-      personality: `As a ${signData.name}, you embody the essence of ${signData.element} energy. Your cosmic blueprint reveals a soul destined for ${signData.personality.toLowerCase()}. The universe has blessed you with an innate understanding of life's deeper mysteries, making you naturally attuned to the celestial rhythms that govern our existence.`,
-      
-      // Enhanced life path
-      lifePath: `Your life journey as a ${signData.name} is one of continuous evolution and cosmic alignment. The stars indicate that your path involves mastering the balance between your ${signData.element.toLowerCase()} nature and the practical demands of earthly existence. You are here to learn, teach, and inspire others through your unique perspective on life's grand tapestry.`,
-      
-      // Enhanced opportunities
-      opportunities: `The cosmos presents you with abundant opportunities to shine in areas related to ${signData.strengths.slice(0, 2).join(' and ').toLowerCase()}. Your natural ${signData.strengths[0].toLowerCase()} will open doors to experiences that align with your soul's purpose. Trust in your intuitive abilities and embrace the cosmic flow.`,
-      
-      // Enhanced challenges
-      challenges: `Your celestial challenges revolve around overcoming tendencies toward ${signData.weaknesses.slice(0, 2).join(' and ').toLowerCase()}. The universe presents these as growth opportunities, not obstacles. By acknowledging and working with these energies, you transform them into sources of wisdom and strength.`,
-      
-      // Basic info
-      dates: getDateRange(sign),
-      emoji: getZodiacEmoji(sign),
+            // Enhanced reading data with all missing elements
+            const enhancedReading = {
+              ...signData,
+              
+              // Enhanced personality with cosmic context
+              personality: `As a ${signData.name}, you embody the essence of ${signData.element} energy. Your cosmic blueprint reveals a soul destined for ${signData.personality.toLowerCase()}. The universe has blessed you with an innate understanding of life's deeper mysteries, making you naturally attuned to the celestial rhythms that govern our existence.`,
+              
+              // Enhanced life path
+              lifePath: `Your life journey as a ${signData.name} is one of continuous evolution and cosmic alignment. The stars indicate that your path involves mastering the balance between your ${signData.element.toLowerCase()} nature and the practical demands of earthly existence. You are here to learn, teach, and inspire others through your unique perspective on life's grand tapestry.`,
+              
+              // Enhanced opportunities
+              opportunities: `The cosmos presents you with abundant opportunities to shine in areas related to ${signData.strengths.slice(0, 2).join(' and ').toLowerCase()}. Your natural ${signData.strengths[0].toLowerCase()} will open doors to experiences that align with your soul's purpose. Trust in your intuitive abilities and embrace the cosmic flow.`,
+              
+              // Enhanced challenges
+              challenges: `Your celestial challenges revolve around overcoming tendencies toward ${signData.weaknesses.slice(0, 2).join(' and ').toLowerCase()}. The universe presents these as growth opportunities, not obstacles. By acknowledging and working with these energies, you transform them into sources of wisdom and strength.`,
+              
+              // Basic info
+              dates: getDateRange(sign),
+              emoji: getZodiacEmoji(sign),
 
-      // Add moon phase data
-      moonPhase: currentMoonPhase,
-      moonInfluence: moonInfluence,
+              // Add moon phase data
+              moonPhase: currentMoonPhase,
+              moonInfluence: moonInfluence,
 
-      // Include all the missing elements from zodiac data
-      planet: signData.planet || signData.rulingPlanet || 'Unknown',
-      rulingPlanet: signData.rulingPlanet || signData.planet || 'Unknown',
-      compatibility: signData.compatibility || {
-        mostCompatible: ['Compatible signs not available'],
-        leastCompatible: ['Incompatible signs not available'],
-        soulmate: 'Unknown',
-        description: 'Compatibility information not available for this sign.'
-      },
-      luckyElements: signData.luckyElements || {
-        numbers: [],
-        colors: [],
-        days: [],
-        stones: [],
-        metals: []
-      },
-      careerSpecific: signData.careerSpecific || {
-        ideal: ['Career information not available'],
-        avoid: ['No specific careers to avoid'],
-        leadership: 'Leadership information not available'
-      },
-      health: signData.health || {
-        bodyParts: [],
-        tendencies: [],
-        recommendations: []
-      },
-      mythology: signData.mythology || {
-        origin: 'Mythological origin not available',
-        story: 'Story not available',
-        archetype: 'Unknown archetype',
-        deity: 'Associated deity unknown'
-      },
-      seasonal: signData.seasonal || {
-        season: 'Season not specified',
-        energy: 'Seasonal energy not defined',
-        connection: 'Seasonal connection not available',
-        bestSeason: 'Best season not specified'
-      }
-    };
-    
-    setReading(enhancedReading);
-    setAnimationClass('animate-fadeInUp');
-    setShowReading(true);
-  };
+              // Include all the missing elements from zodiac data
+              planet: signData.planet || signData.rulingPlanet || 'Unknown',
+              rulingPlanet: signData.rulingPlanet || signData.planet || 'Unknown',
+              compatibility: signData.compatibility || {
+                mostCompatible: ['Compatible signs not available'],
+                leastCompatible: ['Incompatible signs not available'],
+                soulmate: 'Unknown',
+                description: 'Compatibility information not available for this sign.'
+              },
+              luckyElements: signData.luckyElements || {
+                numbers: [],
+                colors: [],
+                days: [],
+                stones: [],
+                metals: []
+              },
+              careerSpecific: signData.careerSpecific || {
+                ideal: ['Career information not available'],
+                avoid: ['No specific careers to avoid'],
+                leadership: 'Leadership information not available'
+              },
+              health: signData.health || {
+                bodyParts: [],
+                tendencies: [],
+                recommendations: []
+              },
+              mythology: signData.mythology || {
+                origin: 'Mythological origin not available',
+                story: 'Story not available',
+                archetype: 'Unknown archetype',
+                deity: 'Associated deity unknown'
+              },
+              seasonal: signData.seasonal || {
+                season: 'Season not specified',
+                energy: 'Seasonal energy not defined',
+                connection: 'Seasonal connection not available',
+                bestSeason: 'Best season not specified'
+              }
+            };
+            
+          setReading(enhancedReading);
+          setAnimationClass('animate-fadeInUp');
+          setShowReading(true);
+          };
 
-  const resetReading = () => {
-    setShowReading(false);
-    setReading(null);
-    setBirthDate('');
-    setAnimationClass('');
-  };
-
-  return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      padding: '2rem',
-      fontFamily: 'Arial, sans-serif'
-    }}>
-      {/* CSS for animations */}
-      <style jsx>{`
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 1; }
-        }
-        
-        .animate-fadeInUp {
-          animation: fadeInUp 0.6s ease-out;
-        }
-        
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-          .grid-responsive {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
-
-      {/* Input Section */}
-      {!showReading && (
-        <div style={{
-          maxWidth: '500px',
-          margin: '0 auto',
-          textAlign: 'center',
-          marginTop: '10vh'
-        }}>
-          <h1 style={{
-            fontSize: '3rem',
-            color: 'white',
-            marginBottom: '1rem',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
-          }}>
-            ✨ Cosmic Reader ✨
-          </h1>
-          <p style={{
-            fontSize: '1.2rem',
-            color: 'rgba(255, 255, 255, 0.8)',
-            marginBottom: '2rem'
-          }}>
-            Discover your cosmic blueprint and celestial destiny
-          </p>
-          
-          <div style={{
+          // Updated Reading Results JSX (replace the existing reading results section)
+          // Reading Results
+          <div className={animationClass} style={{
             background: 'rgba(255, 255, 255, 0.1)',
             backdropFilter: 'blur(10px)',
             borderRadius: '20px',
             padding: '2rem',
-            border: '1px solid rgba(255, 255, 255, 0.2)'
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
           }}>
-            <label style={{
-              display: 'block',
-              color: 'white',
-              fontSize: '1.1rem',
-              marginBottom: '1rem'
-            }}>
-              Enter your birth date:
-            </label>
-            <input
-              type="date"
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-              style={{
-                padding: '12px',
-                fontSize: '1.1rem',
-                borderRadius: '10px',
-                border: 'none',
-                marginBottom: '1.5rem',
-                width: '100%',
-                maxWidth: '300px'
-              }}
-            />
-            <br />
-            <button
-              onClick={generateReading}
-              disabled={!birthDate}
-              style={{
-                padding: '12px 30px',
-                fontSize: '1.2rem',
+            {/* Header */}
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
+                {reading.emoji}
+              </div>
+              <h2 style={{
+                fontSize: '2.5rem',
                 fontWeight: 'bold',
-                borderRadius: '50px',
-                border: 'none',
-                background: birthDate ? 'linear-gradient(45deg, #ff6b6b, #feca57)' : '#ccc',
                 color: 'white',
-                cursor: birthDate ? 'pointer' : 'not-allowed',
-                transition: 'all 0.3s ease',
-                boxShadow: birthDate ? '0 5px 20px rgba(255, 107, 107, 0.4)' : 'none'
-              }}
-            >
-              🔮 Reveal Your Cosmic Truth
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Reading Results */}
-      {showReading && reading && (
-        <div className={animationClass} style={{
-          background: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '20px',
-          padding: '2rem',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-          maxWidth: '1200px',
-          margin: '0 auto'
-        }}>
-          {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
-              {reading.emoji}
-            </div>
-            <h2 style={{
-              fontSize: '2.5rem',
-              fontWeight: 'bold',
-              color: 'white',
-              marginBottom: '0.5rem'
-            }}>
-              {reading.name} {reading.symbol || reading.emoji}
-            </h2>
-            <p style={{
-              fontSize: '1.2rem',
-              color: 'rgba(255, 255, 255, 0.8)',
-              marginBottom: '1rem'
-            }}>
-              {reading.dates}
-            </p>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '2rem',
-              marginBottom: '2rem',
-              flexWrap: 'wrap'
-            }}>
-              <span style={{ color: '#4ecdc4' }}>🔥 Element: {reading.element}</span>
-              <span style={{ color: '#ff6b6b' }}>🪐 Ruling Planet: {reading.rulingPlanet}</span>
-            </div>
-          </div>
-
-          {/* Mythology Section */}
-          <div style={{ marginBottom: '2rem' }}>
-            <h3 style={{
-              fontSize: '1.5rem',
-              color: '#e17055',
-              marginBottom: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}>
-              🏛️ Mythological Origins
-            </h3>
-            <div style={{
-              background: 'rgba(225, 112, 85, 0.1)',
-              borderRadius: '15px',
-              padding: '1.5rem',
-              border: '1px solid rgba(225, 112, 85, 0.3)',
-              marginBottom: '1rem'
-            }}>
-              <div style={{ marginBottom: '1rem' }}>
-                <strong style={{ color: '#e17055' }}>Origin:</strong>
-                <span style={{ color: 'rgba(255, 255, 255, 0.9)', marginLeft: '0.5rem' }}>
-                  {reading.mythology.origin}
-                </span>
-              </div>
-              <div style={{ marginBottom: '1rem' }}>
-                <strong style={{ color: '#e17055' }}>Archetype:</strong>
-                <span style={{ color: 'rgba(255, 255, 255, 0.9)', marginLeft: '0.5rem' }}>
-                  {reading.mythology.archetype}
-                </span>
-              </div>
-              <div style={{ marginBottom: '1rem' }}>
-                <strong style={{ color: '#e17055' }}>Associated Deity:</strong>
-                <span style={{ color: 'rgba(255, 255, 255, 0.9)', marginLeft: '0.5rem' }}>
-                  {reading.mythology.deity}
-                </span>
-              </div>
-              <p style={{
-                fontSize: '1rem',
-                lineHeight: '1.6',
-                color: 'rgba(255, 255, 255, 0.9)',
-                fontStyle: 'italic'
+                marginBottom: '0.5rem'
               }}>
-                {reading.mythology.story}
+                {reading.name} {reading.symbol || reading.emoji}
+              </h2>
+              <p style={{
+                fontSize: '1.2rem',
+                color: 'rgba(255, 255, 255, 0.8)',
+                marginBottom: '1rem'
+              }}>
+                {reading.dates}
+              </p>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '2rem',
+                marginBottom: '2rem',
+                flexWrap: 'wrap'
+              }}>
+                <span style={{ color: '#4ecdc4' }}>🔥 Element: {reading.element}</span>
+                <span style={{ color: '#ff6b6b' }}>🪐 Ruling Planet: {reading.rulingPlanet}</span>
+              </div>
+            </div>
+
+            {/* Mythology Section - Before Personality */}
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{
+                fontSize: '1.5rem',
+                color: '#e17055',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                🏛️ Mythological Origins
+              </h3>
+              <div style={{
+                background: 'rgba(225, 112, 85, 0.1)',
+                borderRadius: '15px',
+                padding: '1.5rem',
+                border: '1px solid rgba(225, 112, 85, 0.3)',
+                marginBottom: '1rem'
+              }}>
+                <div style={{ marginBottom: '1rem' }}>
+                  <strong style={{ color: '#e17055' }}>Origin:</strong>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.9)', marginLeft: '0.5rem' }}>
+                    {reading.mythology.origin}
+                  </span>
+                </div>
+                <div style={{ marginBottom: '1rem' }}>
+                  <strong style={{ color: '#e17055' }}>Archetype:</strong>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.9)', marginLeft: '0.5rem' }}>
+                    {reading.mythology.archetype}
+                  </span>
+                </div>
+                <div style={{ marginBottom: '1rem' }}>
+                  <strong style={{ color: '#e17055' }}>Associated Deity:</strong>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.9)', marginLeft: '0.5rem' }}>
+                    {reading.mythology.deity}
+                  </span>
+                </div>
+                <p style={{
+                  fontSize: '1rem',
+                  lineHeight: '1.6',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  fontStyle: 'italic'
+                }}>
+                  {reading.mythology.story}
+                </p>
+              </div>
+            </div>
+
+            {/* Personality */}
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{
+                fontSize: '1.5rem',
+                color: '#4ecdc4',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                🌟 Your Cosmic Personality
+              </h3>
+              <p style={{
+                fontSize: '1.1rem',
+                lineHeight: '1.6',
+                color: 'rgba(255, 255, 255, 0.9)'
+              }}>
+                {reading.personality}
               </p>
             </div>
-          </div>
 
-          {/* Personality */}
-          <div style={{ marginBottom: '2rem' }}>
-            <h3 style={{
-              fontSize: '1.5rem',
-              color: '#4ecdc4',
-              marginBottom: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}>
-              🌟 Your Cosmic Personality
-            </h3>
-            <p style={{
-              fontSize: '1.1rem',
-              lineHeight: '1.6',
-              color: 'rgba(255, 255, 255, 0.9)'
-            }}>
-              {reading.personality}
-            </p>
-          </div>
-
-          {/* Compatibility Section - After Personality */}
+            {/* Compatibility Section - After Personality */}
             <div style={{ marginBottom: '2rem' }}>
               <h3 style={{
                 fontSize: '1.5rem',
@@ -1005,9 +883,8 @@ const AstrologicalReader = () => {
               </div>
             </div>
 
-
-          {/* Action Buttons */}
-          <div style={{
+            {/* Action Buttons */}
+            <div style={{
             textAlign: 'center',
             paddingTop: '2rem',
             borderTop: '1px solid rgba(255, 255, 255, 0.2)'
