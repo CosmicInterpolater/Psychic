@@ -45,9 +45,15 @@ export const zodiacSigns = {
       deity: "Ares (Mars) - God of War and Courage"
     },
     moonPhases: {
-      newMoon: "Perfect time for starting new projects and setting ambitious goals",
-      fullMoon: "Peak energy for leadership and taking decisive action",
-      influence: "Your impulsive nature is amplified during fire moon phases"
+      newMoon: "Perfect time for starting new projects and setting ambitious goals. Your pioneering energy is at its peak for fresh beginnings.",
+      waxingCrescent: "Build momentum on your initiatives. Your natural leadership begins to attract followers and support for your ventures.",
+      firstQuarter: "Overcome obstacles with determination. This is when your warrior spirit shines brightest in facing challenges head-on.",
+      waxingGibbous: "Refine your strategies and gather resources. Your competitive nature helps you optimize and improve your approaches.",
+      fullMoon: "Peak energy for leadership and taking decisive action. Your charisma and confidence are magnetically powerful.",
+      waningGibbous: "Share your victories and mentor others. Your experiences become valuable lessons for those following your path.",
+      lastQuarter: "Release what no longer serves your ambitions. Clear away outdated goals to make space for new conquests.",
+      waningCrescent: "Rest and reflect before your next adventure. Your high-energy nature needs this quiet time for strategic planning.",
+      influence: "Fire moon phases amplify your natural pioneering spirit, while cardinal moon energies align with your leadership instincts."
     },
     seasonal: {
       season: "Spring Equinox",
@@ -102,9 +108,15 @@ export const zodiacSigns = {
       deity: "Aphrodite (Venus) - Goddess of Love and Beauty"
     },
     moonPhases: {
-      newMoon: "Ideal for financial planning and setting material goals",
-      fullMoon: "Perfect for appreciating beauty and indulging sensory pleasures",
-      influence: "Earth moon phases enhance your natural grounding and stability"
+      newMoon: "Ideal for financial planning and setting material goals. Plant seeds for long-term security and abundance.",
+      waxingCrescent: "Slowly build your resources and foundations. Your patient approach ensures steady, sustainable growth.",
+      firstQuarter: "Work through financial or material challenges methodically. Your persistence pays off in tangible results.",
+      waxingGibbous: "Fine-tune your comfort and security systems. Your eye for quality helps you make wise investments.",
+      fullMoon: "Perfect for appreciating beauty and indulging sensory pleasures. Your aesthetic sense is heightened and magnetic.",
+      waningGibbous: "Share your stability and resources with loved ones. Your generous nature creates lasting bonds.",
+      lastQuarter: "Release material attachments that burden you. Declutter both possessions and outdated financial strategies.",
+      waningCrescent: "Rest in comfort and luxury. Your body and soul need this time to recharge in beautiful surroundings.",
+      influence: "Earth moon phases enhance your natural grounding and stability, while Venus-ruled moons heighten your appreciation for beauty."
     },
     seasonal: {
       season: "Mid-Spring",
@@ -159,9 +171,15 @@ export const zodiacSigns = {
       deity: "Hermes (Mercury) - Messenger of the Gods"
     },
     moonPhases: {
-      newMoon: "Perfect for starting new learning projects and networking",
-      fullMoon: "Peak time for communication and sharing ideas",
-      influence: "Air moon phases amplify your natural curiosity and social nature"
+      newMoon: "Perfect for starting new learning projects and networking. Your curiosity opens doors to exciting connections.",
+      waxingCrescent: "Build your communication networks and gather information. Your social butterfly nature attracts diverse contacts.",
+      firstQuarter: "Navigate communication challenges with wit and adaptability. Your quick thinking resolves misunderstandings.",
+      waxingGibbous: "Process and organize all the information you've gathered. Your analytical mind connects seemingly unrelated dots.",
+      fullMoon: "Peak time for communication and sharing ideas. Your words have extraordinary power to influence and inspire.",
+      waningGibbous: "Teach others what you've learned and facilitate important conversations. Your role as messenger becomes crucial.",
+      lastQuarter: "Release outdated information and communication patterns. Clear mental clutter to make space for new knowledge.",
+      waningCrescent: "Quiet your busy mind and listen deeply. This rare stillness allows profound insights to emerge.",
+      influence: "Air moon phases amplify your natural curiosity and social nature, while Mercury-ruled moons enhance your communication abilities."
     },
     seasonal: {
       season: "Late Spring to Early Summer",
@@ -216,9 +234,15 @@ export const zodiacSigns = {
       deity: "Artemis (Diana) - Goddess of the Moon and Protection"
     },
     moonPhases: {
-      newMoon: "Perfect for emotional healing and setting intentions for family",
-      fullMoon: "Peak emotional sensitivity and intuitive insights",
-      influence: "All moon phases strongly affect you - you're ruled by lunar energy"
+      newMoon: "Perfect for emotional healing and setting intentions for family. Your intuitive wisdom guides new emotional beginnings.",
+      waxingCrescent: "Nurture new emotional connections and family bonds. Your caring nature creates safe spaces for growth.",
+      firstQuarter: "Work through family dynamics and emotional challenges with compassion. Your empathy helps heal old wounds.",
+      waxingGibbous: "Deepen emotional intimacy and strengthen your support network. Your protective instincts create lasting security.",
+      fullMoon: "Peak emotional sensitivity and intuitive insights. Your psychic abilities are extraordinarily heightened.",
+      waningGibbous: "Share your emotional wisdom and nurture others through transitions. Your experience becomes their comfort.",
+      lastQuarter: "Release emotional baggage and unhealthy family patterns. Create boundaries to protect your sensitive nature.",
+      waningCrescent: "Retreat into your shell for deep emotional processing. This solitude is essential for your psychic renewal.",
+      influence: "All moon phases strongly affect you as the Moon rules your sign. Water moon phases intensify your natural emotional depth."
     },
     seasonal: {
       season: "Summer Solstice",
@@ -273,9 +297,15 @@ export const zodiacSigns = {
       deity: "Apollo (Sol) - God of the Sun, Arts, and Leadership"
     },
     moonPhases: {
-      newMoon: "Perfect for creative projects and leadership initiatives",
-      fullMoon: "Peak time for performances and being in the spotlight",
-      influence: "Fire moon phases amplify your natural dramatic flair and confidence"
+      newMoon: "Perfect for creative projects and leadership initiatives. Your inner light begins to shine on new stages.",
+      waxingCrescent: "Build your audience and gather supporters for your vision. Your natural charisma attracts the right people.",
+      firstQuarter: "Overcome ego challenges and creative blocks with courage. Your pride motivates you to exceed expectations.",
+      waxingGibbous: "Perfect your performance and polish your presentation. Your attention to dramatic detail ensures success.",
+      fullMoon: "Peak time for performances and being in the spotlight. Your radiant energy commands attention and admiration.",
+      waningGibbous: "Share your talents generously and mentor emerging artists. Your success inspires others to shine.",
+      lastQuarter: "Release ego attachments and outdated ways of seeking attention. Authentic self-expression replaces performance.",
+      waningCrescent: "Rest your performer's heart and reconnect with your authentic self. Solitude restores your inner fire.",
+      influence: "Fire moon phases amplify your natural dramatic flair and confidence, while solar-influenced moons boost your leadership power."
     },
     seasonal: {
       season: "Mid-Summer",
@@ -330,9 +360,15 @@ export const zodiacSigns = {
       deity: "Demeter (Ceres) - Goddess of Harvest and Nurturing"
     },
     moonPhases: {
-      newMoon: "Ideal for organizing, planning, and health routines",
-      fullMoon: "Perfect for detailed work and helping others",
-      influence: "Earth moon phases enhance your natural analytical and practical abilities"
+      newMoon: "Ideal for organizing, planning, and health routines. Your analytical mind creates perfect systems for improvement.",
+      waxingCrescent: "Gradually implement new routines and healthy habits. Your methodical approach ensures lasting change.",
+      firstQuarter: "Work through perfectionist tendencies and criticism. Your high standards motivate positive transformation.",
+      waxingGibbous: "Refine your systems and help others improve their lives. Your attention to detail creates lasting value.",
+      fullMoon: "Perfect for detailed work and helping others. Your service-oriented nature reaches its most effective expression.",
+      waningGibbous: "Share your practical wisdom and teach others your efficient methods. Your experience becomes their foundation.",
+      lastQuarter: "Release perfectionist expectations and self-criticism. Accept good enough while maintaining quality standards.",
+      waningCrescent: "Rest your analytical mind and trust your intuitive wisdom. This quiet time reveals deeper truths.",
+      influence: "Earth moon phases enhance your natural analytical and practical abilities, while Mercury-ruled moons sharpen your discrimination."
     },
     seasonal: {
       season: "Late Summer to Early Autumn",
@@ -386,9 +422,15 @@ export const zodiacSigns = {
       deity: "Aphrodite (Venus) - Goddess of Love and Harmony"
     },
     moonPhases: {
-      newMoon: "Perfect for relationship healing and artistic projects",
-      fullMoon: "Peak time for decision-making and finding balance",
-      influence: "Air moon phases enhance your natural diplomatic and social abilities"
+      newMoon: "Perfect for relationship healing and artistic projects. Your desire for harmony creates beautiful new connections.",
+      waxingCrescent: "Build balanced relationships and collaborative partnerships. Your diplomatic skills attract ideal matches.",
+      firstQuarter: "Navigate relationship conflicts with grace and fairness. Your mediation abilities restore peace and understanding.",
+      waxingGibbous: "Perfect your aesthetic projects and deepen romantic connections. Your charm and beauty create magnetic attraction.",
+      fullMoon: "Peak time for decision-making and finding balance. Your sense of justice and beauty reaches perfect expression.",
+      waningGibbous: "Share your aesthetic gifts and help others find balance. Your refined taste elevates everyone around you.",
+      lastQuarter: "Release relationship patterns that create imbalance. Choose quality connections over people-pleasing.",
+      waningCrescent: "Find peace in solitude and reconnect with your authentic preferences. Inner balance precedes outer harmony.",
+      influence: "Air moon phases enhance your natural diplomatic and social abilities, while Venus-ruled moons heighten your appreciation for beauty and relationships."
     },
     seasonal: {
       season: "Autumn Equinox",
@@ -442,9 +484,15 @@ export const zodiacSigns = {
       deity: "Hades (Pluto) - God of the Underworld and Transformation"
     },
     moonPhases: {
-      newMoon: "Perfect for deep transformation and letting go of the past",
-      fullMoon: "Peak intensity for emotional breakthroughs and revelations",
-      influence: "Water moon phases intensify your natural emotional depth and psychic abilities"
+      newMoon: "Perfect for deep transformation and letting go of the past. Your phoenix nature begins its most powerful rebirth cycle.",
+      waxingCrescent: "Gradually build new depths of intimacy and personal power. Your magnetic presence attracts transformative connections.",
+      firstQuarter: "Work through trust issues and emotional intensity. Your courage to face shadows creates breakthrough healing.",
+      waxingGibbous: "Deepen psychological insights and spiritual practices. Your investigative nature uncovers profound truths.",
+      fullMoon: "Peak intensity for emotional breakthroughs and revelations. Your psychic abilities reach extraordinary depths.",
+      waningGibbous: "Share your transformative insights and help others through their dark nights. Your experience lights their path.",
+      lastQuarter: "Release old identities and destructive patterns. Your ability to die and be reborn creates space for evolution.",
+      waningCrescent: "Retreat into the depths for profound regeneration. This darkness is where your greatest power is restored.",
+      influence: "Water moon phases intensify your natural emotional depth and psychic abilities, while Pluto-influenced moons amplify your transformative power."
     },
     seasonal: {
       season: "Deep Autumn",
@@ -498,9 +546,15 @@ export const zodiacSigns = {
       deity: "Jupiter (Zeus) - King of Gods and Ruler of Expansion"
     },
     moonPhases: {
-      newMoon: "Perfect for setting new learning goals and planning adventures",
-      fullMoon: "Peak time for sharing wisdom and completing educational journeys",
-      influence: "Fire moon phases amplify your natural enthusiasm and desire for exploration"
+      newMoon: "Perfect for setting new learning goals and planning adventures. Your philosophical mind opens to expanded horizons.",
+      waxingCrescent: "Build knowledge networks and plan your next expedition. Your enthusiasm attracts fellow truth-seekers.",
+      firstQuarter: "Overcome limiting beliefs and cultural restrictions. Your quest for truth breaks through conventional barriers.",
+      waxingGibbous: "Expand your teaching abilities and refine your philosophy. Your wisdom becomes a beacon for others.",
+      fullMoon: "Peak time for sharing wisdom and completing educational journeys. Your truth-telling reaches its most powerful expression.",
+      waningGibbous: "Mentor others on their spiritual journeys and share your adventures. Your experiences become their inspiration.",
+      lastQuarter: "Release dogmatic thinking and outdated beliefs. Make space for new philosophical understanding.",
+      waningCrescent: "Quiet your restless spirit and listen to inner wisdom. This stillness reveals the deepest truths.",
+      influence: "Fire moon phases amplify your natural enthusiasm and desire for exploration, while Jupiter-influenced moons expand your philosophical insights."
     },
     seasonal: {
       season: "Early Winter",
@@ -555,9 +609,15 @@ export const zodiacSigns = {
       deity: "Saturn (Kronos) - God of Time, Discipline, and Structure"
     },
     moonPhases: {
-      newMoon: "Perfect for setting long-term goals and career planning",
-      fullMoon: "Peak time for achieving major milestones and recognition",
-      influence: "Earth moon phases enhance your natural determination and practical abilities"
+      newMoon: "Perfect for setting long-term goals and career planning. Your ambition finds its most strategic expression.",
+      waxingCrescent: "Steadily build your professional foundation and reputation. Your discipline creates lasting achievements.",
+      firstQuarter: "Work through authority challenges and structural obstacles. Your persistence overcomes seemingly impossible barriers.",
+      waxingGibbous: "Refine your leadership skills and organize your resources. Your executive abilities reach peak efficiency.",
+      fullMoon: "Peak time for achieving major milestones and receiving recognition. Your hard work culminates in success.",
+      waningGibbous: "Share your expertise and mentor rising leaders. Your experience becomes their foundation for success.",
+      lastQuarter: "Release outdated career strategies and rigid thinking. Embrace new approaches while maintaining your standards.",
+      waningCrescent: "Rest from your ambitious climb and reconnect with deeper purpose. This reflection reveals your true calling.",
+      influence: "Earth moon phases enhance your natural determination and practical abilities, while Saturn-influenced moons strengthen your discipline and structure."
     },
     seasonal: {
       season: "Winter Solstice",
@@ -612,9 +672,15 @@ export const zodiacSigns = {
       deity: "Uranus - God of Sky and Innovation"
     },
     moonPhases: {
-      newMoon: "Perfect for humanitarian projects and innovative breakthroughs",
-      fullMoon: "Peak time for group activities and social reform",
-      influence: "Air moon phases enhance your natural ability to think outside the box and connect with groups"
+      newMoon: "Perfect for humanitarian projects and innovative breakthroughs. Your revolutionary spirit births new solutions for collective problems.",
+      waxingCrescent: "Build your network of like-minded reformers and gather support for your cause. Your vision attracts fellow revolutionaries.",
+      firstQuarter: "Break through conventional limitations and outdated systems. Your rebellious nature challenges status quo effectively.",
+      waxingGibbous: "Refine your innovative ideas and organize your humanitarian efforts. Your unique perspective creates lasting change.",
+      fullMoon: "Peak time for group activities and social reform. Your ability to inspire collective action reaches maximum power.",
+      waningGibbous: "Share your innovations and teach others to think independently. Your freedom-loving nature liberates trapped minds.",
+      lastQuarter: "Release attachment to being different and embrace authentic uniqueness. True individuality doesn't need to rebel.",
+      waningCrescent: "Detach from group energies and reconnect with your individual truth. This solitude reveals your authentic vision.",
+      influence: "Air moon phases enhance your natural ability to think outside the box and connect with groups, while Uranus-influenced moons amplify your innovative and revolutionary nature."
     },
     seasonal: {
       season: "Deep Winter",
@@ -669,9 +735,15 @@ export const zodiacSigns = {
       deity: "Neptune (Poseidon) - God of the Sea and Mystical Depths"
     },
     moonPhases: {
-      newMoon: "Perfect for spiritual practices and creative inspiration",
-      fullMoon: "Peak time for psychic abilities and emotional healing",
-      influence: "Water moon phases intensify your natural psychic abilities and emotional sensitivity"
+      newMoon: "Perfect for spiritual practices and creative inspiration. Your connection to the divine source opens new channels of artistic flow.",
+      waxingCrescent: "Gradually develop your psychic abilities and artistic talents. Your sensitivity attracts spiritual guidance and creative muses.",
+      firstQuarter: "Work through emotional overwhelm and boundary issues. Your compassion learns to protect itself while still serving others.",
+      waxingGibbous: "Deepen spiritual practices and refine artistic expressions. Your mystical nature channels higher wisdom into earthly form.",
+      fullMoon: "Peak time for psychic abilities and emotional healing. Your connection to the collective unconscious reaches extraordinary depths.",
+      waningGibbous: "Share your spiritual gifts and help others heal emotional wounds. Your empathy becomes a healing force for the world.",
+      lastQuarter: "Release victim consciousness and escapist patterns. Your spiritual strength learns to navigate earthly challenges.",
+      waningCrescent: "Merge with the infinite and restore your spiritual essence. This dissolution prepares you for your next incarnation of service.",
+      influence: "Water moon phases intensify your natural psychic abilities and emotional sensitivity, while Neptune-influenced moons enhance your spiritual connection and artistic inspiration."
     },
     seasonal: {
       season: "Late Winter/Early Spring",
