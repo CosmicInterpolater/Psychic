@@ -205,7 +205,9 @@ const AstrologicalReader = () => {
     setMoonPhase(currentMoonPhase);
   
   // Get moon phase influence for this zodiac sign
-    
+    const moonInfluence = signData.moonPhases && signData.moonPhases[currentMoonPhase.name] 
+    ? signData.moonPhases[currentMoonPhase.name]
+    : `The current ${currentMoonPhase.phase} brings a time of cosmic reflection and energy alignment for your ${signData.name} nature. This lunar phase encourages you to embrace the celestial rhythms and trust in the universe's divine timing.`; 
     // Enhanced reading data
     const enhancedReading = {
       ...signData,
