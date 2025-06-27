@@ -1,18 +1,29 @@
-// AstrologicalReader.js - Main Container Component
+// AstrologicalReader.js - Fixed Navigation Logic
 import React, { useState } from 'react';
 import DateInput from './DateInput';
 import ReadingDisplay from './ReadingDisplay';
+import HoroscopeReader from './horoscope_reader';
 import { zodiacSigns } from '../../data/ZodiacSigns';
 import { getZodiacSign, getDateRange, getZodiacEmoji } from './zodiacUtils';
 import { getMoonPhase } from './moon_phase_utils';
 
-const AstrologicalReader = () => {
+const AstrologicalReader = ({ onNavigateHome }) => {
   const [birthDate, setBirthDate] = useState('');
   const [reading, setReading] = useState(null);
   const [showReading, setShowReading] = useState(false);
+  const [showHoroscope, setShowHoroscope] = useState(false);
   const [moonPhase, setMoonPhase] = useState(null);
+  const [currentStep, setCurrentStep] = useState('input'); // 'input', 'horoscope', 'reading'
 
-  const generateReading = async () => {
+  const handleDateSubmit = () => {
+    if (!birthDate) return;
+    
+    // Move to horoscope step
+    setCurrentStep('horoscope');
+    setShowHoroscope(true);
+  };
+
+  const handleProceedToFullReading = async () => {
     if (!birthDate) return;
     
     const date = new Date(birthDate);
@@ -85,11 +96,34 @@ const AstrologicalReader = () => {
     };
     
     setReading(enhancedReading);
+    setCurrentStep('reading');
     setShowReading(true);
+    setShowHoroscope(false);
   };
 
-  const resetReading = () => {
+  // FIXED: This function now properly handles navigation back to main home
+  const handleBackToHome = () => {
+    // Always use the onNavigateHome prop if it exists (which it should when called from main Home component)
+    if (onNavigateHome) {
+      onNavigateHome();
+      return;
+    }
+    
+    // Fallback: if for some reason onNavigateHome doesn't exist, reset the component
+    // This should rarely happen since this component is called from Home.js
+    console.warn('onNavigateHome prop not found, resetting component instead');
+    setCurrentStep('input');
     setShowReading(false);
+    setShowHoroscope(false);
+    setReading(null);
+    setBirthDate('');
+  };
+
+  // ADDED: Separate function for resetting within the astrology reader (for "New Reading" type functionality)
+  const handleResetReading = () => {
+    setCurrentStep('input');
+    setShowReading(false);
+    setShowHoroscope(false);
     setReading(null);
     setBirthDate('');
   };
@@ -119,16 +153,29 @@ const AstrologicalReader = () => {
         }
       `}</style>
 
-      {!showReading ? (
+      {currentStep === 'input' && (
         <DateInput 
           birthDate={birthDate}
           setBirthDate={setBirthDate}
-          onGenerate={generateReading}
+          onGenerate={handleDateSubmit}
         />
-      ) : (
+      )}
+
+      {currentStep === 'horoscope' && showHoroscope && (
+        <HoroscopeReader
+          birthDate={birthDate}
+          onProceedToFullReading={handleProceedToFullReading}
+          onBackToHome={handleBackToHome} // This will now properly go back to main home
+          getZodiacSign={getZodiacSign}
+          getZodiacEmoji={getZodiacEmoji}
+        />
+      )}
+
+      {currentStep === 'reading' && showReading && (
         <ReadingDisplay 
           reading={reading}
-          onReset={resetReading}
+          onReset={handleResetReading} // Use the reset function for "New Reading"
+          onBackToHome={handleBackToHome} // Use home navigation for "Back to Home"
         />
       )}
     </div>

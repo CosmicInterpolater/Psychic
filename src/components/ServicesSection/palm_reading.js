@@ -61,28 +61,31 @@ const PalmReading = () => {
                             <div className="text-center">
                                 <div className="relative inline-block">
                                     <div className="text-9xl mb-4 filter drop-shadow-lg">✋</div>
-                                    <div className="absolute inset-0 pointer-events-none">
+                                    <div className="absolute inset-0">
                                         {/* Interactive palm line indicators */}
                                         <div className="relative w-full h-full">
                                             {palmLines.map((line, index) => (
                                                 <button
                                                     key={line.name}
-                                                    className={`absolute w-3 h-3 rounded-full border-2 transition-all duration-300 hover:scale-150 ${
+                                                    className={`absolute w-4 h-4 rounded-full border-2 transition-all duration-300 hover:scale-150 transform -translate-x-2 -translate-y-2 ${
                                                         selectedLine === index 
-                                                            ? 'bg-cosmic-primary border-cosmic-primary shadow-cosmic' 
-                                                            : 'bg-transparent border-cosmic-light hover:bg-cosmic-light'
+                                                            ? 'bg-blue-400 border-blue-300 shadow-lg shadow-blue-400/50 animate-pulse' 
+                                                            : 'bg-purple-400 border-purple-300 hover:bg-purple-300 shadow-lg shadow-purple-400/50 animate-pulse'
                                                     }`}
                                                     style={{
                                                         left: index === 0 ? '25%' : index === 1 ? '15%' : index === 2 ? '35%' : '45%',
-                                                        top: index === 0 ? '30%' : index === 1 ? '20%' : index === 2 ? '40%' : '50%'
+                                                        top: index === 0 ? '30%' : index === 1 ? '20%' : index === 2 ? '40%' : '50%',
+                                                        boxShadow: selectedLine === index 
+                                                            ? '0 0 15px rgba(96, 165, 250, 0.8), 0 0 30px rgba(96, 165, 250, 0.4)' 
+                                                            : '0 0 15px rgba(196, 181, 253, 0.8), 0 0 30px rgba(196, 181, 253, 0.4)'
                                                     }}
                                                     onClick={() => setSelectedLine(selectedLine === index ? null : index)}
                                                     aria-label={`Select ${line.name}`}
                                                 />
                                             ))}
                                         </div>
+                                        </div>
                                     </div>
-                                </div>
                                 <p className="text-cosmic-light text-sm mt-4">Click the glowing points to explore each palm line</p>
                             </div>
 

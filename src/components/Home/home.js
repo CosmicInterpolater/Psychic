@@ -6,9 +6,11 @@ import ServicesSection from '../ServicesSection/services_section';
 import PalmReading from '../ServicesSection/palm_reading'; 
 import TarotReading from '../ServicesSection/tarot_reading';
 import AstrologyReading from '../ServicesSection/astrology_reading_page';
+import CrystalReading from '../ServicesSection/crystal_reading';
 // Import the interactive components
 import PalmReader from '../PalmReader/PalmReader'; 
 import TarotReader from '../TarotReader/TarotReader';
+import CrystalReader from '../CrystalReader/CrystalReader';
 
 const Home = () => {
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -73,7 +75,7 @@ const Home = () => {
             case 'palmistry':
                 return <PalmReading />;
             case 'astrology':
-                return <AstrologyReading />;
+                return <AstrologyReading onNavigateHome={navigateHome} />;
             case 'tarot-reader':
                 return <TarotReader />;
             case 'palm-reader':

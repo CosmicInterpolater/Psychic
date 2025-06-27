@@ -13,7 +13,8 @@ import HealthSection from './HealthSection';
 import LuckyElementsSection from './LuckyElementsSection';
 import MoonPhaseSection from './MoonPhaseSection';
 
-const ReadingDisplay = ({ reading, onReset }) => {
+const ReadingDisplay = ({ reading, onReset, onBackToHome }) => {
+//const ReadingDisplay = ({ reading, onReset }) => {
   return (
     <div className="animate-fadeInUp" style={{
       background: 'rgba(255, 255, 255, 0.1)',

@@ -7,6 +7,9 @@ const AstrologyReading = () => {
     const [birthDate, setBirthDate] = useState('');
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
+    // Convert zodiacSigns object to array
+    const zodiacSignsArray = Object.values(zodiacSigns);
+
     // Calculate zodiac sign based on birth date
     const calculateZodiacSign = (date) => {
         if (!date) return null;
@@ -16,11 +19,13 @@ const AstrologyReading = () => {
         const day = birthDate.getDate();
         
         // Find matching zodiac sign based on date ranges
-        return zodiacSigns.find(sign => {
-            const [startMonth, startDay] = sign.dateRange.start.split('/').map(Number);
-            const [endMonth, endDay] = sign.dateRange.end.split('/').map(Number);
+        return zodiacSignsArray.find(sign => {
+            // Parse the dates string (e.g., "March 21 - April 19")
+            const [startDate, endDate] = sign.dates.split(' - ');
+            const [startMonth, startDay] = parseDateString(startDate);
+            const [endMonth, endDay] = parseDateString(endDate);
             
-            // Handle year-end wrap (Capricorn)
+            // Handle year-end wrap (Capricorn/Sagittarius)
             if (startMonth > endMonth) {
                 return (month === startMonth && day >= startDay) || 
                        (month === endMonth && day <= endDay);
@@ -30,6 +35,18 @@ const AstrologyReading = () => {
                    (month === endMonth && day <= endDay) ||
                    (month > startMonth && month < endMonth);
         });
+    };
+
+    // Helper function to parse date strings like "March 21"
+    const parseDateString = (dateStr) => {
+        const months = {
+            'January': 1, 'February': 2, 'March': 3, 'April': 4,
+            'May': 5, 'June': 6, 'July': 7, 'August': 8,
+            'September': 9, 'October': 10, 'November': 11, 'December': 12
+        };
+        
+        const [monthName, day] = dateStr.trim().split(' ');
+        return [months[monthName], parseInt(day)];
     };
 
     const handleDateChange = (e) => {
@@ -82,9 +99,9 @@ const AstrologyReading = () => {
                             <div className="text-center mb-8">
                                 <div className="text-6xl mb-4">{selectedZodiac.symbol}</div>
                                 <h2 className="text-4xl text-cosmic-light mb-2">{selectedZodiac.name}</h2>
-                                <p className="text-cosmic-accent text-xl mb-4">{selectedZodiac.element} • {selectedZodiac.quality}</p>
+                                <p className="text-cosmic-accent text-xl mb-4">{selectedZodiac.element} • {selectedZodiac.quality || 'Cardinal'}</p>
                                 <p className="text-cosmic-muted">
-                                    {selectedZodiac.dateRange.start} - {selectedZodiac.dateRange.end}
+                                    {selectedZodiac.dates}
                                 </p>
                             </div>
 
@@ -92,7 +109,7 @@ const AstrologyReading = () => {
                                 <div>
                                     <h4 className="text-xl text-cosmic-accent mb-3">Personality Traits</h4>
                                     <p className="text-cosmic-light leading-relaxed mb-4">
-                                        {selectedZodiac.description}
+                                        {selectedZodiac.personality}
                                     </p>
                                     <div className="space-y-2">
                                         <div><strong className="text-cosmic-accent">Strengths:</strong> {selectedZodiac.strengths.join(', ')}</div>
@@ -104,8 +121,8 @@ const AstrologyReading = () => {
                                     <h4 className="text-xl text-cosmic-accent mb-3">Cosmic Influences</h4>
                                     <div className="space-y-3">
                                         <div><strong className="text-cosmic-accent">Ruling Planet:</strong> {selectedZodiac.rulingPlanet}</div>
-                                        <div><strong className="text-cosmic-accent">Lucky Colors:</strong> {selectedZodiac.colors.join(', ')}</div>
-                                        <div><strong className="text-cosmic-accent">Compatible Signs:</strong> {selectedZodiac.compatibility.join(', ')}</div>
+                                        <div><strong className="text-cosmic-accent">Lucky Colors:</strong> {selectedZodiac.luckyElements.colors.join(', ')}</div>
+                                        <div><strong className="text-cosmic-accent">Compatible Signs:</strong> {selectedZodiac.compatibility.mostCompatible.join(', ')}</div>
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +143,7 @@ const AstrologyReading = () => {
                 <div className="max-w-7xl mx-auto">
                     <h3 className="text-3xl text-center text-cosmic-light mb-12">Explore All Zodiac Signs</h3>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {zodiacSigns.map((sign, index) => (
+                        {zodiacSignsArray.map((sign, index) => (
                             <div
                                 key={sign.name}
                                 className={`cosmic-card p-6 text-center cursor-pointer transition-all hover:scale-105 animate-fadeInUp ${
@@ -138,7 +155,7 @@ const AstrologyReading = () => {
                                 <div className="text-4xl mb-3">{sign.symbol}</div>
                                 <h4 className="text-cosmic-light font-semibold mb-2">{sign.name}</h4>
                                 <p className="text-cosmic-muted text-sm">
-                                    {sign.dateRange.start} - {sign.dateRange.end}
+                                    {sign.dates}
                                 </p>
                             </div>
                         ))}

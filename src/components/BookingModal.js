@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import TarotReader from './TarotReader/TarotReader';
 import PalmReader from './PalmReader/PalmReader';
 import AstrologyReader from './Astrology/astrology_reader';
+import CrystalReader from './CrystalReader/CrystalReader'; 
+
 
 export const BookingModal = ({ 
     isOpen, 
@@ -25,25 +27,25 @@ export const BookingModal = ({
             id: 'tarot',
             title: 'Stellar Tarot Reading',
             icon: '🌟',
-            component: 'tarot'  // Changed to string identifier
+            component: 'tarot'
         },
         {
             id: 'astrology',
             title: 'Galactic Astrology Chart',
             icon: '🪐',
-            component: 'astrology'  // Changed to string identifier
+            component: 'astrology'
         },
         {
             id: 'palmistry',
             title: 'Quantum Palm Reading',
             icon: '✋',
-            component: 'palmistry'  // Changed to string identifier
+            component: 'palmistry'
         },
         {
             id: 'crystal',
             title: 'Crystal Matrix Consultation',
             icon: '💎',
-            component: null // Will be added when component is ready
+            component: 'crystal' // Updated to properly reference the crystal component
         }
     ];
 
@@ -83,11 +85,8 @@ export const BookingModal = ({
         
         // Launch the selected reading immediately
         if (currentService?.component) {
-            setActiveReader(currentService.component);  // Set string identifier
+            setActiveReader(currentService.component);
             setCurrentStep('reading');
-        } else if (currentService?.id === 'crystal') {
-            alert('Crystal Matrix Consultation coming soon! Your subscription is active and you can access this reading when it becomes available.');
-            handleClose();
         }
     };
 
@@ -120,6 +119,8 @@ export const BookingModal = ({
                     return <PalmReader />;
                 case 'astrology':
                     return <AstrologyReader />;
+                case 'crystal':
+                    return <CrystalReader />;
                 default:
                     return <div style={{ color: 'white', textAlign: 'center', padding: '40px' }}>
                         Component not available
