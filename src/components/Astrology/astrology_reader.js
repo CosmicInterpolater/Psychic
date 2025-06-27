@@ -1,10 +1,10 @@
 // AstrologicalReader.js - Main Container Component
 import React, { useState } from 'react';
-import DateInput from './components/DateInput';
-import ReadingDisplay from './components/ReadingDisplay';
+import DateInput from './DateInput';
+import ReadingDisplay from './ReadingDisplay';
 import { zodiacSigns } from '../../data/ZodiacSigns';
-import { getZodiacSign, getDateRange, getZodiacEmoji } from './utils/zodiacUtils';
-import { getMoonPhase } from './utils/moonPhaseUtils';
+import { getZodiacSign, getDateRange, getZodiacEmoji } from './zodiacUtils';
+import { getMoonPhase } from './moon_phase_utils';
 
 const AstrologicalReader = () => {
   const [birthDate, setBirthDate] = useState('');

@@ -1,6 +1,7 @@
 // components/ReadingDisplay.js - Main Reading Display Component
 import React from 'react';
 import ReadingHeader from './ReadingHeader';
+import MythologySection from './MythologySection';
 import PersonalitySection from './PersonalitySection';
 import CompatibilitySection from './CompatibilitySection';
 import SeasonalSection from './SeasonalSection';
@@ -11,7 +12,6 @@ import CareerSection from './CareerSection';
 import HealthSection from './HealthSection';
 import LuckyElementsSection from './LuckyElementsSection';
 import MoonPhaseSection from './MoonPhaseSection';
-import MythologySection from './MythologySection';
 
 const ReadingDisplay = ({ reading, onReset }) => {
   return (

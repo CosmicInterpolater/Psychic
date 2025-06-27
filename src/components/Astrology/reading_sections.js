@@ -629,3 +629,4 @@ export const ReadingSections = {
   HealthSection,
   LuckyElementsSection,
   MoonPhaseSection
+};
