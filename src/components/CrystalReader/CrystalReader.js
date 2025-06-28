@@ -28,10 +28,18 @@ const ModularCrystalReader = () => {
   const [aiInsight, setAiInsight] = useState(null);
   const [aiService] = useState(new AIService());
   const [openAIKey, setOpenAIKey] = useState('');
+  const [aiError, setAiError] = useState(null);
   
   useEffect(() => {
     setCrystalGrid(getRandomCrystals(crystalDatabase, 9));
   }, []);
+
+  // Update AI service when API key changes
+  useEffect(() => {
+    if (openAIKey) {
+      aiService.setApiKey(openAIKey);
+    }
+  }, [openAIKey, aiService]);
 
   const handleSacredSpaceReady = () => {
     setShowSacredSpace(false);
@@ -49,6 +57,7 @@ const ModularCrystalReader = () => {
     setSelectedCrystal(crystal);
     setIsReading(true);
     setAiInsight(null);
+    setAiError(null);
     
     setTimeout(() => {
       setShowInterpretation(true);
@@ -57,24 +66,39 @@ const ModularCrystalReader = () => {
 
   const selectCrystalByAI = async () => {
     if (!validateQuestion(question)) {
-      alert('Please enter a question for the AI to analyze.');
+      alert('Please enter a meaningful question for the AI to analyze.');
       return;
     }
     
     setIsAISelection(true);
     setIsReading(true);
+    setAiError(null);
     
     try {
-      // Use AI service if API key is available, otherwise use local analysis
       let selectedCrystal;
       let insight = null;
       
-      if (openAIKey && aiService.isConfigured()) {
-        const aiResult = await aiService.selectCrystal(question, readingType, crystalDatabase);
-        selectedCrystal = aiResult.crystal;
-        insight = aiResult.insight;
+      // Check if we have an API key and should use AI
+      if (openAIKey && openAIKey.trim()) {
+        try {
+          // Use local analysis to select crystal first
+          selectedCrystal = analyzeQuestionAndSelectCrystal(question, readingType, crystalDatabase);
+          
+          // Then get AI insight for the selected crystal
+          insight = await aiService.generateCrystalInsight(question, selectedCrystal, readingType);
+          
+        } catch (aiError) {
+          console.warn('AI insight failed, using local analysis:', aiError);
+          setAiError('AI service unavailable, using local crystal wisdom');
+          
+          // Fallback to local analysis for both crystal and insight
+          selectedCrystal = analyzeQuestionAndSelectCrystal(question, readingType, crystalDatabase);
+          insight = aiService.generateLocalInsight(question, selectedCrystal, readingType);
+        }
       } else {
+        // No API key provided, use local analysis
         selectedCrystal = analyzeQuestionAndSelectCrystal(question, readingType, crystalDatabase);
+        insight = aiService.generateLocalInsight(question, selectedCrystal, readingType);
       }
       
       setSelectedCrystal(selectedCrystal);
@@ -84,11 +108,15 @@ const ModularCrystalReader = () => {
         setShowInterpretation(true);
         setIsAISelection(false);
       }, 1000);
+      
     } catch (error) {
-      console.error('AI selection failed:', error);
-      // Fallback to local analysis
+      console.error('Crystal selection failed:', error);
+      setAiError('Error occurred during crystal selection');
+      
+      // Final fallback
       const fallbackCrystal = analyzeQuestionAndSelectCrystal(question, readingType, crystalDatabase);
       setSelectedCrystal(fallbackCrystal);
+      setAiInsight(aiService.generateLocalInsight(question, fallbackCrystal, readingType));
       setIsAISelection(false);
       setShowInterpretation(true);
     }
@@ -101,6 +129,7 @@ const ModularCrystalReader = () => {
     setQuestion('');
     setIsAISelection(false);
     setAiInsight(null);
+    setAiError(null);
     setCrystalGrid(getRandomCrystals(crystalDatabase, 9));
   };
 
@@ -127,6 +156,13 @@ const ModularCrystalReader = () => {
             Connect with the ancient wisdom of crystals. Choose your method of crystal selection.
           </p>
         </div>
+
+        {/* Show AI Error if any */}
+        {aiError && (
+          <div className="mb-4 bg-yellow-900/50 border border-yellow-400 rounded-lg p-4">
+            <p className="text-yellow-200 text-sm">⚠️ {aiError}</p>
+          </div>
+        )}
 
         {!selectedCrystal ? (
           <div className="space-y-8">
@@ -162,7 +198,7 @@ const ModularCrystalReader = () => {
         ) : (
           <div className="space-y-8">
             <CrystalInterpretation 
-              crystal={selectedCrystal}
+              selectedCrystal={selectedCrystal} 
               question={question}
               readingType={readingType}
               isReading={isReading}
