@@ -6,8 +6,6 @@ import QuestionInput from './QuestionInput';
 import CrystalGrid from './CrystalGrid';
 import LoadingSpinner from './LoadingSpinner';
 import CrystalInterpretation from './CrystalInterpretation';
-// Fixed: Correct import path (matching the actual filename)
-import AIService from './ai_service'; // Changed from './ai_Service'
 import { 
   analyzeQuestionAndSelectCrystal, 
   getRandomCrystals,
@@ -27,40 +25,10 @@ const ModularCrystalReader = () => {
   // AI-related state
   const [isAISelection, setIsAISelection] = useState(false);
   const [aiInsight, setAiInsight] = useState(null);
-  const [aiError, setAiError] = useState(null);
-  const [backendConnected, setBackendConnected] = useState(false);
-  
-  // Fixed: Proper backend URL configuration
-  const [aiService] = useState(() => {
-    const service = new AIService();
-    // Configure with your actual backend URL
-    service.configure({ 
-      backendURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:5555/api',
-      timeout: 30000
-    });
-    return service;
-  });
 
   useEffect(() => {
     setCrystalGrid(getRandomCrystals(crystalDatabase, 9));
-    // Test backend connection on component mount
-    testBackendConnection();
   }, []);
-
-  const testBackendConnection = async () => {
-    try {
-      console.log('Testing backend connection to:', aiService.backendURL);
-      const isConnected = await aiService.testConnection();
-      console.log('Backend connection result:', isConnected);
-      setBackendConnected(isConnected);
-      if (!isConnected) {
-        console.warn('Backend AI service not available, will use local insights');
-      }
-    } catch (error) {
-      console.error('Backend connection test error:', error);
-      setBackendConnected(false);
-    }
-  };
 
   const handleSacredSpaceReady = () => {
     setShowSacredSpace(false);
@@ -78,36 +46,76 @@ const ModularCrystalReader = () => {
     setSelectedCrystal(crystal);
     setIsReading(true);
     setAiInsight(null);
-    setAiError(null);
     
     setTimeout(() => {
       setShowInterpretation(true);
     }, 1500);
   };
 
+  // Enhanced local insight generation
+  const generateLocalInsight = (question, selectedCrystal, readingType) => {
+    const questionThemes = analyzeQuestionThemes(question);
+    const crystalProperties = selectedCrystal.properties[0] || 'wisdom';
+    
+    const insights = {
+      'daily': [
+        `The energy of ${selectedCrystal.name} flows through your daily path, whispering secrets of ${selectedCrystal.element.toLowerCase()} wisdom. Trust that each moment today carries the potential for the ${selectedCrystal.meaning.toLowerCase()} you seek.`,
+        `As ${selectedCrystal.name} resonates with your ${selectedCrystal.chakra} chakra, feel how this ancient stone guides you toward experiences that align with your highest good today.`,
+        `${selectedCrystal.name} illuminates your daily journey with the sacred power of ${crystalProperties.toLowerCase()}. Let this crystal's energy remind you that ordinary moments hold extraordinary potential.`
+      ],
+      'love': [
+        `In the realm of the heart, ${selectedCrystal.name} reveals that true ${selectedCrystal.meaning.toLowerCase()} begins within. The love you seek in others is already awakening in the chambers of your own heart.`,
+        `The ${selectedCrystal.element.toLowerCase()} energy of ${selectedCrystal.name} suggests that your relationships are mirrors, reflecting back the very healing and growth your soul desires.`,
+        `${selectedCrystal.name} whispers that love flourishes when nurtured by ${crystalProperties.toLowerCase()}. Your heart's desires align with the universe's plan for your romantic fulfillment.`
+      ],
+      'career': [
+        `${selectedCrystal.name} illuminates a path where your professional life becomes a sacred expression of your soul's purpose. Success flows naturally when you align your work with the ${selectedCrystal.meaning.toLowerCase()} this crystal represents.`,
+        `The universe speaks through ${selectedCrystal.name}, revealing that your career challenges are invitations to embody the ${crystalProperties.toLowerCase()} and wisdom this stone teaches.`,
+        `Professional transformation awaits as ${selectedCrystal.name} guides you toward opportunities that honor both your material needs and spiritual growth.`
+      ],
+      'spiritual': [
+        `Through the mystical lens of ${selectedCrystal.name}, your spiritual journey takes on new depth. This sacred stone bridges the earthly and divine, showing you that ${selectedCrystal.meaning.toLowerCase()} is your natural birthright.`,
+        `${selectedCrystal.name} whispers ancient truths: your spiritual awakening is not a destination but a remembering of who you have always been.`,
+        `The sacred energy of ${selectedCrystal.name} activates dormant wisdom within your soul, revealing that your spiritual path is uniquely yours to walk with ${crystalProperties.toLowerCase()}.`
+      ]
+    };
+
+    const typeInsights = insights[readingType] || insights.daily;
+    return typeInsights[Math.floor(Math.random() * typeInsights.length)];
+  };
+
+  const analyzeQuestionThemes = (question) => {
+    const questionLower = question.toLowerCase();
+    const themes = [];
+    
+    if (questionLower.includes('love') || questionLower.includes('heart')) themes.push('love');
+    if (questionLower.includes('work') || questionLower.includes('career')) themes.push('career');
+    if (questionLower.includes('heal') || questionLower.includes('health')) themes.push('healing');
+    if (questionLower.includes('money') || questionLower.includes('success')) themes.push('abundance');
+    if (questionLower.includes('peace') || questionLower.includes('calm')) themes.push('peace');
+    
+    return themes;
+  };
+
   const selectCrystalByAI = async () => {
     if (!validateQuestion(question)) {
-      alert('Please enter a meaningful question for the AI to analyze.');
+      alert('Please enter a meaningful question for crystal guidance.');
       return;
     }
     
     setIsAISelection(true);
     setIsReading(true);
-    setAiError(null);
     
     try {
-      console.log('Starting AI crystal selection...');
-      console.log('Backend connected:', backendConnected);
-      console.log('Question:', question);
-      console.log('Reading type:', readingType);
+      // Simulate AI processing time
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Use the AIService's selectCrystal method which handles both crystal selection and insight generation
-      const result = await aiService.selectCrystal(question, readingType, crystalDatabase);
+      // Use enhanced local analysis
+      const selectedCrystal = analyzeQuestionAndSelectCrystal(question, readingType, crystalDatabase);
+      const insight = generateLocalInsight(question, selectedCrystal, readingType);
       
-      console.log('AI selection result:', result);
-      
-      setSelectedCrystal(result.crystal);
-      setAiInsight(result.insight);
+      setSelectedCrystal(selectedCrystal);
+      setAiInsight(insight);
       
       setTimeout(() => {
         setShowInterpretation(true);
@@ -116,11 +124,10 @@ const ModularCrystalReader = () => {
       
     } catch (error) {
       console.error('Crystal selection failed:', error);
-      setAiError(`Crystal selection error: ${error.message}`);
       
-      // Final fallback
+      // Fallback
       const fallbackCrystal = analyzeQuestionAndSelectCrystal(question, readingType, crystalDatabase);
-      const fallbackInsight = aiService.generateLocalInsight(question, fallbackCrystal, readingType);
+      const fallbackInsight = generateLocalInsight(question, fallbackCrystal, readingType);
       
       setSelectedCrystal(fallbackCrystal);
       setAiInsight(fallbackInsight);
@@ -136,7 +143,6 @@ const ModularCrystalReader = () => {
     setQuestion('');
     setIsAISelection(false);
     setAiInsight(null);
-    setAiError(null);
     setCrystalGrid(getRandomCrystals(crystalDatabase, 9));
   };
 
@@ -163,31 +169,14 @@ const ModularCrystalReader = () => {
             Connect with the ancient wisdom of crystals. Choose your method of crystal selection.
           </p>
           
-          {/* Backend connection status */}
+          {/* Local wisdom mode indicator */}
           <div className="mt-4">
-            <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm ${
-              backendConnected 
-                ? 'bg-green-900/50 text-green-200 border border-green-400' 
-                : 'bg-yellow-900/50 text-yellow-200 border border-yellow-400'
-            }`}>
-              <div className={`w-2 h-2 rounded-full mr-2 ${
-                backendConnected ? 'bg-green-400' : 'bg-yellow-400'
-              }`}></div>
-              {backendConnected ? '🤖 AI Enhanced Readings Available' : '🔮 Local Crystal Wisdom Mode'}
-            </div>
-            {/* Debug info */}
-            <div className="text-xs text-blue-300 mt-2">
-              Backend URL: {aiService.backendURL}
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-purple-900/50 text-purple-200 border border-purple-400">
+              <div className="w-2 h-2 rounded-full mr-2 bg-purple-400"></div>
+              🔮 Enhanced Local Crystal Wisdom
             </div>
           </div>
         </div>
-
-        {/* Show AI Error if any */}
-        {aiError && (
-          <div className="mb-4 bg-yellow-900/50 border border-yellow-400 rounded-lg p-4">
-            <p className="text-yellow-200 text-sm">⚠️ {aiError}</p>
-          </div>
-        )}
 
         {!selectedCrystal ? (
           <div className="space-y-8">
@@ -205,7 +194,7 @@ const ModularCrystalReader = () => {
 
             {isAISelection && (
               <LoadingSpinner 
-                message={backendConnected ? "🧠 AI is analyzing your question..." : "🔮 Crystal wisdom is flowing..."}
+                message="🔮 Crystal wisdom is analyzing your question..."
                 subMessage="Matching your energy with the perfect crystal"
               />
             )}

@@ -1,24 +1,53 @@
-// aiService.js - OpenAI Integration for Crystal Readings
+// aiService.js - Backend Integration for Crystal Readings
+import axios from 'axios';
 
 class AIService {
-  constructor(apiKey = null) {
-    this.apiKey = apiKey;
-    this.baseURL = 'https://api.openai.com/v1/chat/completions';
-  }
-
-  setApiKey(apiKey) {
-    this.apiKey = apiKey;
+  constructor() {
+    // Default backend URL - can be configured later
+    this.backendURL = 'http://localhost:5555/api';
+    this.timeout = 30000; // 30 second timeout
+    
+    // Configuration flags
+    this.useBackend = true;
+    this.retryAttempts = 3;
+    this.retryDelay = 1000; // 1 second
+    
+    // Try to get backend URL from window object if set
+    if (typeof window !== 'undefined' && window.REACT_APP_BACKEND_URL) {
+      this.backendURL = window.REACT_APP_BACKEND_URL;
+    }
   }
 
   isConfigured() {
-    return this.apiKey && this.apiKey.trim().length > 0;
+    return true; // Backend approach always works with fallback
+  }
+
+  // Method to configure the service
+  configure(options = {}) { 
+    if (options.backendURL) {
+      this.backendURL = options.backendURL;
+    }
+    if (options.timeout) {
+      this.timeout = options.timeout;
+    }
   }
 
   async selectCrystal(question, readingType, crystalDatabase) {
-    // For now, we'll use local analysis for crystal selection
-    // and AI for generating insights
+    // Use local analysis for crystal selection
     const crystal = this.analyzeQuestionLocally(question, readingType, crystalDatabase);
-    const insight = await this.generateCrystalInsight(question, crystal, readingType);
+    
+    // Generate insight using backend
+    let insight;
+    if (this.useBackend) {
+      try {
+        insight = await this.generateCrystalInsight(question, crystal, readingType);
+      } catch (error) {
+        console.warn('Backend insight failed, falling back to local:', error.message);
+        insight = this.generateLocalInsight(question, crystal, readingType);
+      }
+    } else {
+      insight = this.generateLocalInsight(question, crystal, readingType);
+    }
     
     return {
       crystal,
@@ -26,7 +55,67 @@ class AIService {
     };
   }
 
-  // Local crystal analysis (fallback method)
+  async generateCrystalInsight(question, selectedCrystal, readingType) {
+    try {
+      // Make request to backend API
+      const response = await axios.post(
+        `${this.backendURL}/crystal-insight`,
+        {
+          question,
+          crystal: {
+            name: selectedCrystal.name,
+            element: selectedCrystal.element,
+            chakra: selectedCrystal.chakra,
+            properties: selectedCrystal.properties,
+            meaning: selectedCrystal.meaning
+          },
+          readingType
+        },
+        {
+          timeout: this.timeout,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response.data && response.data.insight) {
+        return response.data.insight;
+      } else {
+        throw new Error('Invalid response format from backend');
+      }
+
+    } catch (error) {
+      console.error('Backend Service Error:', error);
+      
+      // Handle different types of errors
+      if (error.code === 'ECONNABORTED') {
+        throw new Error('Request timeout. Please try again.');
+      } else if (error.response) {
+        // Server responded with error status
+        const status = error.response.status;
+        const message = error.response.data?.error || 'Backend service error';
+        
+        if (status === 401) {
+          throw new Error('Authentication failed with AI service');
+        } else if (status === 429) {
+          throw new Error('Rate limit exceeded. Please try again later.');
+        } else if (status === 503) {
+          throw new Error('AI service temporarily unavailable');
+        } else {
+          throw new Error(`Backend error: ${message}`);
+        }
+      } else if (error.request) {
+        // Request made but no response received
+        throw new Error('Unable to reach backend service. Please check your connection.');
+      } else {
+        // Something else happened
+        throw new Error('Unexpected error occurred');
+      }
+    }
+  }
+
+  // Local crystal analysis (unchanged)
   analyzeQuestionLocally(question, readingType, crystalDatabase) {
     const questionLower = question.toLowerCase();
     const crystals = Object.values(crystalDatabase);
@@ -74,65 +163,6 @@ class AIService {
     return scoredCrystals[0].crystal;
   }
 
-  async generateCrystalInsight(question, selectedCrystal, readingType) {
-    if (!this.isConfigured()) {
-      throw new Error('OpenAI API key not provided');
-    }
-
-    const prompt = this.createPrompt(question, selectedCrystal, readingType);
-
-    try {
-      const response = await fetch(this.baseURL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`
-        },
-        body: JSON.stringify({
-          model: 'gpt-3.5-turbo', // Changed from gpt-4 to gpt-3.5-turbo for better availability
-          messages: [
-            {
-              role: 'system',
-              content: 'You are a wise crystal oracle and spiritual guide. Provide insightful, compassionate, and mystical guidance based on crystal energy and metaphysical wisdom. Your responses should be profound yet accessible, blending ancient wisdom with practical spiritual advice. Keep responses under 200 words.'
-            },
-            {
-              role: 'user',
-              content: prompt
-            }
-          ],
-          max_tokens: 250,
-          temperature: 0.8
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(`OpenAI API error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
-      }
-
-      const data = await response.json();
-      
-      if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-        throw new Error('Invalid response format from OpenAI');
-      }
-      
-      return data.choices[0].message.content.trim();
-    } catch (error) {
-      console.error('AI Service Error:', error);
-      
-      // Provide more specific error information
-      if (error.message.includes('401')) {
-        throw new Error('Invalid API key. Please check your OpenAI API key.');
-      } else if (error.message.includes('429')) {
-        throw new Error('Rate limit exceeded. Please try again later.');
-      } else if (error.message.includes('Network')) {
-        throw new Error('Network error. Please check your connection.');
-      }
-      
-      throw error;
-    }
-  }
-
   createPrompt(question, crystal, readingType) {
     return `As a crystal oracle, provide mystical insight for this reading:
 
@@ -151,7 +181,7 @@ Provide a 2-3 sentence spiritual insight that:
 Focus on how ${crystal.name}'s unique energy addresses their concern about "${question}".`;
   }
 
-  // Enhanced local insight generation
+  // Enhanced local insight generation (unchanged)
   generateLocalInsight(question, selectedCrystal, readingType) {
     const questionThemes = this.analyzeQuestionThemes(question);
     const crystalProperties = selectedCrystal.properties[0] || 'wisdom';
@@ -194,6 +224,19 @@ Focus on how ${crystal.name}'s unique energy addresses their concern about "${qu
     if (questionLower.includes('peace') || questionLower.includes('calm')) themes.push('peace');
     
     return themes;
+  }
+
+  // Method to test backend connectivity
+  async testConnection() {
+    try {
+      const response = await axios.get(`${this.backendURL}/health`, {
+        timeout: 5000
+      });
+      return response.status === 200;
+    } catch (error) {
+      console.error('Backend connectivity test failed:', error);
+      return false;
+    }
   }
 }
 
