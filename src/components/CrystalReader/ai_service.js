@@ -3,29 +3,35 @@ import axios from 'axios';
 
 class AIService {
   constructor() {
-    // Default backend URL - can be configured later
-    this.backendURL = 'http://localhost:5555/api';
-    this.timeout = 30000; // 30 second timeout
+    // More comprehensive endpoint list addressing common localhost issues
+    this.apiEndpoints = [
+      '/api/crystal-insight',
+      'http://127.0.0.1:5000/api/crystal-insight',  // Use IP instead of localhost
+      'http://127.0.0.1:3001/api/crystal-insight',  
+      'http://127.0.0.1:5555/api/crystal-insight',
+      'http://localhost:5000/api/crystal-insight',   // Keep localhost as backup
+      'http://localhost:3001/api/crystal-insight', 
+      'http://localhost:5555/api/crystal-insight'
+    ];
     
-    // Configuration flags
+    this.timeout = 10000; // Shorter timeout for faster failover
     this.useBackend = true;
-    this.retryAttempts = 3;
-    this.retryDelay = 1000; // 1 second
-    
-    // Try to get backend URL from window object if set
-    if (typeof window !== 'undefined' && window.REACT_APP_BACKEND_URL) {
-      this.backendURL = window.REACT_APP_BACKEND_URL;
+    this.debugMode = false; // Enable for troubleshooting
+  }
+
+  log(...args) {
+    if (this.debugMode) {
+      console.log('[AIService]', ...args);
     }
   }
 
   isConfigured() {
-    return true; // Backend approach always works with fallback
+    return true;
   }
 
-  // Method to configure the service
   configure(options = {}) { 
     if (options.backendURL) {
-      this.backendURL = options.backendURL;
+      this.apiEndpoints.unshift(options.backendURL + '/crystal-insight');
     }
     if (options.timeout) {
       this.timeout = options.timeout;
@@ -36,7 +42,7 @@ class AIService {
     // Use local analysis for crystal selection
     const crystal = this.analyzeQuestionLocally(question, readingType, crystalDatabase);
     
-    // Generate insight using backend
+    // Generate insight using backend - EXACT same pattern as tarot
     let insight;
     if (this.useBackend) {
       try {
@@ -56,66 +62,57 @@ class AIService {
   }
 
   async generateCrystalInsight(question, selectedCrystal, readingType) {
-    try {
-      // Make request to backend API
-      const response = await axios.post(
-        `${this.backendURL}/crystal-insight`,
-        {
-          question,
-          crystal: {
-            name: selectedCrystal.name,
-            element: selectedCrystal.element,
-            chakra: selectedCrystal.chakra,
-            properties: selectedCrystal.properties,
-            meaning: selectedCrystal.meaning
-          },
-          readingType
-        },
-        {
+    const requestData = {
+      question,
+      crystal: {
+        name: selectedCrystal.name,
+        element: selectedCrystal.element,
+        chakra: selectedCrystal.chakra,
+        properties: selectedCrystal.properties,
+        meaning: selectedCrystal.meaning
+      },
+      readingType
+    };
+
+    let lastError = null;
+    
+    // Try each endpoint with better error handling
+    for (let i = 0; i < this.apiEndpoints.length; i++) {
+      const endpoint = this.apiEndpoints[i];
+      this.log(`Trying endpoint ${i + 1}/${this.apiEndpoints.length}: ${endpoint}`);
+      
+      try {
+        const response = await axios.post(endpoint, requestData, {
           timeout: this.timeout,
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          withCredentials: false // Explicitly disable credentials for CORS
+        });
+
+        if (response.data && response.data.insight) {
+          this.log(`Success with endpoint: ${endpoint}`);
+          return response.data.insight;
         }
-      );
-
-      if (response.data && response.data.insight) {
-        return response.data.insight;
-      } else {
-        throw new Error('Invalid response format from backend');
-      }
-
-    } catch (error) {
-      console.error('Backend Service Error:', error);
-      
-      // Handle different types of errors
-      if (error.code === 'ECONNABORTED') {
-        throw new Error('Request timeout. Please try again.');
-      } else if (error.response) {
-        // Server responded with error status
-        const status = error.response.status;
-        const message = error.response.data?.error || 'Backend service error';
+      } catch (error) {
+        lastError = error;
+        this.log(`Endpoint ${endpoint} failed:`, error.message);
         
-        if (status === 401) {
-          throw new Error('Authentication failed with AI service');
-        } else if (status === 429) {
-          throw new Error('Rate limit exceeded. Please try again later.');
-        } else if (status === 503) {
-          throw new Error('AI service temporarily unavailable');
-        } else {
-          throw new Error(`Backend error: ${message}`);
+        // Add small delay between attempts
+        if (i < this.apiEndpoints.length - 1) {
+          await new Promise(resolve => setTimeout(resolve, 500));
         }
-      } else if (error.request) {
-        // Request made but no response received
-        throw new Error('Unable to reach backend service. Please check your connection.');
-      } else {
-        // Something else happened
-        throw new Error('Unexpected error occurred');
       }
     }
+    
+    // All endpoints failed
+    const errorMsg = lastError?.message || 'All backend endpoints failed';
+    this.log('All endpoints failed. Last error:', errorMsg);
+    throw new Error(`Backend connection failed: ${errorMsg}`);
   }
 
-  // Local crystal analysis (unchanged)
+  // Local crystal analysis (unchanged from working version)
   analyzeQuestionLocally(question, readingType, crystalDatabase) {
     const questionLower = question.toLowerCase();
     const crystals = Object.values(crystalDatabase);
@@ -163,24 +160,6 @@ class AIService {
     return scoredCrystals[0].crystal;
   }
 
-  createPrompt(question, crystal, readingType) {
-    return `As a crystal oracle, provide mystical insight for this reading:
-
-Question: "${question}"
-Crystal Selected: ${crystal.name} (${crystal.element} element, ${crystal.chakra} chakra)
-Reading Type: ${readingType}
-Crystal Properties: ${crystal.properties.join(', ')}
-Crystal Meaning: ${crystal.meaning}
-
-Provide a 2-3 sentence spiritual insight that:
-1. Connects the crystal's energy to their specific question
-2. Offers profound yet practical guidance
-3. Uses mystical but accessible language
-4. Feels personally meaningful and transformative
-
-Focus on how ${crystal.name}'s unique energy addresses their concern about "${question}".`;
-  }
-
   // Enhanced local insight generation (unchanged)
   generateLocalInsight(question, selectedCrystal, readingType) {
     const questionThemes = this.analyzeQuestionThemes(question);
@@ -226,17 +205,44 @@ Focus on how ${crystal.name}'s unique energy addresses their concern about "${qu
     return themes;
   }
 
-  // Method to test backend connectivity
   async testConnection() {
-    try {
-      const response = await axios.get(`${this.backendURL}/health`, {
-        timeout: 5000
-      });
-      return response.status === 200;
-    } catch (error) {
-      console.error('Backend connectivity test failed:', error);
-      return false;
+    const healthEndpoints = this.apiEndpoints.map(endpoint => 
+      endpoint.replace('/crystal-insight', '/health')
+    );
+    
+    this.log('Testing backend connectivity...');
+    
+    for (let i = 0; i < healthEndpoints.length; i++) {
+      const endpoint = healthEndpoints[i];
+      this.log(`Testing health endpoint ${i + 1}/${healthEndpoints.length}: ${endpoint}`);
+      
+      try {
+        const response = await axios.get(endpoint, { 
+          timeout: 3000,
+          withCredentials: false 
+        });
+        if (response.status === 200) {
+          this.log(`Health check passed for: ${endpoint}`);
+          return true;
+        }
+      } catch (error) {
+        this.log(`Health check failed for ${endpoint}:`, error.message);
+        continue;
+      }
     }
+    
+    this.log('All health checks failed');
+    return false;
+  }
+
+  // Enable debugging method for troubleshooting
+  enableDebug() {
+    this.debugMode = true;
+    this.log('Debug mode enabled');
+  }
+
+  disableDebug() {
+    this.debugMode = false;
   }
 }
 
