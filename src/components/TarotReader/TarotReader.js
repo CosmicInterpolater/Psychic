@@ -1,4 +1,3 @@
-
 // Refactored main TarotReader.js
 import React from 'react';
 import './TarotReader.scss';
@@ -6,6 +5,7 @@ import { tarotDeck } from '../../data/tarotDeckData';
 import SpreadSelector from './components/SpreadSelector';
 import CardDisplay from './components/CardDisplay';
 import InterpretationDisplay from './components/InterpretationDisplay';
+import QuestionInput from './components/QuestionInput';
 import { useTarotReading } from './hooks/useTarotReading';
 
 const spreadTypes = {
@@ -28,7 +28,10 @@ const TarotReader = () => {
         showInterpretation,
         gettingAnalysis,
         readingAnalysis,
+        userQuestion,
+        questionAsked,
         selectSpread,
+        setQuestion,
         shuffleAndDraw,
         generateInterpretation,
         resetReading,
@@ -42,16 +45,31 @@ const TarotReader = () => {
                 <p className="text-center">Discover insights through the ancient wisdom of the cards</p>
 
                 {!isReading && (
-                    <SpreadSelector
-                        spreadTypes={spreadTypes}
-                        selectedSpread={selectedSpread}
-                        onSpreadSelect={selectSpread}
-                        onDrawCards={shuffleAndDraw}
-                    />
+                    <div className="space-y-6">
+                        <QuestionInput
+                            userQuestion={userQuestion}
+                            onQuestionChange={setQuestion}
+                            placeholder="What guidance are you seeking from the cards?"
+                        />
+                        
+                        <SpreadSelector
+                            spreadTypes={spreadTypes}
+                            selectedSpread={selectedSpread}
+                            onSpreadSelect={selectSpread}
+                            onDrawCards={shuffleAndDraw}
+                        />
+                    </div>
                 )}
 
                 {isReading && (
                     <div className="card-display space-y-8">
+                        {questionAsked && (
+                            <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                                <h3 className="text-lg font-semibold text-white mb-2">Your Question:</h3>
+                                <p className="text-white/80 italic">"{questionAsked}"</p>
+                            </div>
+                        )}
+                        
                         <CardDisplay
                             spreadTypes={spreadTypes}
                             selectedSpread={selectedSpread}
@@ -66,6 +84,7 @@ const TarotReader = () => {
                                 drawnCards={drawnCards}
                                 gettingAnalysis={gettingAnalysis}
                                 readingAnalysis={readingAnalysis}
+                                questionAsked={questionAsked}
                                 getOverallReadingSubtitle={getOverallReadingSubtitle}
                             />
                         )}

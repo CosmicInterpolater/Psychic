@@ -18,5 +18,19 @@ export const useImageHandler = () => {
         reader.readAsDataURL(file);
     }, []);
 
-    return { image, loadImage };
+    const loadImageFromCapture = useCallback((file) => {
+        // Same functionality as loadImage, but can be extended for capture-specific logic
+        loadImage(file);
+    }, [loadImage]);
+
+    const clearImage = useCallback(() => {
+        setImage(null);
+    }, []);
+
+    return { 
+        image, 
+        loadImage, 
+        loadImageFromCapture,
+        clearImage 
+    };
 };

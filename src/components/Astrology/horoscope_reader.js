@@ -12,11 +12,73 @@ const HoroscopeReader = ({
   const [error, setError] = useState(null);
   const [animationClass, setAnimationClass] = useState('');
 
+  // Check if navigator.onLine is available and if we're online
+  const isOnline = () => {
+    return navigator.onLine !== false; // Default to true if navigator.onLine is undefined
+  };
+
+  // Check network connectivity by trying to fetch a simple resource
+  const checkNetworkConnectivity = async () => {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+      
+      const response = await fetch('https://httpbin.org/get', {
+        method: 'HEAD',
+        signal: controller.signal,
+        cache: 'no-cache'
+      });
+      
+      clearTimeout(timeoutId);
+      return response.ok;
+    } catch (error) {
+      console.warn('Network connectivity check failed:', error);
+      return false;
+    }
+  };
+
+  // Enhanced fetch with timeout
+  const fetchWithTimeout = async (url, options = {}, timeout = 8000) => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+    
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      throw error;
+    }
+  };
+
   // Get horoscope data from multiple free APIs with fallbacks
   const fetchHoroscope = async (zodiacSign) => {
     setLoading(true);
     setError(null);
     
+    // First check if we're online
+    if (!isOnline()) {
+      console.warn('Browser reports offline status');
+      setHoroscope(generateOfflineHoroscope(zodiacSign));
+      setAnimationClass('animate-fadeInUp');
+      setLoading(false);
+      return;
+    }
+
+    // Check actual network connectivity
+    const hasNetwork = await checkNetworkConnectivity();
+    if (!hasNetwork) {
+      console.warn('Network connectivity test failed');
+      setHoroscope(generateOfflineHoroscope(zodiacSign));
+      setAnimationClass('animate-fadeInUp');
+      setLoading(false);
+      return;
+    }
+
     const apis = [
       // API 1: horoscope-api.herokuapp.com
       {
@@ -35,11 +97,11 @@ const HoroscopeReader = ({
     let dailyHoroscope = null;
     let weeklyHoroscope = null;
     
-    // Try each API for daily horoscope
+    // Try each API for daily horoscope with timeout
     for (const api of apis) {
       try {
         console.log(`Trying ${api.name} for daily horoscope...`);
-        const response = await fetch(api.daily);
+        const response = await fetchWithTimeout(api.daily, {}, 8000);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -73,13 +135,13 @@ const HoroscopeReader = ({
       }
     }
 
-    // Try to get weekly horoscope
+    // Try to get weekly horoscope with timeout
     for (const api of apis) {
       if (!api.weekly) continue;
       
       try {
         console.log(`Trying ${api.name} for weekly horoscope...`);
-        const response = await fetch(api.weekly);
+        const response = await fetchWithTimeout(api.weekly, {}, 8000);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -127,6 +189,22 @@ const HoroscopeReader = ({
     
     setAnimationClass('animate-fadeInUp');
     setLoading(false);
+  };
+
+  // Generate offline horoscope when no network is available
+  const generateOfflineHoroscope = (zodiacSign) => {
+    return {
+      sign: zodiacSign,
+      daily: {
+        content: generateFallbackHoroscope(zodiacSign, 'daily'),
+        date: new Date().toLocaleDateString(),
+        source: 'offline'
+      },
+      weekly: {
+        content: generateFallbackHoroscope(zodiacSign, 'weekly'),
+        source: 'offline'
+      }
+    };
   };
 
   // Generate fallback horoscope content
@@ -340,6 +418,27 @@ const HoroscopeReader = ({
           </p>
         </div>
 
+        {/* Offline Notice */}
+        {(horoscope.daily.source === 'offline' || horoscope.weekly.source === 'offline') && (
+          <div style={{
+            background: 'rgba(255, 193, 7, 0.1)',
+            border: '1px solid rgba(255, 193, 7, 0.3)',
+            borderRadius: '10px',
+            padding: '1rem',
+            marginBottom: '2rem',
+            textAlign: 'center'
+          }}>
+            <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌟</div>
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.9)',
+              fontSize: '0.9rem',
+              margin: 0
+            }}>
+              <strong>Offline Mode:</strong> The stars have provided you with a timeless cosmic reading while you're disconnected from the network.
+            </p>
+          </div>
+        )}
+
         {/* Daily Horoscope */}
         <div style={{ marginBottom: '2rem' }}>
           <h3 style={{
@@ -373,7 +472,7 @@ const HoroscopeReader = ({
               }}>
                 📅 {horoscope.daily.date}
               </span>
-              {horoscope.daily.source !== 'fallback' && (
+              {horoscope.daily.source !== 'fallback' && horoscope.daily.source !== 'offline' && (
                 <span style={{
                   color: 'rgba(255, 255, 255, 0.6)',
                   fontSize: '0.8rem',
@@ -412,7 +511,7 @@ const HoroscopeReader = ({
             padding: '1.5rem',
             border: '1px solid rgba(78, 205, 196, 0.3)'
           }}>
-            {horoscope.weekly.source !== 'fallback' && (
+            {horoscope.weekly.source !== 'fallback' && horoscope.weekly.source !== 'offline' && (
               <div style={{
                 display: 'flex',
                 justifyContent: 'flex-end',
