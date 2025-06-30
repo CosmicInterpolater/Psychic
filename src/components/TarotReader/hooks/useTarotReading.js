@@ -67,7 +67,7 @@ export const useTarotReading = (tarotDeck, spreadTypes) => {
         const payload = {
             drawnCards: drawnCards,
             spread: selectedSpread,
-            spreadType: spreadTypes[selectedSpread],
+            spreadType: spreadTypes[selectedSpread], 
             question: questionAsked || null
         };
 
