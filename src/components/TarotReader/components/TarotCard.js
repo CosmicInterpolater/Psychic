@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 const TarotCard = ({ card, position }) => {
     return (
         <div className="text-center">
@@ -12,10 +12,10 @@ const TarotCard = ({ card, position }) => {
                         {card.keywords.slice(0, 2).join(" • ")}
                     </div>
                     <div className={'card-image'}>
-                        <img 
-                            src={'/images/' + card.name.toLowerCase().replaceAll(' ', '') + '.jpeg'} 
-                            alt={card.name} 
-                            className="w-full" 
+                        <img
+                            src={'/images/' + card.name.toLowerCase().replaceAll(' ', '') + '.jpeg'}
+                            alt={card.name}
+                            className="w-full"
                         />
                     </div>
                 </div>

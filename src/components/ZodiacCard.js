@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ZodiacCard = ({ 
-    zodiacSign, 
-    index = 0, 
+const ZodiacCard = ({
+    zodiacSign,
+    index = 0,
     onClick,
     isSelected = false
 }) => {

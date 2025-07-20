@@ -38,14 +38,14 @@ const TarotReading = () => {
     return (
         <div className="page-container page-full-width">
             <section className="page-section">
-                
+
                 {/* Header */}
                 <div className="text-center py-16">
                     <h1 className="animate-fadeInUp">
                         🌟 Stellar Tarot Reading
                     </h1>
                     <p className="text-text-cosmic text-lg mb-8 max-w-3xl mx-auto animate-fadeInUp animate-delay-200">
-                        Navigate your cosmic path through ancient tarot wisdom enhanced by stellar AI insights. 
+                        Navigate your cosmic path through ancient tarot wisdom enhanced by stellar AI insights.
                         Discover what the universe has in store for you.
                     </p>
                 </div>
@@ -57,7 +57,7 @@ const TarotReading = () => {
                         <p className="text-cosmic-muted mb-8">
                             Experience the power of tarot with our complimentary past-present-future spread
                         </p>
-                        
+
                         {!isRevealed ? (
                             <button
                                 onClick={drawThreeCards}
@@ -103,7 +103,7 @@ const TarotReading = () => {
                     <div className="cosmic-card p-8">
                         <h3 className="text-2xl text-cosmic-light mb-6">What is Stellar Tarot?</h3>
                         <p className="text-cosmic-muted mb-4">
-                            Our Stellar Tarot Reading combines ancient tarot wisdom with modern AI-enhanced insights, 
+                            Our Stellar Tarot Reading combines ancient tarot wisdom with modern AI-enhanced insights,
                             providing you with deeper clarity and cosmic guidance for your life's journey.
                         </p>
                         <ul className="space-y-2 text-cosmic-muted">

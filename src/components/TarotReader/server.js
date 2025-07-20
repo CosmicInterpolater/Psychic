@@ -70,7 +70,7 @@ app.post('/api/tarot-reading', async (req, res) => {
 
     } catch (error) {
         console.error('Error generating tarot reading:', error.message);
-        
+
         // Handle different types of errors
         if (error.response?.status === 401) {
             res.status(500).json({ error: 'AI service authentication failed' });
@@ -86,13 +86,13 @@ app.post('/api/tarot-reading', async (req, res) => {
 
 function buildTarotPrompt(drawnCards, spreadType, question) {
     let prompt = `Please provide a comprehensive tarot reading interpretation.\n\n`;
-    
+
     if (question) {
         prompt += `**Question Asked**: "${question}"\n\n`;
     }
-    
+
     prompt += `**Spread Type**: ${spreadType.name} (${drawnCards.length} cards)\n\n`;
-    
+
     prompt += `**Cards Drawn**:\n`;
     drawnCards.forEach((card, index) => {
         prompt += `${index + 1}. **${card.position}**: ${card.name}${card.isReversed ? ' (Reversed)' : ''}\n`;
@@ -106,7 +106,7 @@ function buildTarotPrompt(drawnCards, spreadType, question) {
     if (question) {
         prompt += `Please provide a detailed interpretation that specifically addresses the question "${question}" using the context of these cards and their positions. `;
     }
-    
+
     prompt += `Please provide:\n`;
     prompt += `1. An overall interpretation of the reading\n`;
     prompt += `2. How the cards relate to each other within the spread\n`;
@@ -121,13 +121,13 @@ function buildTarotPrompt(drawnCards, spreadType, question) {
 
 // Alternative API endpoint for different AI services
 //app.post('/api/tarot-reading-claude', async (req, res) => {
-    // Implementation for Anthropic Claude API
-    // Similar structure but different API endpoint and request format
+// Implementation for Anthropic Claude API
+// Similar structure but different API endpoint and request format
 //});
 
 //app.post('/api/tarot-reading-local', async (req, res) => {
-    // Implementation for local AI models (e.g., Ollama)
-    // Example: http://localhost:11434/api/generate for Ollama
+// Implementation for local AI models (e.g., Ollama)
+// Example: http://localhost:11434/api/generate for Ollama
 //});
 
 const PORT = process.env.PORT || 5000;

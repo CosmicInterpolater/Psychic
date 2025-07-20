@@ -35,7 +35,7 @@ const ImageCaptureModal = ({ isOpen, onClose, onImageCapture }) => {
 
             const stream = await navigator.mediaDevices.getUserMedia(constraints);
             streamRef.current = stream;
-            
+
             if (videoRef.current) {
                 videoRef.current.srcObject = stream;
                 videoRef.current.onloadedmetadata = () => {
@@ -118,7 +118,7 @@ const ImageCaptureModal = ({ isOpen, onClose, onImageCapture }) => {
                                 muted
                                 className={`camera-preview ${!isStreaming ? 'loading' : ''}`}
                             />
-                            
+
                             {!isStreaming && (
                                 <div className="loading-overlay">
                                     <div className="loading-spinner"></div>
@@ -141,15 +141,15 @@ const ImageCaptureModal = ({ isOpen, onClose, onImageCapture }) => {
                 </div>
 
                 <div className="modal-actions">
-                    <button 
-                        onClick={switchCamera} 
+                    <button
+                        onClick={switchCamera}
                         className="switch-camera-btn"
                         disabled={!isStreaming}
                     >
                         Switch Camera
                     </button>
-                    <button 
-                        onClick={capturePhoto} 
+                    <button
+                        onClick={capturePhoto}
                         className="capture-btn"
                         disabled={!isStreaming}
                     >

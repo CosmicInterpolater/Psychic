@@ -1,6 +1,6 @@
 // Example: How to use content monitoring in TarotReader component
 import React, { useState } from 'react';
-import { useContentMonitoring } from '../../App';
+import { useContentMonitoring } from '../../services/contentMonitoring';
 
 const TarotReader = () => {
     const { checkContent, sessionBlocked } = useContentMonitoring();
@@ -49,7 +49,7 @@ const TarotReader = () => {
     return (
         <div className="tarot-reader">
             <h1>Tarot Card Reader</h1>
-            
+
             {/* Question Input Form */}
             <form onSubmit={handleQuestionSubmit} className="question-form">
                 <div className="form-group">
@@ -64,8 +64,8 @@ const TarotReader = () => {
                         className="form-control"
                     />
                 </div>
-                <button 
-                    type="submit" 
+                <button
+                    type="submit"
                     disabled={isProcessing || !userQuestion.trim()}
                     className="btn btn-primary"
                 >
@@ -93,13 +93,13 @@ const PalmReader = () => {
         try {
             // Convert file to base64 for monitoring
             const imageData = await fileToBase64(file);
-            
+
             // Check the uploaded image
             const monitoringResult = await checkContent(
-                { 
+                {
                     image: imageData,
                     filename: file.name,
-                    fileType: file.type 
+                    fileType: file.type
                 },
                 'palm_reader'
             );
@@ -142,7 +142,7 @@ const PalmReader = () => {
     return (
         <div className="palm-reader">
             <h1>Palm Reader</h1>
-            
+
             <div className="upload-section">
                 <label htmlFor="palm-image">Upload your palm image:</label>
                 <input
@@ -176,7 +176,7 @@ const useMonitoredInput = (componentName) => {
         if (!inputValue.trim()) return;
 
         setIsChecking(true);
-        
+
         try {
             const result = await checkContent(
                 { text: inputValue },

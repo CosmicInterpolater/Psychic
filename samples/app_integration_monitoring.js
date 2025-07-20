@@ -1,11 +1,11 @@
 import React, { useEffect, useState, createContext, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Navigation from './components/Navigation';
-import Footer from './components/Footer';
-import TarotReader from './components/TarotReader/TarotReader';
-import PalmReader from './components/PalmReader/PalmReader';
-import StarshipPsychics from './components/Home/Home';
-import { ContentMonitoringService } from './services/ContentMonitoringService';
+import Navigation from '../src/components/Navigation';
+import Footer from '../src/components/Footer';
+import TarotReader from '../src/components/TarotReader/TarotReader';
+import PalmReader from '../src/components/PalmReader/PalmReader';
+import StarshipPsychics from '../src/components/Home/Home';
+import { ContentMonitoringService } from './services/contentMonitoring';
 import CrisisModal from './components/Modals/CrisisModal';
 import './styles/tailwind.scss';
 import './styles/app.scss';

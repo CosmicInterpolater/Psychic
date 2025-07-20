@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BookingModal } from '../BookingModal';
 // Import the services section
-import ServicesSection from '../ServicesSection/services_section';
+import ServicesSection from '../ServicesSection';
 // Import the individual service components
-import PalmReading from '../ServicesSection/palm_reading'; 
-import TarotReading from '../ServicesSection/tarot_reading';
-import AstrologyReading from '../ServicesSection/astrology_reading_page';
-import CrystalReading from '../ServicesSection/crystal_reading';
+import PalmReading from '../ServicesSection/PalmReading';
+import TarotReading from '../ServicesSection/TarotReading';
+import AstrologyReading from '../ServicesSection/AstrologyReading';
+import CrystalReading from '../ServicesSection/CrystalReading';
 // Import the interactive components
-import PalmReader from '../PalmReader/PalmReader'; 
+import PalmReader from '../PalmReader/PalmReader';
 import TarotReader from '../TarotReader/TarotReader';
 import CrystalReader from '../CrystalReader/CrystalReader';
 
@@ -87,8 +87,8 @@ const Home = () => {
 
     const renderHomeView = () => (
         <div className="page-container page-full-width page-component--home">
-            <section className="page-section" style={{paddingBottom: 0}}>
-                
+            <section className="page-section" style={{ paddingBottom: 0 }}>
+
                 {/* Hero Section - You'll need to create this component */}
                 <div className="text-center py-16">
                     <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
@@ -106,7 +106,7 @@ const Home = () => {
                 </div>
 
                 {/* Services Section */}
-                <ServicesSection 
+                <ServicesSection
                     onBookingOpen={openBookingModal}
                     onServiceSelect={navigateToService}
                 />

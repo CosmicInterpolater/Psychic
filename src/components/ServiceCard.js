@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ServiceCard = ({ 
-    service, 
-    index = 0, 
-    onBookSession 
+const ServiceCard = ({
+    service,
+    index = 0,
+    onBookSession
 }) => {
     return (
         <div

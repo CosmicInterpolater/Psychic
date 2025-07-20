@@ -1,9 +1,9 @@
 // components/QuestionInput.js
 import React, { useState } from 'react';
 
-const QuestionInput = ({ 
-    userQuestion, 
-    onQuestionChange, 
+const QuestionInput = ({
+    userQuestion,
+    onQuestionChange,
     isDisabled = false,
     placeholder = "What guidance are you seeking? (Optional)"
 }) => {
@@ -41,7 +41,7 @@ const QuestionInput = ({
                     <span className="font-medium">Ask a Question</span>
                     <span className="text-sm text-white/60">(Optional)</span>
                 </button>
-                
+
                 {userQuestion && (
                     <button
                         onClick={clearQuestion}

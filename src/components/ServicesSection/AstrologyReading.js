@@ -13,27 +13,27 @@ const AstrologyReading = () => {
     // Calculate zodiac sign based on birth date
     const calculateZodiacSign = (date) => {
         if (!date) return null;
-        
+
         const birthDate = new Date(date);
         const month = birthDate.getMonth() + 1;
         const day = birthDate.getDate();
-        
+
         // Find matching zodiac sign based on date ranges
         return zodiacSignsArray.find(sign => {
             // Parse the dates string (e.g., "March 21 - April 19")
             const [startDate, endDate] = sign.dates.split(' - ');
             const [startMonth, startDay] = parseDateString(startDate);
             const [endMonth, endDay] = parseDateString(endDate);
-            
+
             // Handle year-end wrap (Capricorn/Sagittarius)
             if (startMonth > endMonth) {
-                return (month === startMonth && day >= startDay) || 
-                       (month === endMonth && day <= endDay);
+                return (month === startMonth && day >= startDay) ||
+                    (month === endMonth && day <= endDay);
             }
-            
-            return (month === startMonth && day >= startDay) || 
-                   (month === endMonth && day <= endDay) ||
-                   (month > startMonth && month < endMonth);
+
+            return (month === startMonth && day >= startDay) ||
+                (month === endMonth && day <= endDay) ||
+                (month > startMonth && month < endMonth);
         });
     };
 
@@ -44,7 +44,7 @@ const AstrologyReading = () => {
             'May': 5, 'June': 6, 'July': 7, 'August': 8,
             'September': 9, 'October': 10, 'November': 11, 'December': 12
         };
-        
+
         const [monthName, day] = dateStr.trim().split(' ');
         return [months[monthName], parseInt(day)];
     };
@@ -67,14 +67,14 @@ const AstrologyReading = () => {
     return (
         <div className="page-container page-full-width">
             <section className="page-section">
-                
+
                 {/* Header */}
                 <div className="text-center py-16">
                     <h1 className="animate-fadeInUp">
                         🪐 Galactic Astrology Reading
                     </h1>
                     <p className="text-text-cosmic text-lg mb-8 max-w-3xl mx-auto animate-fadeInUp animate-delay-200">
-                        Discover your cosmic blueprint through deep-space birth chart analysis. 
+                        Discover your cosmic blueprint through deep-space birth chart analysis.
                         Uncover your celestial purpose and stellar influences.
                     </p>
                 </div>
@@ -146,9 +146,8 @@ const AstrologyReading = () => {
                         {zodiacSignsArray.map((sign, index) => (
                             <div
                                 key={sign.name}
-                                className={`cosmic-card p-6 text-center cursor-pointer transition-all hover:scale-105 animate-fadeInUp ${
-                                    selectedZodiac?.name === sign.name ? 'ring-2 ring-cosmic-accent' : ''
-                                }`}
+                                className={`cosmic-card p-6 text-center cursor-pointer transition-all hover:scale-105 animate-fadeInUp ${selectedZodiac?.name === sign.name ? 'ring-2 ring-cosmic-accent' : ''
+                                    }`}
                                 style={{ animationDelay: `${index * 50}ms` }}
                                 onClick={() => setSelectedZodiac(sign)}
                             >

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const PsychicCard = ({ 
-    psychic, 
-    index = 0, 
-    onSelectGuide 
+const PsychicCard = ({
+    psychic,
+    index = 0,
+    onSelectGuide
 }) => {
     return (
         <div

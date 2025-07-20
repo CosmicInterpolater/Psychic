@@ -10,11 +10,10 @@ const SpreadSelector = ({ spreadTypes, selectedSpread, onSpreadSelect, onDrawCar
                     <button
                         key={key}
                         onClick={() => onSpreadSelect(key)}
-                        className={`spread-btn p-4 rounded-lg border-2 transition-all ${
-                            selectedSpread === key
+                        className={`spread-btn p-4 rounded-lg border-2 transition-all ${selectedSpread === key
                                 ? 'border-yellow-400 bg-yellow-400/20 text-white'
                                 : 'border-white/30 bg-white/5 text-blue-200 hover:border-white/50'
-                        }`}
+                            }`}
                     >
                         <div className="font-semibold">{spread.name}</div>
                         <div className="text-sm opacity-80">{spread.cards} card{spread.cards > 1 ? 's' : ''}</div>

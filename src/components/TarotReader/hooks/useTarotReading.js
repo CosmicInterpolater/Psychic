@@ -38,11 +38,11 @@ export const useTarotReading = (tarotDeck, spreadTypes) => {
     const generateBasicInterpretation = (withQuestion = false) => {
         const spread = spreadTypes[selectedSpread];
         let interpretation = "";
-        
+
         if (withQuestion && questionAsked) {
             interpretation += `**Your Question**: "${questionAsked}"\n\n`;
         }
-        
+
         interpretation += `Your ${spread.name} reading reveals:\n\n`;
 
         drawnCards.forEach((card) => {
@@ -53,7 +53,7 @@ export const useTarotReading = (tarotDeck, spreadTypes) => {
         if (withQuestion && questionAsked) {
             interpretation += `**Guidance for your question**: The cards suggest reflecting on how these energies relate to "${questionAsked}". `;
         }
-        
+
         interpretation += "This reading offers guidance for reflection. Trust your intuition and take what resonates with your current situation.";
         return interpretation;
     };
@@ -67,14 +67,14 @@ export const useTarotReading = (tarotDeck, spreadTypes) => {
         const payload = {
             drawnCards: drawnCards,
             spread: selectedSpread,
-            spreadType: spreadTypes[selectedSpread], 
+            spreadType: spreadTypes[selectedSpread],
             question: questionAsked || null
         };
 
         const apiEndpoints = [
             '/api/tarot-reading',
             'http://localhost:5000/api/tarot-reading',
-            'http://localhost:3001/api/tarot-reading', 
+            'http://localhost:3001/api/tarot-reading',
             'http://localhost:5555/api/tarot-reading'
         ];
 
@@ -106,7 +106,7 @@ export const useTarotReading = (tarotDeck, spreadTypes) => {
             console.log("All API endpoints failed, using fallback interpretation");
             setGettingAnalysis(false);
             const fallbackReading = generateBasicInterpretation(true);
-            setReadingAnalysis({ 
+            setReadingAnalysis({
                 result: fallbackReading,
                 hasQuestion: !!questionAsked,
                 isFallback: true
@@ -127,7 +127,7 @@ export const useTarotReading = (tarotDeck, spreadTypes) => {
         if (questionAsked) {
             return `The cards respond to your question: "${questionAsked}"`;
         }
-        
+
         if (drawnCards.length === 1) {
             return "Focus on this card's message for guidance in your current situation.";
         } else if (drawnCards.length === 3) {

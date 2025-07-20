@@ -36,7 +36,7 @@ const ImageInputSection = ({ onImageLoad, onImageCapture, hasImage, onClearImage
     return (
         <div className="image-input-section">
             <div className="input-options">
-                <button 
+                <button
                     className="input-btn upload-btn"
                     onClick={handleUploadClick}
                     title="Upload from device"
@@ -45,7 +45,7 @@ const ImageInputSection = ({ onImageLoad, onImageCapture, hasImage, onClearImage
                     Upload Photo
                 </button>
 
-                <button 
+                <button
                     className="input-btn capture-btn"
                     onClick={handleCaptureClick}
                     title="Take photo with camera"
@@ -55,7 +55,7 @@ const ImageInputSection = ({ onImageLoad, onImageCapture, hasImage, onClearImage
                 </button>
 
                 {hasImage && (
-                    <button 
+                    <button
                         className="input-btn clear-btn"
                         onClick={onClearImage}
                         title="Clear current image"

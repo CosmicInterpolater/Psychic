@@ -2,13 +2,13 @@
 import React from 'react';
 import TarotCard from './TarotCard';
 
-const CardDisplay = ({ 
-    spreadTypes, 
-    selectedSpread, 
-    drawnCards, 
-    showInterpretation, 
-    onResetReading, 
-    onGetInterpretation 
+const CardDisplay = ({
+    spreadTypes,
+    selectedSpread,
+    drawnCards,
+    showInterpretation,
+    onResetReading,
+    onGetInterpretation
 }) => {
     const getGridClass = () => {
         if (drawnCards.length === 1) return 'grid-cols-1 max-w-sm mx-auto';
@@ -33,10 +33,10 @@ const CardDisplay = ({
 
             <div className={`grid gap-6 ${getGridClass()}`}>
                 {drawnCards.map((card, index) => (
-                    <TarotCard 
-                        key={index} 
-                        card={card} 
-                        position={card.position} 
+                    <TarotCard
+                        key={index}
+                        card={card}
+                        position={card.position}
                     />
                 ))}
             </div>

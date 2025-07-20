@@ -11,13 +11,17 @@ import { useTarotReading } from './hooks/useTarotReading';
 const spreadTypes = {
     "single": { name: "Single Card", cards: 1, positions: ["Present Situation"] },
     "three": { name: "Past, Present, Future", cards: 3, positions: ["Past", "Present", "Future"] },
-    "seven": { name: "Horseshoe", cards: 7, positions: ["The Chance", "The Booty", "The Sacrifice", "The Trail",
-            "The Wit", "The Vigilance", "The Survival Instinct"] },
-    "celtic": { name: "Celtic Cross", cards: 10, positions: [
+    "seven": {
+        name: "Horseshoe", cards: 7, positions: ["The Chance", "The Booty", "The Sacrifice", "The Trail",
+            "The Wit", "The Vigilance", "The Survival Instinct"]
+    },
+    "celtic": {
+        name: "Celtic Cross", cards: 10, positions: [
             "Present Situation", "Challenge", "Distant Past", "Recent Past",
             "Possible Outcome", "Near Future", "Your Approach", "External Influences",
             "Hopes & Fears", "Final Outcome"
-        ]}
+        ]
+    }
 };
 
 const TarotReader = () => {
@@ -51,7 +55,7 @@ const TarotReader = () => {
                             onQuestionChange={setQuestion}
                             placeholder="What guidance are you seeking from the cards?"
                         />
-                        
+
                         <SpreadSelector
                             spreadTypes={spreadTypes}
                             selectedSpread={selectedSpread}
@@ -69,7 +73,7 @@ const TarotReader = () => {
                                 <p className="text-white/80 italic">"{questionAsked}"</p>
                             </div>
                         )}
-                        
+
                         <CardDisplay
                             spreadTypes={spreadTypes}
                             selectedSpread={selectedSpread}

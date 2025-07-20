@@ -8,6 +8,14 @@ node_modules/
 # IDE outputs
 .idea/
 
+# ai
+/.venv
+/doing
+/done
+/prompts
+/.aisdlc
+/.aisdlc.lock
+
 # Environment files
 .env
 .env.local

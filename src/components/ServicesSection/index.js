@@ -49,7 +49,7 @@ const ServiceDetailModal = ({ service, isOpen, onClose, onBookingOpen }) => {
                             <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
                             <p className="text-blue-200">{service.description}</p>
                         </div>
-                        
+
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="bg-white/10 backdrop-blur rounded-lg p-4">
                                 <h4 className="text-lg font-semibold text-white mb-3">What You'll Experience</h4>
@@ -89,7 +89,7 @@ const ServiceDetailModal = ({ service, isOpen, onClose, onBookingOpen }) => {
                             <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
                             <p className="text-blue-200">{service.description}</p>
                         </div>
-                        
+
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="bg-white/10 backdrop-blur rounded-lg p-4">
                                 <h4 className="text-lg font-semibold text-white mb-3">What Your Palm Reveals</h4>
@@ -144,7 +144,7 @@ const ServiceDetailModal = ({ service, isOpen, onClose, onBookingOpen }) => {
                             <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
                             <p className="text-blue-200">{service.description}</p>
                         </div>
-                        
+
                         <div className="grid md:grid-cols-3 gap-4">
                             <div className="bg-white/10 backdrop-blur rounded-lg p-4 text-center">
                                 <div className="text-3xl mb-2">🌟</div>
@@ -162,7 +162,7 @@ const ServiceDetailModal = ({ service, isOpen, onClose, onBookingOpen }) => {
                                 <p className="text-blue-200 text-xs">Opportunities revealed</p>
                             </div>
                         </div>
-                        
+
                         <div className="bg-white/10 backdrop-blur rounded-lg p-4">
                             <h4 className="text-lg font-semibold text-white mb-3 text-center">Zodiac Elements</h4>
                             <div className="grid grid-cols-4 gap-2">
@@ -270,7 +270,7 @@ const ServicesSection = ({ onBookingOpen, onServiceSelect }) => {
                                 <p className="text-blue-200 mb-4 text-sm">{service.description}</p>
                                 <div className="text-2xl font-bold text-yellow-400 mb-2">${service.price}</div>
                                 <div className="text-sm text-blue-300 mb-6">{service.duration} minutes</div>
-                                
+
                                 <div className="space-y-2">
                                     <button
                                         onClick={() => onBookingOpen(service.id)}
@@ -278,7 +278,7 @@ const ServicesSection = ({ onBookingOpen, onServiceSelect }) => {
                                     >
                                         Book Session
                                     </button>
-                                    
+
                                     {/* Only show "Learn More" for services that have dedicated pages */}
                                     {(service.id === 'tarot' || service.id === 'palmistry' || service.id === 'astrology') && (
                                         <button

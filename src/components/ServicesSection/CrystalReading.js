@@ -54,14 +54,14 @@ const CrystalReading = () => {
     return (
         <div className="page-container page-full-width">
             <section className="page-section">
-                
+
                 {/* Header */}
                 <div className="text-center py-16">
                     <h1 className="animate-fadeInUp">
                         💎 Crystal Energy Reading
                     </h1>
                     <p className="text-text-cosmic text-lg mb-8 max-w-3xl mx-auto animate-fadeInUp animate-delay-200">
-                        Harness the ancient power of crystals to unlock your energy pathways and discover 
+                        Harness the ancient power of crystals to unlock your energy pathways and discover
                         the healing vibrations that will guide your spiritual journey.
                     </p>
                 </div>
@@ -73,7 +73,7 @@ const CrystalReading = () => {
                         <p className="text-cosmic-muted mb-8">
                             Discover your current energy alignment with our complimentary crystal guidance spread
                         </p>
-                        
+
                         {!isRevealed ? (
                             <button
                                 onClick={drawThreeCrystals}
@@ -120,7 +120,7 @@ const CrystalReading = () => {
                     <div className="cosmic-card p-8">
                         <h3 className="text-2xl text-cosmic-light mb-6">What is Crystal Energy Reading?</h3>
                         <p className="text-cosmic-muted mb-4">
-                            Crystal Energy Reading taps into the vibrational frequencies of sacred stones to 
+                            Crystal Energy Reading taps into the vibrational frequencies of sacred stones to
                             reveal your energetic patterns, chakra alignments, and spiritual healing pathways.
                         </p>
                         <ul className="space-y-2 text-cosmic-muted">

@@ -1,13 +1,13 @@
 // components/ControlPanel.jsx
 import React from 'react';
 
-const ControlPanel = ({ 
-    onLoadImage, 
-    onResetLines, 
-    onToggleLines, 
-    onAIAnalysis, 
-    showLines, 
-    isAnalyzing 
+const ControlPanel = ({
+    onLoadImage,
+    onResetLines,
+    onToggleLines,
+    onAIAnalysis,
+    showLines,
+    isAnalyzing
 }) => (
     <div className="cosmic-card bg-cosmic-deep/80 mb-6">
         <div className="control-group">
@@ -23,9 +23,9 @@ const ControlPanel = ({
             <button className="cosmic-button" onClick={onToggleLines}>
                 {showLines ? 'Hide Lines' : 'Show Lines'}
             </button>
-            <button 
-                className="cosmic-button" 
-                onClick={onAIAnalysis} 
+            <button
+                className="cosmic-button"
+                onClick={onAIAnalysis}
                 disabled={isAnalyzing}
             >
                 {isAnalyzing ? 'Analyzing...' : 'AI Analysis'}

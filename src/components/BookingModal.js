@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import TarotReader from './TarotReader/TarotReader';
 import PalmReader from './PalmReader/PalmReader';
-import AstrologyReader from './Astrology/astrology_reader';
-import CrystalReader from './CrystalReader/CrystalReader'; 
+import AstrologyReader from './Astrology/AstrologicalReader';
+import CrystalReader from './CrystalReader/CrystalReader';
 
 
-export const BookingModal = ({ 
-    isOpen, 
-    onClose, 
+export const BookingModal = ({
+    isOpen,
+    onClose,
     selectedService
 }) => {
     const [currentStep, setCurrentStep] = useState('subscription'); // 'subscription' or 'reading'
     const [selectedPlan, setSelectedPlan] = useState('');
     const [activeReader, setActiveReader] = useState(null);
-    
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -69,7 +69,7 @@ export const BookingModal = ({
 
     const handleSubscriptionSubmit = (e) => {
         e.preventDefault();
-        
+
         if (!formData.disclaimer || !formData.terms) {
             alert('Please agree to all terms and conditions.');
             return;
@@ -79,10 +79,10 @@ export const BookingModal = ({
             alert('Please select a subscription plan.');
             return;
         }
-        
+
         // Simulate subscription process
         alert(`Welcome to Cosmic Readings! Your ${selectedPlan} subscription is active. Launching your ${currentService?.title} now...`);
-        
+
         // Launch the selected reading immediately
         if (currentService?.component) {
             setActiveReader(currentService.component);
@@ -112,7 +112,7 @@ export const BookingModal = ({
     // Helper function to render the correct component
     const renderReaderComponent = () => {
         try {
-            switch(activeReader) {
+            switch (activeReader) {
                 case 'tarot':
                     return <TarotReader />;
                 case 'palmistry':
@@ -134,11 +134,11 @@ export const BookingModal = ({
                 activeReader: activeReader,
                 currentService: currentService
             });
-            
+
             return (
-                <div style={{ 
-                    color: 'white', 
-                    textAlign: 'center', 
+                <div style={{
+                    color: 'white',
+                    textAlign: 'center',
                     padding: '40px',
                     backgroundColor: 'rgba(255, 0, 0, 0.1)',
                     border: '1px solid #ff4444',
@@ -288,10 +288,10 @@ export const BookingModal = ({
                             ×
                         </button>
                     </div>
-                    
-                    <div style={{ 
-                        flex: 1, 
-                        overflow: 'auto', 
+
+                    <div style={{
+                        flex: 1,
+                        overflow: 'auto',
                         padding: '20px',
                         color: 'white'
                     }}>
@@ -320,21 +320,21 @@ export const BookingModal = ({
 
                         {/* Subscription Plans */}
                         <div style={{ marginBottom: '32px' }}>
-                            <h3 style={{ 
-                                fontSize: '1.25rem', 
-                                fontWeight: '600', 
-                                color: 'white', 
-                                marginBottom: '16px' 
+                            <h3 style={{
+                                fontSize: '1.25rem',
+                                fontWeight: '600',
+                                color: 'white',
+                                marginBottom: '16px'
                             }}>
                                 Choose Your Subscription Plan
                             </h3>
-                            <div style={{ 
-                                display: 'grid', 
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
-                                gap: '16px' 
+                            <div style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                                gap: '16px'
                             }}>
                                 {/* Monthly Plan */}
-                                <div 
+                                <div
                                     style={{
                                         padding: '20px',
                                         backgroundColor: selectedPlan === 'monthly' ? 'rgba(74, 144, 226, 0.2)' : 'rgba(255, 255, 255, 0.05)',
@@ -364,11 +364,11 @@ export const BookingModal = ({
                                     <h4 style={{ fontSize: '1.125rem', fontWeight: '600', margin: '0 0 8px 0' }}>Monthly</h4>
                                     <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ffd700', marginBottom: '8px' }}>$4.99</div>
                                     <p style={{ fontSize: '0.875rem', color: '#b0b0b0', margin: '0 0 12px 0' }}>per month</p>
-                                    <ul style={{ 
-                                        fontSize: '0.75rem', 
-                                        color: '#a0a0a0', 
-                                        listStyle: 'none', 
-                                        padding: 0, 
+                                    <ul style={{
+                                        fontSize: '0.75rem',
+                                        color: '#a0a0a0',
+                                        listStyle: 'none',
+                                        padding: 0,
                                         margin: 0,
                                         textAlign: 'left'
                                     }}>
@@ -379,7 +379,7 @@ export const BookingModal = ({
                                 </div>
 
                                 {/* Yearly Plan */}
-                                <div 
+                                <div
                                     style={{
                                         padding: '20px',
                                         backgroundColor: selectedPlan === 'yearly' ? 'rgba(74, 144, 226, 0.2)' : 'rgba(255, 255, 255, 0.05)',
@@ -424,11 +424,11 @@ export const BookingModal = ({
                                     <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ffd700', marginBottom: '8px' }}>$49.95</div>
                                     <p style={{ fontSize: '0.875rem', color: '#b0b0b0', margin: '0 0 4px 0' }}>per year</p>
                                     <p style={{ fontSize: '0.75rem', color: '#00ff88', margin: '0 0 12px 0' }}>Save $9.93!</p>
-                                    <ul style={{ 
-                                        fontSize: '0.75rem', 
-                                        color: '#a0a0a0', 
-                                        listStyle: 'none', 
-                                        padding: 0, 
+                                    <ul style={{
+                                        fontSize: '0.75rem',
+                                        color: '#a0a0a0',
+                                        listStyle: 'none',
+                                        padding: 0,
                                         margin: 0,
                                         textAlign: 'left'
                                     }}>
@@ -458,17 +458,17 @@ export const BookingModal = ({
                         </div>
 
                         <form onSubmit={handleSubscriptionSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                            <div style={{ 
-                                display: 'grid', 
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-                                gap: '16px' 
+                            <div style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                                gap: '16px'
                             }}>
                                 <div>
-                                    <label style={{ 
-                                        display: 'block', 
-                                        marginBottom: '8px', 
-                                        fontWeight: '500', 
-                                        color: '#e0e0e0' 
+                                    <label style={{
+                                        display: 'block',
+                                        marginBottom: '8px',
+                                        fontWeight: '500',
+                                        color: '#e0e0e0'
                                     }}>
                                         Full Name *
                                     </label>
@@ -492,11 +492,11 @@ export const BookingModal = ({
                                 </div>
 
                                 <div>
-                                    <label style={{ 
-                                        display: 'block', 
-                                        marginBottom: '8px', 
-                                        fontWeight: '500', 
-                                        color: '#e0e0e0' 
+                                    <label style={{
+                                        display: 'block',
+                                        marginBottom: '8px',
+                                        fontWeight: '500',
+                                        color: '#e0e0e0'
                                     }}>
                                         Email *
                                     </label>

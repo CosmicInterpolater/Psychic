@@ -39,14 +39,14 @@ const PalmReading = () => {
     return (
         <div className="page-container page-full-width">
             <section className="page-section">
-                
+
                 {/* Header */}
                 <div className="text-center py-16">
                     <h1 className="animate-fadeInUp">
                         ✋ Quantum Palm Reading
                     </h1>
                     <p className="text-text-cosmic text-lg mb-8 max-w-3xl mx-auto animate-fadeInUp animate-delay-200">
-                        Advanced palmistry analysis using quantum consciousness mapping techniques. 
+                        Advanced palmistry analysis using quantum consciousness mapping techniques.
                         Discover the secrets written in your hands by the universe itself.
                     </p>
                 </div>
@@ -55,7 +55,7 @@ const PalmReading = () => {
                 <div className="max-w-5xl mx-auto mb-16">
                     <div className="cosmic-card p-8">
                         <h3 className="text-2xl text-center text-cosmic-light mb-8">Explore Your Palm Lines</h3>
-                        
+
                         <div className="grid md:grid-cols-2 gap-12 items-center">
                             {/* Palm Visual */}
                             <div className="text-center">
@@ -67,16 +67,15 @@ const PalmReading = () => {
                                             {palmLines.map((line, index) => (
                                                 <button
                                                     key={line.name}
-                                                    className={`absolute w-4 h-4 rounded-full border-2 transition-all duration-300 hover:scale-150 transform -translate-x-2 -translate-y-2 ${
-                                                        selectedLine === index 
-                                                            ? 'bg-blue-400 border-blue-300 shadow-lg shadow-blue-400/50 animate-pulse' 
+                                                    className={`absolute w-4 h-4 rounded-full border-2 transition-all duration-300 hover:scale-150 transform -translate-x-2 -translate-y-2 ${selectedLine === index
+                                                            ? 'bg-blue-400 border-blue-300 shadow-lg shadow-blue-400/50 animate-pulse'
                                                             : 'bg-purple-400 border-purple-300 hover:bg-purple-300 shadow-lg shadow-purple-400/50 animate-pulse'
-                                                    }`}
+                                                        }`}
                                                     style={{
                                                         left: index === 0 ? '25%' : index === 1 ? '15%' : index === 2 ? '35%' : '45%',
                                                         top: index === 0 ? '30%' : index === 1 ? '20%' : index === 2 ? '40%' : '50%',
-                                                        boxShadow: selectedLine === index 
-                                                            ? '0 0 15px rgba(96, 165, 250, 0.8), 0 0 30px rgba(96, 165, 250, 0.4)' 
+                                                        boxShadow: selectedLine === index
+                                                            ? '0 0 15px rgba(96, 165, 250, 0.8), 0 0 30px rgba(96, 165, 250, 0.4)'
                                                             : '0 0 15px rgba(196, 181, 253, 0.8), 0 0 30px rgba(196, 181, 253, 0.4)'
                                                     }}
                                                     onClick={() => setSelectedLine(selectedLine === index ? null : index)}
@@ -84,8 +83,8 @@ const PalmReading = () => {
                                                 />
                                             ))}
                                         </div>
-                                        </div>
                                     </div>
+                                </div>
                                 <p className="text-cosmic-light text-sm mt-4">Click the glowing points to explore each palm line</p>
                             </div>
 
@@ -120,7 +119,7 @@ const PalmReading = () => {
                 {/* Palm Reading Methods */}
                 <div className="max-w-4xl mx-auto mb-16">
                     <h3 className="text-3xl text-center text-cosmic-light mb-12">Our Quantum Palm Reading Methods</h3>
-                    
+
                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="cosmic-card p-6 text-center">
                             <div className="text-4xl mb-4">🌌</div>
@@ -146,7 +145,7 @@ const PalmReading = () => {
                 <div className="max-w-4xl mx-auto mb-16">
                     <div className="cosmic-card p-8">
                         <h3 className="text-3xl text-center text-cosmic-light mb-8">What Your Palm Reveals</h3>
-                        
+
                         <div className="grid md:grid-cols-2 gap-8">
                             <div className="space-y-6">
                                 <div className="flex items-start space-x-4">
@@ -206,7 +205,7 @@ const PalmReading = () => {
                 {/* Reading Process */}
                 <div className="max-w-4xl mx-auto mb-16">
                     <h3 className="text-3xl text-center text-cosmic-light mb-12">Your Reading Experience</h3>
-                    
+
                     <div className="grid md:grid-cols-4 gap-6">
                         <div className="text-center">
                             <div className="cosmic-card p-6 mb-4">
@@ -249,7 +248,7 @@ const PalmReading = () => {
                         <p className="text-text-cosmic mb-6">
                             Book your quantum palm reading session and unlock the wisdom written in your hands by the universe itself.
                         </p>
-                        <button 
+                        <button
                             onClick={openBookingModal}
                             className="btn-primary text-lg px-8 py-4"
                         >
