@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { BookingModal } from '../BookingModal';
+import { BookingModal } from './BookingModal';
 // Import the services section
-import ServicesSection from '../ServicesSection';
+import ServicesSection from './ServicesSection';
 // Import the individual service components
-import PalmReading from '../ServicesSection/PalmReading';
-import TarotReading from '../ServicesSection/TarotReading';
-import AstrologyReading from '../ServicesSection/AstrologyReading';
-import CrystalReading from '../ServicesSection/CrystalReading';
+import PalmReading from './ServicesSection/PalmReading';
+import TarotReading from './ServicesSection/TarotReading';
+import AstrologyReading from './ServicesSection/AstrologyReading';
+import CrystalReading from './ServicesSection/CrystalReading';
 // Import the interactive components
 import PalmReader from '../PalmReader/PalmReader';
 import TarotReader from '../TarotReader/TarotReader';

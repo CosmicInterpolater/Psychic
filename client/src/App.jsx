@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Navigation from './components/Navigation';
-import Footer from './components/Footer';
+import Navigation from './components/layout/Navigation';
+import Footer from './components/layout/Footer';
 import TarotReader from './components/TarotReader/TarotReader';
 import PalmReader from './components/PalmReader/PalmReader';
-import StarshipPsychics from './components/Home/Home';
+import StarshipPsychics from './components/home/Home';
 import './styles/tailwind.scss';
 import './styles/app.scss';
 
