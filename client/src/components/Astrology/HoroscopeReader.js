@@ -80,17 +80,28 @@ const HoroscopeReader = ({
         }
 
         const apis = [
-            // API 1: horoscope-api.herokuapp.com
+            // API 1: Aztro API - Free and reliable
             {
-                name: 'horoscope-api',
-                daily: `https://horoscope-api.herokuapp.com/horoscope/today/${zodiacSign}`,
-                weekly: `https://horoscope-api.herokuapp.com/horoscope/week/${zodiacSign}`
+                name: 'aztro',
+                daily: `https://aztro.sameerkumar.website/?sign=${zodiacSign}&day=today`,
+                weekly: null, // Aztro doesn't have weekly, we'll generate one
+                method: 'POST' // Aztro requires POST requests
             },
-            // API 2: horoscopefree.herokuapp.com  
+            // API 2: Free Astrology API
             {
-                name: 'horoscopefree',
-                daily: `https://horoscopefree.herokuapp.com/daily/${zodiacSign.toLowerCase()}`,
-                weekly: null // This API might not have weekly
+                name: 'freeastrologyapi',
+                daily: `https://json.freeastrologyapi.com/daily-sun-sign-prediction?sign=${zodiacSign}`,
+                weekly: `https://json.freeastrologyapi.com/weekly-sun-sign-prediction?sign=${zodiacSign}`,
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            },
+            // API 3: Prokerala API (free tier)
+            {
+                name: 'prokerala',
+                daily: `https://api.prokerala.com/v2/astrology/daily-prediction`,
+                weekly: `https://api.prokerala.com/v2/astrology/weekly-prediction`,
+                method: 'GET',
+                requiresAuth: true // This one might need API key, so we'll skip if no key
             }
         ];
 

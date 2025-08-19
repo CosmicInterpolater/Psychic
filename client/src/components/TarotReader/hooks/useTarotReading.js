@@ -71,39 +71,18 @@ export const useTarotReading = (tarotDeck, spreadTypes) => {
             question: questionAsked || null
         };
 
-        const apiEndpoints = [
-            '/api/tarot-reading',
-            'http://localhost:5000/api/tarot-reading',
-            'http://localhost:3001/api/tarot-reading',
-            'http://localhost:5555/api/tarot-reading'
-        ];
-
-        let apiSuccess = false;
-
-        for (const endpoint of apiEndpoints) {
-            if (apiSuccess) break;
-
-            try {
-                const response = await axios.post(endpoint, payload, {
-                    timeout: 15000, // Increased timeout for AI processing
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
-                setGettingAnalysis(false);
-                setReadingAnalysis({
-                    result: response.data.message || response.data.result || 'Reading completed successfully!',
-                    hasQuestion: !!questionAsked
-                });
-                apiSuccess = true;
-                return;
-            } catch (error) {
-                console.log(`API endpoint ${endpoint} failed:`, error.message);
-                continue;
-            }
-        }
-
-        if (!apiSuccess) {
-            console.log("All API endpoints failed, using fallback interpretation");
+        try {
+            const response = await axios.post('http://localhost:8080/api/tarot/interpret', payload, {
+                timeout: 15000,
+                headers: { 'Content-Type': 'application/json' }
+            });
+            setGettingAnalysis(false);
+            setReadingAnalysis({
+                result: response.data.message || response.data.result || 'Reading completed successfully!',
+                hasQuestion: !!questionAsked
+            });
+        } catch (error) {
+            console.log('Tarot interpretation API failed:', error.message);
             setGettingAnalysis(false);
             const fallbackReading = generateBasicInterpretation(true);
             setReadingAnalysis({
