@@ -72,7 +72,7 @@ export const useTarotReading = (tarotDeck, spreadTypes) => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/api/tarot/interpret', payload, {
+            const response = await axios.post('http://localhost:3001/api/tarot/interpret', payload, {
                 timeout: 15000,
                 headers: { 'Content-Type': 'application/json' }
             });

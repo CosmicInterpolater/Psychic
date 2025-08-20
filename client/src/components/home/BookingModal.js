@@ -7,7 +7,11 @@ import CrystalReader from '../CrystalReader/CrystalReader';
 export const BookingModal = ({
     isOpen,
     onClose,
-    selectedService
+    selectedService,
+    birthDate,
+    birthCity,
+    birthState,
+    birthTime
 }) => {
     const [currentStep, setCurrentStep] = useState('subscription'); // 'subscription' or 'reading'
     const [selectedPlan, setSelectedPlan] = useState('');
@@ -117,7 +121,7 @@ export const BookingModal = ({
                 case 'palmistry':
                     return <PalmReader />;
                 case 'astrology':
-                    return <AstrologyReader />;
+                    return <AstrologyReader birthDate={birthDate} birthCity={birthCity} birthState={birthState} birthTime={birthTime} />;
                 case 'crystal':
                     return <CrystalReader />;
                 default:

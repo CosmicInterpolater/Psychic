@@ -1,6 +1,6 @@
 // Tarot interpretation service
 export async function getTarotInterpretation(spread) {
-  const response = await fetch('http://localhost:8080/api/tarot/interpret', {
+  const response = await fetch('http://localhost:3001/api/tarot/interpret', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -12,13 +12,13 @@ export async function getTarotInterpretation(spread) {
 }
 
 // Astrology horoscope service
-export async function getAstrologyHoroscope(sign, period) {
-  const response = await fetch('http://localhost:8080/api/astrology/horoscope', {
+export async function getAstrologyHoroscope(sign, period, birthCity, birthState, birthTime) {
+  const response = await fetch('http://localhost:3001/api/astrology/horoscope', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ sign, period })
+    body: JSON.stringify({ sign, period, birthCity, birthState, birthTime })
   });
   if (!response.ok) throw new Error('Failed to get horoscope');
   return response.json();

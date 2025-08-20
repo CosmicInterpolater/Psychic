@@ -1,7 +1,7 @@
 // components/DateInput.js - Date Input Component
 import React from 'react';
 
-const DateInput = ({ birthDate, setBirthDate, onGenerate }) => {
+const DateInput = ({ birthDate, setBirthDate, birthCity, setBirthCity, birthState, setBirthState, birthTime, setBirthTime, onGenerate }) => {
     return (
         <div style={{
             maxWidth: '500px',
@@ -44,6 +44,51 @@ const DateInput = ({ birthDate, setBirthDate, onGenerate }) => {
                     type="date"
                     value={birthDate}
                     onChange={(e) => setBirthDate(e.target.value)}
+                    style={{
+                        padding: '12px',
+                        fontSize: '1.1rem',
+                        borderRadius: '10px',
+                        border: 'none',
+                        marginBottom: '1.5rem',
+                        width: '100%',
+                        maxWidth: '300px'
+                    }}
+                />
+                <input
+                    type="text"
+                    value={birthCity}
+                    onChange={e => setBirthCity(e.target.value)}
+                    placeholder="Birth City (optional)"
+                    style={{
+                        padding: '12px',
+                        fontSize: '1.1rem',
+                        borderRadius: '10px',
+                        border: 'none',
+                        marginBottom: '1.5rem',
+                        width: '100%',
+                        maxWidth: '300px'
+                    }}
+                />
+                <input
+                    type="text"
+                    value={birthState}
+                    onChange={e => setBirthState(e.target.value)}
+                    placeholder="Birth State/Province (optional)"
+                    style={{
+                        padding: '12px',
+                        fontSize: '1.1rem',
+                        borderRadius: '10px',
+                        border: 'none',
+                        marginBottom: '1.5rem',
+                        width: '100%',
+                        maxWidth: '300px'
+                    }}
+                />
+                <input
+                    type="time"
+                    value={birthTime}
+                    onChange={e => setBirthTime(e.target.value)}
+                    placeholder="Time of Birth (optional)"
                     style={{
                         padding: '12px',
                         fontSize: '1.1rem',

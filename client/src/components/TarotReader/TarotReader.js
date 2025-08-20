@@ -4,6 +4,8 @@ import './TarotReader.scss';
 import { tarotDeck } from '../../data/tarotDeckData';
 import SpreadSelector from './components/SpreadSelector';
 import CardDisplay from './components/CardDisplay';
+import { arrangeLotusSpread } from './lotusSpread';
+import { arrangeCelticCross } from './celticCrossSpread';
 import InterpretationDisplay from './components/InterpretationDisplay';
 import QuestionInput from './components/QuestionInput';
 import { useTarotReading } from './hooks/useTarotReading';
@@ -45,8 +47,8 @@ const TarotReader = () => {
     return (
         <div className="page-container page--component-tarot-reader">
             <section className="page-section">
-                <h1 className="page-title">Tarot Card Reader</h1>
-                <p className="text-center">Discover insights through the ancient wisdom of the cards</p>
+                <h1 className="page-title" style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Tarot Card Reader</h1>
+                <p className="text-center" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>Discover insights through the ancient wisdom of the cards</p>
 
                 {!isReading && (
                     <div className="space-y-6">
@@ -77,7 +79,13 @@ const TarotReader = () => {
                         <CardDisplay
                             spreadTypes={spreadTypes}
                             selectedSpread={selectedSpread}
-                            drawnCards={drawnCards}
+                            drawnCards={
+                                selectedSpread === 'seven'
+                                    ? arrangeLotusSpread(drawnCards)
+                                    : selectedSpread === 'celtic'
+                                        ? arrangeCelticCross(drawnCards)
+                                        : drawnCards
+                            }
                             showInterpretation={showInterpretation}
                             onResetReading={resetReading}
                             onGetInterpretation={generateInterpretation}

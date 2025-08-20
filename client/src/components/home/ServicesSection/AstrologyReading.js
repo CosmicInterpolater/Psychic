@@ -5,6 +5,9 @@ import { BookingModal } from '../BookingModal';
 const AstrologyReading = () => {
     const [selectedZodiac, setSelectedZodiac] = useState(null);
     const [birthDate, setBirthDate] = useState('');
+    const [birthCity, setBirthCity] = useState('');
+    const [birthState, setBirthState] = useState('');
+    const [birthTime, setBirthTime] = useState('');
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
     // Convert zodiacSigns object to array
@@ -79,15 +82,37 @@ const AstrologyReading = () => {
                     </p>
                 </div>
 
-                {/* Birth Date Input */}
+                {/* Birth Details Input */}
                 <div className="max-w-2xl mx-auto mb-12">
                     <div className="cosmic-card p-8 text-center">
-                        <h3 className="text-2xl mb-6 text-cosmic-light">Enter Your Birth Date</h3>
+                        <h3 className="text-2xl mb-6 text-cosmic-light">Enter Your Birth Details</h3>
                         <input
                             type="date"
                             value={birthDate}
                             onChange={handleDateChange}
+                            className="w-full max-w-md mx-auto p-3 rounded-lg bg-cosmic-void/30 border border-cosmic-accent/30 text-cosmic-light text-center text-lg focus:outline-none focus:border-cosmic-accent mb-4"
+                            placeholder="Birth Date"
+                        />
+                        <input
+                            type="text"
+                            value={birthCity}
+                            onChange={e => setBirthCity(e.target.value)}
+                            className="w-full max-w-md mx-auto p-3 rounded-lg bg-cosmic-void/30 border border-cosmic-accent/30 text-cosmic-light text-center text-lg focus:outline-none focus:border-cosmic-accent mb-4"
+                            placeholder="Birth City (optional)"
+                        />
+                        <input
+                            type="text"
+                            value={birthState}
+                            onChange={e => setBirthState(e.target.value)}
+                            className="w-full max-w-md mx-auto p-3 rounded-lg bg-cosmic-void/30 border border-cosmic-accent/30 text-cosmic-light text-center text-lg focus:outline-none focus:border-cosmic-accent mb-4"
+                            placeholder="Birth State/Province (optional)"
+                        />
+                        <input
+                            type="time"
+                            value={birthTime}
+                            onChange={e => setBirthTime(e.target.value)}
                             className="w-full max-w-md mx-auto p-3 rounded-lg bg-cosmic-void/30 border border-cosmic-accent/30 text-cosmic-light text-center text-lg focus:outline-none focus:border-cosmic-accent"
+                            placeholder="Time of Birth (optional)"
                         />
                     </div>
                 </div>
@@ -192,6 +217,10 @@ const AstrologyReading = () => {
                 isOpen={isBookingModalOpen}
                 onClose={closeBookingModal}
                 selectedService="astrology"
+                birthDate={birthDate}
+                birthCity={birthCity}
+                birthState={birthState}
+                birthTime={birthTime}
             />
         </div>
     );

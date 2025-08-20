@@ -7,26 +7,31 @@ import { zodiacSigns } from '../../data/ZodiacSigns';
 import { getZodiacSign, getDateRange, getZodiacEmoji } from './zodiacUtils';
 import { getMoonPhase } from '../../services/astrologyService';
 
-const AstrologicalReader = ({ onNavigateHome }) => {
-    const [birthDate, setBirthDate] = useState('');
+const AstrologicalReader = ({ onNavigateHome, birthDate, birthCity, birthState, birthTime }) => {
+    // Accept birth details as props and initialize state
+    const [localBirthDate, setLocalBirthDate] = useState(birthDate || '');
+    const [localBirthCity, setLocalBirthCity] = useState(birthCity || '');
+    const [localBirthState, setLocalBirthState] = useState(birthState || '');
+    const [localBirthTime, setLocalBirthTime] = useState(birthTime || '');
     const [reading, setReading] = useState(null);
     const [showReading, setShowReading] = useState(false);
     const [showHoroscope, setShowHoroscope] = useState(false);
     const [moonPhase, setMoonPhase] = useState(null);
     const [currentStep, setCurrentStep] = useState('input'); // 'input', 'horoscope', 'reading'
 
-    const handleDateSubmit = () => {
-        if (!birthDate) return;
+    // On mount, set birth details from props if provided
+    // No need for useEffect, state is initialized from props above
 
-        // Move to horoscope step
+    const handleDateSubmit = () => {
+        if (!localBirthDate) return;
         setCurrentStep('horoscope');
         setShowHoroscope(true);
     };
 
     const handleProceedToFullReading = async () => {
-        if (!birthDate) return;
+        if (!localBirthDate) return;
 
-        const date = new Date(birthDate);
+        const date = new Date(localBirthDate);
         const sign = getZodiacSign(date);
         const signData = zodiacSigns[sign];
 
@@ -39,29 +44,23 @@ const AstrologicalReader = ({ onNavigateHome }) => {
             ? signData.moonPhases[currentMoonPhase.name]
             : `The current ${currentMoonPhase.phase} brings a time of cosmic reflection and energy alignment for your ${signData.name} nature.`;
 
+        // Compose birth details for ascendant/house analysis
+        let birthDetailsText = '';
+        if (localBirthCity || localBirthState || localBirthTime) {
+            birthDetailsText = `\nBirth Place: ${localBirthCity || ''}${localBirthCity && localBirthState ? ', ' : ''}${localBirthState || ''}\nTime of Birth: ${localBirthTime || 'Unknown'}`;
+        }
+
         // Enhanced reading data
         const enhancedReading = {
             ...signData,
-
-            // Enhanced personality with cosmic context
-            personality: `As a ${signData.name}, you embody the essence of ${signData.element} energy. Your cosmic blueprint reveals a soul destined for ${signData.personality.toLowerCase()}.`,
-
-            // Enhanced life path
+            personality: `As a ${signData.name}, you embody the essence of ${signData.element} energy. Your cosmic blueprint reveals a soul destined for ${signData.personality.toLowerCase()}.` + birthDetailsText,
             lifePath: `Your life journey as a ${signData.name} is one of continuous evolution and cosmic alignment.`,
-
-            // Enhanced opportunities
             opportunities: `The cosmos presents you with abundant opportunities to shine in areas related to ${signData.strengths.slice(0, 2).join(' and ').toLowerCase()}.`,
-
-            // Enhanced challenges
             challenges: `Your celestial challenges revolve around overcoming tendencies toward ${signData.weaknesses.slice(0, 2).join(' and ').toLowerCase()}.`,
-
-            // Basic info
             dates: getDateRange(sign),
             emoji: getZodiacEmoji(sign),
             moonPhase: currentMoonPhase,
             moonInfluence: moonInfluence,
-
-            // Include fallback data for missing elements
             planet: signData.planet || signData.rulingPlanet || 'Unknown',
             rulingPlanet: signData.rulingPlanet || signData.planet || 'Unknown',
             compatibility: signData.compatibility || {
@@ -92,7 +91,10 @@ const AstrologicalReader = ({ onNavigateHome }) => {
                 energy: 'Seasonal energy not defined',
                 connection: 'Seasonal connection not available',
                 bestSeason: 'Best season not specified'
-            }
+            },
+            birthCity: localBirthCity,
+            birthState: localBirthState,
+            birthTime: localBirthTime
         };
 
         setReading(enhancedReading);
@@ -155,17 +157,26 @@ const AstrologicalReader = ({ onNavigateHome }) => {
 
             {currentStep === 'input' && (
                 <DateInput
-                    birthDate={birthDate}
-                    setBirthDate={setBirthDate}
+                    birthDate={localBirthDate}
+                    setBirthDate={setLocalBirthDate}
+                    birthCity={localBirthCity}
+                    setBirthCity={setLocalBirthCity}
+                    birthState={localBirthState}
+                    setBirthState={setLocalBirthState}
+                    birthTime={localBirthTime}
+                    setBirthTime={setLocalBirthTime}
                     onGenerate={handleDateSubmit}
                 />
             )}
 
             {currentStep === 'horoscope' && showHoroscope && (
                 <HoroscopeReader
-                    birthDate={birthDate}
+                    birthDate={localBirthDate}
+                    birthCity={localBirthCity}
+                    birthState={localBirthState}
+                    birthTime={localBirthTime}
                     onProceedToFullReading={handleProceedToFullReading}
-                    onBackToHome={handleBackToHome} // This will now properly go back to main home
+                    onBackToHome={handleBackToHome}
                     getZodiacSign={getZodiacSign}
                     getZodiacEmoji={getZodiacEmoji}
                 />
@@ -174,9 +185,21 @@ const AstrologicalReader = ({ onNavigateHome }) => {
             {currentStep === 'reading' && showReading && (
                 <ReadingDisplay
                     reading={reading}
-                    onReset={handleResetReading} // Use the reset function for "New Reading"
-                    onBackToHome={handleBackToHome} // Use home navigation for "Back to Home"
+                    birthDate={localBirthDate}
+                    birthCity={localBirthCity}
+                    birthState={localBirthState}
+                    birthTime={localBirthTime}
+                    onReset={handleResetReading}
+                    onBackToHome={handleBackToHome}
                 />
+            )}
+
+            {/* Fallback for blank screen: show error if nothing renders */}
+            {!(currentStep === 'input' || (currentStep === 'horoscope' && showHoroscope) || (currentStep === 'reading' && showReading)) && (
+                <div style={{ color: 'white', textAlign: 'center', padding: '40px', background: '#660000' }}>
+                    <h2>⚠️ Service Error</h2>
+                    <p>Something went wrong. Please check your inputs and try again, or contact support.</p>
+                </div>
             )}
         </div>
     );

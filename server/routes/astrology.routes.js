@@ -6,11 +6,23 @@ require('dotenv').config();
 // Astrology horoscope endpoint
 router.post('/horoscope', async (req, res) => {
   try {
-    const { sign, period } = req.body; // period: 'daily' or 'weekly'
-    // Example: Call external astrology API
+    const { sign, period, birthCity, birthState, birthTime } = req.body;
+
+    // Compose extra details for AI prompt
+    let birthDetails = '';
+    if (birthCity || birthState || birthTime) {
+      birthDetails = `Birth Place: ${birthCity || ''}${birthCity && birthState ? ', ' : ''}${birthState || ''}. Time of Birth: ${birthTime || 'Unknown'}.`;
+    }
+
+    // Example: Call external astrology API or AI service
+    const aiPrompt = `Provide a ${period} horoscope for ${sign}. ${birthDetails} Include ascendant and 1st house analysis if possible.`;
     const response = await axios.post('EXTERNAL_ASTROLOGY_API_URL', {
+      prompt: aiPrompt,
       sign,
-      period
+      period,
+      birthCity,
+      birthState,
+      birthTime
     }, {
       headers: {
         'Authorization': `Bearer ${process.env.AI_API_KEY}`
